@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <my-select :optionsData="optionsData" v-model="valueData" />
+    <my-select :optionsData="optionsData" v-model="deafultValue" />
   </div>
 </template>
 <script>
@@ -9,6 +9,7 @@ import MySelectMockup from "@/mockups/MySelectMockup.js";
 export default {
   data() {
     return {
+      deafultValue: 'Выберите...',
       optionsData: MySelectMockup,
     };
   },
