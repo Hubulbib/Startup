@@ -13,8 +13,21 @@ export function useClickOutside (el, callback) {
         }
     }
 
-    onMounted(() => window.addEventListener('click', clickOutside))
-    onBeforeMount(() => window.removeEventListener('clcik', clickOutside))
+    const keyBreake = event => {
+        if (typeof callback === 'function' && event.code === 'Escape') {
+            callback()
+        }
+    }
+
+    onMounted(() => {
+        window.addEventListener('click', clickOutside)
+        window.addEventListener('keydown', keyBreake)
+    })
+    onBeforeMount(() =>{
+        window.removeEventListener('clcik', clickOutside)
+        window.removeEventListener('keydown', keyBreake)
+
+    })
 
     return {
         clickOutside
