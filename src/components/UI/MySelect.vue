@@ -1,9 +1,10 @@
 <template>
-  <div class="select">
+  <div class="select" ref="root">
     <div
       class="select__wrapper"
-      @keydown.enter="toggle()"
-      @click="changeOption(value)"
+      @keydown.enter="toggle"
+      @keydown.space="toggle"
+      @click="toggle"
       tabindex="0"
       :value="modelValue"
     >
@@ -22,16 +23,16 @@
         }"
       >
         <perfect-scrollbar ref="scrollbar">
-          <!-- дефолтный li надо добавить -->
           <li
+            v-for="item in optionsData"
             class="select__item"
             :class="{ 'select__item--current': item.name === value }"
             :value="item.name"
-            v-for="item in optionsData"
-            tabindex="0"
             :key="item.id"
             @keydown.enter="select(item.name)"
+            @keydown.space="select(item.name)"
             @click="select(item.name)"
+            tabindex="0"
           >
             {{ item.name }}
           </li>
@@ -43,6 +44,8 @@
 
 <script>
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
+import { ref } from "vue";
+import { useClickOutside } from "@/hooks/useClickOutside.js";
 
 export default {
   name: "my-select",
@@ -54,35 +57,28 @@ export default {
       default: () => [],
     },
   },
-  data() {
-    return {
-      value: this.modelValue,
-      visible: false,
+  setup(props) {
+    const value = ref(props.modelValue);
+    const visible = ref(false);
+    const root = ref(null);
+
+    const toggle = () => {
+      return (visible.value = !visible.value);
     };
-  },
-  methods: {
-    toggle() {
-      this.visible = !this.visible;
-    },
-    select(option) {
-      this.value = option;
-    },
-    changeOption(value) {
-      this.toggle();
-      this.$emit("update:modelValue", value);
-    },
-    handleOutsideClick(event) {
-      const selectElement = this.$el;
-      if (!selectElement.contains(event.target)) {
-        this.visible = false;
-      }
-    },
-  },
-  mounted() {
-    document.addEventListener("click", this.handleOutsideClick);
-  },
-  beforeUnmount() {
-    document.removeEventListener("click", this.handleOutsideClick);
+
+    const select = (option) => {
+      return (value.value = option);
+    };
+
+    useClickOutside(root, () => visible.value ? toggle() : null)
+
+    return {
+      value,
+      visible,
+      toggle,
+      select,
+      root,
+    };
   },
 };
 </script>

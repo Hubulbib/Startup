@@ -4,14 +4,18 @@
   </div>
 </template>
 <script>
+import { ref } from "vue";
 import MySelectMockup from "@/mockups/MySelectMockup.js";
 
 export default {
-  data() {
+  setup() {
+    const deafaultValue = 'Выберите...'
+    const optionsData = ref(MySelectMockup)
+
     return {
-      deafaultValue: 'Выберите...',
-      optionsData: MySelectMockup,
-    };
+      deafaultValue,
+      optionsData
+    }
   },
 };
 </script>
