@@ -1,5 +1,38 @@
+<script>
+  export default {
+    name: 'my-select'
+  }
+</script>
+
+<script setup>
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
+import { ref } from "vue";
+// import { useClickOutside } from "@/hooks/useClickOutside.js";
+
+const props = defineProps({
+  modelValue: String,
+  optionsData: {
+    type: Array,
+    default: () => [],
+  },
+})
+const value = ref(props.modelValue);
+const visible = ref(false);
+// const root = ref(null);
+
+const toggle = () => {
+  return (visible.value = !visible.value);
+};
+
+const select = (option) => {
+  return (value.value = option);
+};
+
+// useClickOutside(root, () => visible.value ? toggle() : null)
+</script>
+
 <template>
-  <div class="select" ref="root">
+  <div v-click-outside="(toggle, visible.value)" class="select" ref="root">
     <div
       class="select__wrapper"
       @keydown.enter="toggle"
@@ -41,47 +74,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import { PerfectScrollbar } from "vue3-perfect-scrollbar";
-import { ref } from "vue";
-import { useClickOutside } from "@/hooks/useClickOutside.js";
-
-export default {
-  name: "my-select",
-  components: { PerfectScrollbar },
-  props: {
-    modelValue: String,
-    optionsData: {
-      type: Array,
-      default: () => [],
-    },
-  },
-  setup(props) {
-    const value = ref(props.modelValue);
-    const visible = ref(false);
-    const root = ref(null);
-
-    const toggle = () => {
-      return (visible.value = !visible.value);
-    };
-
-    const select = (option) => {
-      return (value.value = option);
-    };
-
-    useClickOutside(root, () => visible.value ? toggle() : null)
-
-    return {
-      value,
-      visible,
-      toggle,
-      select,
-      root,
-    };
-  },
-};
-</script>
 
 <style scoped lang="scss">
 .select {

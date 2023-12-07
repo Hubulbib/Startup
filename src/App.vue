@@ -1,23 +1,17 @@
 <template>
   <div class="app">
     <my-select :optionsData="optionsData" v-model="deafaultValue" />
+    <Icon icon="mdi:youtube" width="96" color="#15CA82" />
+    <my-svg name="rect" />
   </div>
 </template>
-<script>
+
+<script setup>
 import { ref } from "vue";
 import MySelectMockup from "@/mockups/MySelectMockup.js";
 
-export default {
-  setup() {
-    const deafaultValue = 'Выберите...'
-    const optionsData = ref(MySelectMockup)
-
-    return {
-      deafaultValue,
-      optionsData
-    }
-  },
-};
+const deafaultValue = "Выберите...";
+const optionsData = ref(MySelectMockup);
 </script>
 
 <style>

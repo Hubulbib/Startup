@@ -1,20 +1,26 @@
-// const clickOutside = (event, el, callback) => {
-//     console.log(el)
-//     if (event.target == el.value || event.composedPath().includes(el.value)) {
-//         return
-//     }
+const clickOutside = (event, el, callback, valueToCheck) => {
+    if (!valueToCheck) return
 
-//     if (typeof callback === 'function') {
-//         callback()
-//     }
-// }
+    if (event.target == el || event.composedPath().includes(el)) return
 
-// export default {
-//     mounted(el) {
-//         window.addEventListener('click', event => clickOutside(event, el))
-//     },
-//     beforeUnmount(el) {
-//         window.removeEventListener('click', clickOutside)
-//     },
-//     name: 'click-outside'
-// }
+    if (typeof callback === 'function') {
+        return callback()
+    }
+
+    //proxy guard
+    if (typeof callback === 'object') {
+        if (typeof callback.value === 'function') {
+            return callback.value()
+        }
+    }
+}
+
+export default {
+    mounted(el, callback, valueToCheck) {
+        window.addEventListener('click', event => clickOutside(event, el , callback, valueToCheck))
+    },
+    beforeUnmount() {
+        window.removeEventListener('click', clickOutside)
+    },
+    name: 'click-outside'
+}

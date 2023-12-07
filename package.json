@@ -7,10 +7,13 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@iconify/vue": "^4.1.1",
     "axios": "^1.5.1",
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
+    "vue-svg-loader": "^0.16.0",
+    "vue-template-compiler": "^2.7.15",
     "vue3-perfect-scrollbar": "^1.6.1",
     "vuex": "^4.0.0"
   },
