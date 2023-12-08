@@ -4,6 +4,7 @@
     <my-select :optionsData="optionsData" v-model="deafaultValue" />
 
     <h2>UI technical icons</h2>
+    <a href="https://icon-sets.iconify.design/material-symbols/battery-horiz-075/" target="_blank">ИКОНКИ БРАТЬ ЗДЕСЬ</a>
     <Icon icon="mdi:youtube" width="96" color="#15CA82" />
 
     <h2>UI custom svg</h2>
@@ -62,10 +63,15 @@ const testClick = () => {
 }
 </script>
 
-<style>
+<style lang="scss">
 *, *::before, *::after {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
 }
 
 @font-face {
@@ -80,7 +86,7 @@ const testClick = () => {
 
 .app {
   margin: 0 auto;
-  max-width: 1640px;
+  max-width: 1200px;
   padding: 20px;
 
   /* temporary layout */

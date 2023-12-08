@@ -1,5 +1,5 @@
-const clickOutside = (event, el, callback, valueToCheck) => {
-    if (!valueToCheck) return
+const clickOutside = (event, el, callback, dependancy) => {
+    if (!dependancy) return
 
     if (event.target == el || event.composedPath().includes(el)) return
 
@@ -16,8 +16,8 @@ const clickOutside = (event, el, callback, valueToCheck) => {
 }
 
 export default {
-    mounted(el, callback, valueToCheck) {
-        window.addEventListener('click', event => clickOutside(event, el , callback, valueToCheck))
+    mounted(el, callback, dependancy) {
+        window.addEventListener('click', event => clickOutside(event, el , callback, dependancy))
     },
     beforeUnmount() {
         window.removeEventListener('click', clickOutside)

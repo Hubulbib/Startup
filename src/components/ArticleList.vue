@@ -1,44 +1,65 @@
 <template>
-  <ul>
+  <ul class="article-list">
     <li v-for="article in articles" :key="article.id">
       <ArticleListItem :item="article" />
     </li>
   </ul>
-  <div class="loadmore-button">
-    <my-button @click="loadMore">Загрузить ещё</my-button>
-  </div>
+  <my-button
+    v-if="!isFull"
+    v-intersection="fetchArticles"
+    @click="fetchArticles"
+    class="loadmore-btn"
+  >
+    Загрузить ещё
+  </my-button>
 </template>
 
 <script setup>
 import ArticlesMockup from "@/mockups/ArticlesMockup.js"; // mockup of articles
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import ArticleListItem from "@/components/ArticleListItem.vue";
 
-  const articles = ref(ArticlesMockup) // would be empty array
-  const fetchArticles = () => {
-      // fetching articles from the server
-      console.log('Articles fetched');
-    }
-  const loadMore = () => {
-      console.log('fetching next 5 articles...');
-    }
-  onMounted(() => {
-    fetchArticles()
-  })
+// const firstLoad = ref(true)
+const loaderInc = ref(3);
+const articles = ref([]);
+const isFull = ref(false)
 
+const fetchArticles = () => {
+  // fetching articles from the server
+  setTimeout(() => {
+    const length = articles.value.length;
+
+    articles.value = [
+      ...articles.value,
+      ...ArticlesMockup.slice(length, length + loaderInc.value),
+    ];
+  }, 250);
+};
+watch(articles, () => {
+  if (articles.value.length === ArticlesMockup.length) {
+    isFull.value = true
+  }
+}, { deep: true })
+onMounted(() => {
+  // try {
+  //   fetchArticles();
+  // } catch (error) {
+  //   console.log(error)
+  // } finally {
+  //   firstLoad.value = false
+  // }
+  // v-intersection triggers callback whenever its element is mounted therefore the first fetch will happen automatically => try catch not really needed
+});
 </script>
 
 <style scoped lang="scss">
 .article-list {
-  margin: auto;
-  max-width: 800px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 }
 
-.loadmore-button {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+.loadmore-btn {
+  align-self: center;
 }
 </style>

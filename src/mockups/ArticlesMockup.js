@@ -29,56 +29,56 @@ export default [
     views: 83,
     description: "Functions are key building blocks in JS. Learn how to define functions, understand scope, arrow functions, and more."
   },
-  // {
-  //   id: 4,
-  //   title: "Objects and Prototypes in JavaScript",
-  //   img: "/images/articles/4.jpeg",
-  //   author_id: 2,
-  //   published: "2022-07-19T16:20:01.567Z",
-  //   likes: 23,
-  //   views: 118,
-  //   description: "Objects allow you to store data and code together. Understand JS objects, prototypes, inheritance, and other object-oriented concepts."
-  // },
-  // {
-  //   id: 5,
-  //   title: "The DOM and Events in JavaScript",
-  //   img: "/images/articles/5.jpeg",
-  //   author_id: 1,
-  //   published: "2022-08-02T07:33:44.789Z",
-  //   likes: 31,
-  //   views: 165,
-  //   description: "Explore the DOM API and how to use events to create interactive web pages. Includes selecting/traversing DOM elements, event listeners."
-  // },
-  // {
-  //   id: 6,
-  //   title: "Asynchronous Programming and AJAX",
-  //   img: "/images/articles/6.jpeg",
-  //   author_id: 3,
-  //   published: "2022-08-16T14:55:22.123Z",
-  //   likes: 27,
-  //   views: 136,
-  //   description: "Learn how asynchronous JavaScript works via callbacks, promises, and async/await. Also covers making AJAX requests in JS."
-  // },
-  // {
-  //   id: 7,
-  //   title: "ECMAScript 6/2015 Features",
-  //   img: "/images/articles/7.jpeg",
-  //   author_id: 2,
-  //   published: "2022-09-01T11:11:11.111Z",
-  //   likes: 41,
-  //   views: 203,
-  //   description: "Major additions in ES6 like arrow functions, classes, template literals, destructuring assignments, default parameters, and more."
-  // },
-  // {
-  //   id: 8,
-  //   title: "JavaScript Best Practices",
-  //   img: "/images/articles/8.jpeg",
-  //   author_id: 1,
-  //   published: "2022-09-15T09:26:54.321Z",
-  //   likes: 23,
-  //   views: 107,
-  //   description: "Write better JS code through tips on variable/function naming, code style/formatting, error handling, comments, modularity patterns."
-  // },
+  {
+    id: 4,
+    title: "Objects and Prototypes in JavaScript",
+    img: "/images/articles/4.jpeg",
+    author_id: 2,
+    published: "2022-07-19T16:20:01.567Z",
+    likes: 23,
+    views: 118,
+    description: "Objects allow you to store data and code together. Understand JS objects, prototypes, inheritance, and other object-oriented concepts."
+  },
+  {
+    id: 5,
+    title: "The DOM and Events in JavaScript",
+    img: "/images/articles/5.jpeg",
+    author_id: 1,
+    published: "2022-08-02T07:33:44.789Z",
+    likes: 31,
+    views: 165,
+    description: "Explore the DOM API and how to use events to create interactive web pages. Includes selecting/traversing DOM elements, event listeners."
+  },
+  {
+    id: 6,
+    title: "Asynchronous Programming and AJAX",
+    img: "/images/articles/6.jpeg",
+    author_id: 3,
+    published: "2022-08-16T14:55:22.123Z",
+    likes: 27,
+    views: 136,
+    description: "Learn how asynchronous JavaScript works via callbacks, promises, and async/await. Also covers making AJAX requests in JS."
+  },
+  {
+    id: 7,
+    title: "ECMAScript 6/2015 Features",
+    img: "/images/articles/7.jpeg",
+    author_id: 2,
+    published: "2022-09-01T11:11:11.111Z",
+    likes: 41,
+    views: 203,
+    description: "Major additions in ES6 like arrow functions, classes, template literals, destructuring assignments, default parameters, and more."
+  },
+  {
+    id: 8,
+    title: "JavaScript Best Practices",
+    img: "/images/articles/8.jpeg",
+    author_id: 1,
+    published: "2022-09-15T09:26:54.321Z",
+    likes: 23,
+    views: 107,
+    description: "Write better JS code through tips on variable/function naming, code style/formatting, error handling, comments, modularity patterns."
+  },
   // {
   //   id: 9,
   //   title: "Tooling for JavaScript Development",
