@@ -3,6 +3,7 @@
     <my-select :optionsData="optionsData" v-model="deafaultValue" />
     <Icon icon="mdi:youtube" width="96" color="#15CA82" />
     <my-svg name="rect" />
+    <my-button class="btn">Кнопка</my-button>
   </div>
 </template>
 
@@ -19,5 +20,11 @@ const optionsData = ref(MySelectMockup);
   margin: 0 auto;
   max-width: 1640px;
   padding: 20px;
+
+  /* temporary layout */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
 }
 </style>

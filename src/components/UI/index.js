@@ -1,7 +1,11 @@
 import MySelect from "@/components/UI/MySelect.vue"
-import MyIcon from "@/components/UI/MySvg.vue"
+import MySvg from "@/components/UI/MySvg.vue"
+import MyButton from "@/components/UI/MyButton.vue"
+import GenericList from "@/components/UI/GenericList.vue"
 
 export default [
     MySelect,
-    MyIcon,
+    MySvg,
+    MyButton,
+    GenericList,
 ]
