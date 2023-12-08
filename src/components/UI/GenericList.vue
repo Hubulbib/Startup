@@ -1,16 +1,10 @@
 <template>
   <ul class="generic-list">
-    <li v-for="item in items" :key="item.id">
-      <component :is="passedComponent" :item="item" />
-    </li>
+        <li class="generic-list__item" v-for="item in items" :key="item.id">
+        <component :is="passedComponent" :item="item" />
+      </li>
   </ul>
 </template>
-
-<!-- 
-
-  пока в подвешенном состоянии, не рекомендуется к использованию
-
- -->
 
 <script>
 export default {
@@ -18,20 +12,27 @@ export default {
   props: {
     items: {
       type: Array,
-      default: () => [],
+      required: true
     },
     passedComponent: {
       type: String, // only String type works here. Otherwise an error occurs in console
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>
 
 <style scoped lang="scss">
-.generic-list {
-  list-style: none;
-}
+
+  .generic-list {
+    list-style: none;
+
+    &__item:not(:last-child) {
+      border-bottom: 1px solid #666;
+    }
+  }
+
+
 </style>
 
 <!-- PARENT

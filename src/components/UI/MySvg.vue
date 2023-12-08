@@ -1,9 +1,10 @@
 <template>
-  <component :is="icon" />
+  <component :is="icon" :value="name"/>
 </template>
   
 <script>
 import icons from "@/assets/svg/index.js";
+import { computed } from "vue";
 
 export default {
   name: "my-svg",
@@ -13,10 +14,14 @@ export default {
       type: String,
     },
   },
-  computed: {
-    icon() {
-      return icons[this.name];
-    },
+  setup(props) {
+    const icon = computed(() => {
+      return icons[props.name]
+    })
+
+    return {
+      icon
+    }
   },
 };
 </script>

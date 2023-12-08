@@ -1,21 +1,83 @@
 <template>
   <div class="app">
+    <h2>UI select</h2>
     <my-select :optionsData="optionsData" v-model="deafaultValue" />
+
+    <h2>UI technical icons</h2>
     <Icon icon="mdi:youtube" width="96" color="#15CA82" />
-    <my-svg name="rect" />
-    <my-button class="btn">Кнопка</my-button>
+
+    <h2>UI custom svg</h2>
+    <my-svg :name="dynamicIcon" />
+
+    <my-button @click="changeIconName('rect')" class="btn">Сменить иконку на Rect</my-button>
+    <my-button @click="changeIconName('wave')" class="btn">Сменить иконку на Wave</my-button>
+    <my-button @click="changeIconName('battery')" class="btn">Сменить иконку на Battery</my-button>
+
+    <h2>UI buttons</h2>
+    <div style="margin-bottom: 20px; display: flex; gap: 20px">
+      <my-button class="first-button" @click="testClick">Button 1</my-button>
+      <my-button @click="testClick" :disabled="true">Button 2</my-button>
+    </div>
+
+    <h2>UI User Avatar</h2>
+    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px">
+      <user-avatar :user="user" />
+      <user-avatar />
+      <user-avatar :user="user2" />
+    </div>
+
+    <h2>Article List</h2>
+    <article-list />
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import MySelectMockup from "@/mockups/MySelectMockup.js";
+import ArticlesMockup from "./mockups/ArticlesMockup.js";
+import ArticleList from "@/components/ArticleList.vue";
 
-const deafaultValue = "Выберите...";
+const deafaultValue = ref("Выберите...");
 const optionsData = ref(MySelectMockup);
+
+const dynamicIcon = ref('rect')
+
+const user = {
+        name: 'Dmitry',
+        surname: 'Aronov'
+      }
+      
+const user2 = {
+        name: 'John',
+        surname: 'Doe',
+        avatar: '/images/users/avatars/avatar_example.jpeg',
+      }
+
+const changeIconName = (name) => {
+  dynamicIcon.value = name
+}
+
+const testClick = () => {
+  console.log('clicked')
+}
 </script>
 
 <style>
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("@/fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+#app {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+}
+
 .app {
   margin: 0 auto;
   max-width: 1640px;
