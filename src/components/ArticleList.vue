@@ -1,19 +1,3 @@
-<template>
-  <ul class="article-list">
-    <li v-for="article in articles" :key="article.id">
-      <ArticleListItem :item="article" />
-    </li>
-  </ul>
-  <my-button
-    v-if="!isFull"
-    v-intersection="fetchArticles"
-    @click="fetchArticles"
-    class="loadmore-btn"
-  >
-    Загрузить ещё
-  </my-button>
-</template>
-
 <script setup>
 import ArticlesMockup from "@/mockups/ArticlesMockup.js"; // mockup of articles
 import { ref, onMounted, watch } from "vue";
@@ -51,6 +35,22 @@ onMounted(() => {
   // v-intersection triggers callback whenever its element is mounted therefore the first fetch will happen automatically => try catch not really needed
 });
 </script>
+
+<template>
+  <ul class="article-list">
+    <li v-for="article in articles" :key="article.id">
+      <ArticleListItem :item="article" />
+    </li>
+  </ul>
+  <my-button
+    v-if="!isFull"
+    v-intersection="fetchArticles"
+    @click="fetchArticles"
+    class="loadmore-btn"
+  >
+    Загрузить ещё
+  </my-button>
+</template>
 
 <style scoped lang="scss">
 .article-list {
