@@ -34,6 +34,7 @@ export default {
 
 svg text {
   transform: translateY(2px);
+  user-select: none;
 }
 
 </style>

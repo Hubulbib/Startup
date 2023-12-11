@@ -44,6 +44,8 @@ img {
   overflow: hidden;
   cursor: pointer;
 
+  user-select: none;
+
   &:hover {
     opacity: 0.9;
   }
