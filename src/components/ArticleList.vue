@@ -8,9 +8,16 @@ const loaderInc = ref(3);
 const articles = ref([]);
 const isFull = ref(false)
 
+const hide = (id) => {
+  ArticlesMockup = ArticlesMockup.filter(item => item.id !== id)
+  articles.value = articles.value.filter(item => item.id !== id)
+}
+
 const fetchArticles = () => {
   // fetching articles from the server
   setTimeout(() => {
+    // try catch
+    // костыль
     const length = articles.value.length;
 
     articles.value = [
@@ -19,11 +26,13 @@ const fetchArticles = () => {
     ];
   }, 250);
 };
+
 watch(articles, () => {
   if (articles.value.length === ArticlesMockup.length) {
     isFull.value = true
   }
 }, { deep: true })
+
 onMounted(() => {
   // try {
   //   fetchArticles();
@@ -32,20 +41,20 @@ onMounted(() => {
   // } finally {
   //   firstLoad.value = false
   // }
-  // v-intersection triggers callback whenever its element is mounted therefore the first fetch will happen automatically => try catch not really needed
+  
+  // v-intersection triggers callback whenever its element is mounted therefore the first fetch will happen automatically => onMounted method doesnt needed
 });
 </script>
 
 <template>
   <ul class="article-list">
     <li v-for="article in articles" :key="article.id">
-      <ArticleListItem :item="article" />
+      <ArticleListItem :item="article" @onHide="hide" />
     </li>
   </ul>
   <my-button
     v-if="!isFull"
     v-intersection="fetchArticles"
-    @click="fetchArticles"
     class="loadmore-btn"
   >
     Загрузить ещё

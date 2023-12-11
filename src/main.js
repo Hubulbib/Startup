@@ -5,6 +5,7 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
 import directives from '@/directives/index.js';
 import { Icon } from '@iconify/vue';
+// import router from '@/router/router.js';
 
 const app = createApp(App);
 
@@ -19,4 +20,5 @@ components.forEach(component => {
 app
     .component('Icon', Icon)
     .use(PerfectScrollbar)
+    // .use(router)
     .mount('#app');
