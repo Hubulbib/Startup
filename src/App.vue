@@ -1,4 +1,5 @@
 <template>
+  <Header></Header>
   <div class="app">
     <h2>UI select</h2>
     <my-select :optionsData="optionsData" v-model="deafaultValue" />
@@ -53,8 +54,7 @@
 import { ref } from "vue";
 import MySelectMockup from "@/mockups/MySelectMockup.js";
 import ArticleList from "@/components/ArticleList.vue";
-
-import MyButton from "@/components/UI/MyButton.vue";
+import Header from "@/components/Header.vue";
 
 const deafaultValue = ref("Выберите...");
 const optionsData = ref(MySelectMockup);
@@ -92,6 +92,12 @@ const testClick = () => {
 
 ul {
   list-style: none;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: currentColor;
 }
 
 button:disabled {
