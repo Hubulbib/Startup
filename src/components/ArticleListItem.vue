@@ -10,12 +10,21 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits([
+  'onHide',
+])
+
+
 const updateLikes = (value) => {
   console.log(
     `The number of likes of article #${props.item.id.value} updated to ${value}`
   );
   props.item.value = value;
 };
+
+const onHide = () => {
+  emit('onHide', props.item.id)
+}
 
 const description = computed(() => {
   if (props.item.description.length > 200) {
@@ -66,7 +75,7 @@ const published = publishedString(props.item);
     <div class="article-item__social">
       <my-button>Поделиться</my-button>
       <my-button>Избранное</my-button>
-      <my-button>Скрыть</my-button>
+      <my-button @click="onHide">Скрыть</my-button>
     </div>
   </div>
 </template>

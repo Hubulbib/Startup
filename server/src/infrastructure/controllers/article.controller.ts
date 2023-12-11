@@ -1,0 +1,62 @@
+import { Response } from 'express'
+import { IAuthRequest } from './interfaces/auth-request.interface'
+import { ArticleService } from '../../core/services/ArticleService/article.service.js'
+import { ArticleRepositoryImpl } from '../db/repositories/article.repository.impl.js'
+
+class ArticleController {
+  constructor(readonly articleService: ArticleService) {}
+
+  createOne = async (req: IAuthRequest, res: Response) => {
+    try {
+      const articleBody = req.body
+      const articleData = await this.articleService.createOne(articleBody)
+      res.status(201).json(articleData)
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  }
+
+  getAll = async (req: IAuthRequest, res: Response) => {
+    try {
+      const { interval, pages } = req.query
+      const options = { interval: +interval, pages: +pages }
+      const articleData = await this.articleService.getAll({ options })
+      res.json(articleData)
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  }
+
+  getOneById = async (req: IAuthRequest, res: Response) => {
+    try {
+      const { id } = req.params
+      const articleData = await this.articleService.getOneById(id)
+      res.json(articleData)
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  }
+
+  editOne = async (req: IAuthRequest, res: Response) => {
+    try {
+      const { id } = req.params
+      const articleBody = req.body
+      const articleData = await this.articleService.editOne(id, articleBody)
+      return res.json(articleData)
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  }
+
+  removeOne = async (req: IAuthRequest, res: Response) => {
+    try {
+      const { id } = req.params
+      const articleData = await this.articleService.removeOne(id)
+      return res.json(articleData)
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  }
+}
+
+export default new ArticleController(new ArticleService(new ArticleRepositoryImpl()))
