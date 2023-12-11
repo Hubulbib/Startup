@@ -4,6 +4,8 @@ import MyButton from "@/components/UI/MyButton.vue"
 import GenericList from "@/components/UI/GenericList.vue"
 import ArticleCounter from "@/components/UI/ArticleCounter.vue"
 import UserAvatar from "@/components/UI/UserAvatar.vue"
+import AvatarInitials from '@/components/UI/AvatarInitials.vue'
+
 
 export default [
     MySelect,
@@ -12,4 +14,5 @@ export default [
     GenericList,
     ArticleCounter,
     UserAvatar,
+    AvatarInitials
 ]

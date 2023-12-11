@@ -1,7 +1,5 @@
 <template>
-  <button
-    :class="['button', isDisabled ? 'button-disabled' : '']"
-  >
+  <button class="button">
     <slot></slot>
   </button>
 </template>
@@ -9,13 +7,7 @@
 <script>
 export default {
   name: "my-button",
-  props: {
-    isDisabled: {
-      type: Boolean,
-      default: false,
-    },
-  },
-};
+}
 </script>
 
 <style scoped lang="scss">
@@ -36,8 +28,9 @@ export default {
   &:active {
     transform: scale(0.95);
   }
+}
 
-  &.button-disabled {
+  .button:disabled {
     background-color: #d3d3d3;
     color: #a9a9a9;
     cursor: not-allowed;
@@ -46,11 +39,10 @@ export default {
       transform: none;
     }
   }
-}
 </style>
 
 <!-- PARENT
 
-<my-button @click="function" :is-disabled="data">Any text</my-button>
+<my-button @click="function" :disabled="boolean">Any text</my-button>
 
 -->

@@ -35,7 +35,6 @@
 <script setup>
 import { ref } from "vue";
 import MySelectMockup from "@/mockups/MySelectMockup.js";
-import ArticlesMockup from "./mockups/ArticlesMockup.js";
 import ArticleList from "@/components/ArticleList.vue";
 
 const deafaultValue = ref("Выберите...");
@@ -47,7 +46,7 @@ const user = {
         name: 'Dmitry',
         surname: 'Aronov'
       }
-      
+
 const user2 = {
         name: 'John',
         surname: 'Doe',
