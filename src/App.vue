@@ -1,6 +1,11 @@
 <template>
   <Header></Header>
   <div class="app">
+    <h2 @click="show">LOGIN</h2>
+    <my-dialog :show="isVisible" @hide="show">
+      <AuthForm></AuthForm>
+    </my-dialog>
+
     <h2>UI select</h2>
     <my-select :optionsData="optionsData" v-model="deafaultValue" />
 
@@ -8,22 +13,24 @@
     <a
       href="https://icon-sets.iconify.design/material-symbols/battery-horiz-075/"
       target="_blank"
-      >ИКОНКИ БРАТЬ ЗДЕСЬ</a
     >
+      ИКОНКИ БРАТЬ ЗДЕСЬ
+    </a>
     <Icon icon="mdi:youtube" width="96" color="#15CA82" />
 
     <h2>UI custom svg</h2>
     <my-svg :name="dynamicIcon" />
 
-    <my-button @click="changeIconName('rect')" class="btn"
-      >Сменить иконку на Rect</my-button
+    <my-button @click="changeIconName('rect')" class="btn">
+      Сменить иконку на Rect
+    </my-button>
+    <my-button @click="changeIconName('wave')" class="btn">
+      Сменить иконку на Wave
+    </my-button
     >
-    <my-button @click="changeIconName('wave')" class="btn"
-      >Сменить иконку на Wave</my-button
-    >
-    <my-button @click="changeIconName('battery')" class="btn"
-      >Сменить иконку на Battery</my-button
-    >
+    <my-button @click="changeIconName('battery')" class="btn">
+      Сменить иконку на Battery
+    </my-button>
 
     <h2>UI buttons</h2>
     <div style="margin-bottom: 20px; display: flex; gap: 20px">
@@ -56,11 +63,18 @@ import MySelectMockup from "@/mockups/MySelectMockup.js";
 import ArticleList from "@/components/ArticleList.vue";
 import Header from "@/components/Header.vue";
 import axios from "axios";
+import AuthForm from "./components/AuthForm.vue";
 
 const deafaultValue = ref("Выберите...");
 const optionsData = ref(MySelectMockup);
 
 const dynamicIcon = ref("rect");
+
+const isVisible = ref(false)
+
+const show = () => {
+  isVisible.value = !isVisible.value
+}
 
 const user = {
   name: "Dmitry",
@@ -84,23 +98,12 @@ const testClick = () => {
 onMounted(async () => {
   // http://localhost:3000/api/...
   try {
-    const response = await axios.get('http://localhost:3000/api/user')
-    console.log(response)
+    const response = await axios.get("http://localhost:3000/api/user");
+    console.log(response.data);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-  // try {
-  //   const response = await fetch('http://localhost:3000/api/user', {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-type': 'application/json'
-  //     },
-  //   })
-  //   console.log(response.json())
-  // } catch (error) {
-  //   console.log(error);
-  // }
-})
+});
 </script>
 
 <style lang="scss">
@@ -124,7 +127,7 @@ a {
 
 button:disabled {
   background-color: #cacaca !important;
-  color: rgba($color: #000000, $alpha: .5) !important;
+  color: rgba($color: #000000, $alpha: 0.5) !important;
   pointer-events: none;
   user-select: none;
 }
@@ -149,5 +152,9 @@ button:disabled {
   flex-direction: column;
   gap: 20px;
   align-items: flex-start;
+}
+
+.stopscroll {
+  overflow: hidden !important;
 }
 </style>

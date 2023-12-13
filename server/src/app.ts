@@ -26,6 +26,8 @@ app.use('/api/article', [AuthMiddleware], articleRouter)
 app.use('/api/subscribe', [AuthMiddleware], subscribeRouter)*/
 // Подумаем с миддлваре
 
+// http://localhost:3000/
+
 app.use('/api/user', userRouter)
 app.use('/api/article', articleRouter)
 app.use('/api/subscribe', subscribeRouter)

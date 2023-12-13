@@ -5,6 +5,7 @@ import GenericList from "@/components/UI/GenericList.vue"
 import ArticleCounter from "@/components/UI/ArticleCounter.vue"
 import UserAvatar from "@/components/UI/UserAvatar.vue"
 import AvatarInitials from '@/components/UI/AvatarInitials.vue'
+import MyDialog from '@/components/UI/MyDialog.vue'
 
 
 export default [
@@ -14,5 +15,6 @@ export default [
     GenericList,
     ArticleCounter,
     UserAvatar,
-    AvatarInitials
+    AvatarInitials,
+    MyDialog
 ]
