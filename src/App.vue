@@ -51,10 +51,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import MySelectMockup from "@/mockups/MySelectMockup.js";
 import ArticleList from "@/components/ArticleList.vue";
 import Header from "@/components/Header.vue";
+import axios from "axios";
 
 const deafaultValue = ref("Выберите...");
 const optionsData = ref(MySelectMockup);
@@ -79,6 +80,27 @@ const changeIconName = (name) => {
 const testClick = () => {
   console.log("clicked");
 };
+
+onMounted(async () => {
+  // http://localhost:3000/api/...
+  try {
+    const response = await axios.get('http://localhost:3000/api/user')
+    console.log(response)
+  } catch (error) {
+    console.log(error)
+  }
+  // try {
+  //   const response = await fetch('http://localhost:3000/api/user', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-type': 'application/json'
+  //     },
+  //   })
+  //   console.log(response.json())
+  // } catch (error) {
+  //   console.log(error);
+  // }
+})
 </script>
 
 <style lang="scss">
