@@ -17,6 +17,11 @@
   </div>
 </template>
 
+<!-- 
+    TODO:
+    SMART STICKY ANIMATED HEADER
+-->
+
 <script>
 export default {
   name: "my-header",
@@ -35,7 +40,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 .wrapper {
   background-color: #e5e5e5;
-  box-shadow: 0 1px 25px rgba($color: #000000, $alpha: .5);
+  box-shadow: 0 1px 25px rgba($color: #000000, $alpha: 0.5);
   border-radius: 0 0 12px 12px;
   padding: 20px;
 
