@@ -15,6 +15,18 @@ class AuthController {
     }
   }
 
+//   {
+//     "_id": "65637d5ae4b52354692340a2",
+//     "name": "Test1",
+//     "surname": "Test1",
+//     "email": "test@test1.ru",
+//     "password": "test",
+//     "role": "admin",
+//     "rating": [],
+//     "userSubscribes": [],
+//     "articles": []
+// }
+
   auth = async (req: Request, res: Response) => {
     try {
       const { email, password } = req.body
