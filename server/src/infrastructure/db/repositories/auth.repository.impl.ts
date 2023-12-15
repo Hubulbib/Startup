@@ -5,6 +5,8 @@ import { AuthRepository } from '../../../core/repositories/AuthRepository/auth.r
 import { UserEntity } from '../../../core/entites/user.entity.js'
 import { CreateBodyDto } from '../../../core/repositories/AuthRepository/dtos/create-body.dto.js'
 import { UserMapper } from '../mappers/user.mapper.js'
+import { AuthBackDto } from '../../../core/repositories/AuthRepository/dtos/auth-back.dto'
+import { IUserDoc } from '../entities/user.entity'
 import 'dotenv/config.js'
 
 export class AuthRepositoryImpl implements AuthRepository {
@@ -20,7 +22,7 @@ export class AuthRepositoryImpl implements AuthRepository {
     return UserMapper.toDomain(await this.userRepository.create({ ...createBody, password: userPassword }))
   }
 
-  async auth(email: string, password: string): Promise<string> {
+  async auth(email: string, password: string): Promise<AuthBackDto> {
     const user = await this.userRepository.findOne({ email })
     if (!user) {
       throw Error('Пользователь с таким e-mail не найден')
@@ -30,12 +32,16 @@ export class AuthRepositoryImpl implements AuthRepository {
       throw Error('Неверный пароль')
     }
 
-    return this.generateAccessToken(user._id, user.role)
+    return this.generateAccessToken(user)
   }
 
-  private generateAccessToken(userId: string, role: string): string {
-    const payload = { userId, role }
+  private generateAccessToken(user: IUserDoc): AuthBackDto {
+    const payload = { userId: user._id, role: user.role }
     const JWT_SECRET = process.env.JWT_SECRET
-    return jwt.sign(payload, JWT_SECRET, { expiresIn: '24h' })
+    const accessToken = jwt.sign(payload, JWT_SECRET, { expiresIn: '24h' })
+    return {
+      user: UserMapper.toDomain(user),
+      accessToken,
+    }
   }
 }
