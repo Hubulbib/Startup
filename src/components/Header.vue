@@ -11,9 +11,12 @@
           <img src="@/assets/empty-avatar.svg" alt="Аватарка пользователя" />
           <span>{{ props.user.name }} {{ props.user.surname }}</span>
         </div>
-        <a v-else href="#" class="header__account--login">Войти</a>
+        <button  @click="show" href="#" class="header__account--login">Войти</button>
       </div>
     </div>
+    <my-dialog :show="isVisible" @hide="show">
+      <LoginModule></LoginModule>
+    </my-dialog>
   </div>
 </template>
 
@@ -22,19 +25,22 @@
     SMART STICKY ANIMATED HEADER
 -->
 
-<script>
-export default {
-  name: "my-header",
-};
-</script>
-
 <script setup>
+import { ref } from 'vue'
+import LoginModule from '@/modules/LoginModule.vue';
+
 const props = defineProps({
   user: {
     type: Object,
     default: null,
   },
 });
+
+const isVisible = ref(false)
+
+const show = () => {
+  isVisible.value = !isVisible.value
+}
 </script>
 
 <style lang="scss" scoped>
@@ -109,7 +115,16 @@ const props = defineProps({
       min-height: 100%;
       font-size: 22px;
 
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+
       position: relative;
+
+      &:hover {
+        text-decoration: underline;
+        color: #4bb4ff;
+      }
 
       &::before {
         content: "";

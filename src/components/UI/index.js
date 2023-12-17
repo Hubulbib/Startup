@@ -6,6 +6,7 @@ import ArticleCounter from "@/components/UI/ArticleCounter.vue"
 import UserAvatar from "@/components/UI/UserAvatar.vue"
 import AvatarInitials from '@/components/UI/AvatarInitials.vue'
 import MyDialog from '@/components/UI/MyDialog.vue'
+import MyInput from '@/components/UI/MyInput.vue'
 
 
 export default [
@@ -16,5 +17,6 @@ export default [
     ArticleCounter,
     UserAvatar,
     AvatarInitials,
-    MyDialog
+    MyDialog,
+    MyInput
 ]

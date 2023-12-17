@@ -1,11 +1,6 @@
 <template>
   <Header></Header>
   <div class="app">
-    <h2 @click="show">LOGIN</h2>
-    <my-dialog :show="isVisible" @hide="show">
-      <AuthForm></AuthForm>
-    </my-dialog>
-
     <h2>UI select</h2>
     <my-select :optionsData="optionsData" v-model="deafaultValue" />
 
@@ -26,8 +21,7 @@
     </my-button>
     <my-button @click="changeIconName('wave')" class="btn">
       Сменить иконку на Wave
-    </my-button
-    >
+    </my-button>
     <my-button @click="changeIconName('battery')" class="btn">
       Сменить иконку на Battery
     </my-button>
@@ -63,18 +57,12 @@ import MySelectMockup from "@/mockups/MySelectMockup.js";
 import ArticleList from "@/components/ArticleList.vue";
 import Header from "@/components/Header.vue";
 import axios from "axios";
-import AuthForm from "./components/AuthForm.vue";
+import RegistrationForm from "./components/RegistrationForm.vue";
 
 const deafaultValue = ref("Выберите...");
 const optionsData = ref(MySelectMockup);
 
 const dynamicIcon = ref("rect");
-
-const isVisible = ref(false)
-
-const show = () => {
-  isVisible.value = !isVisible.value
-}
 
 const user = {
   name: "Dmitry",
@@ -123,6 +111,21 @@ a {
   text-decoration: none;
   cursor: pointer;
   color: currentColor;
+}
+
+input {
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 22px;
+
+  &:hover {
+    background-color: rgba($color: #4bb4ff, $alpha: 0.1);
+  }
+
+  &:active {
+    background-color: rgba($color: #4bb4ff, $alpha: 0.2);
+  }
 }
 
 button:disabled {

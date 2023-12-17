@@ -14,11 +14,11 @@ const emit = defineEmits([
   'onHide',
 ])
 
-
 const updateLikes = (value) => {
   console.log(
     `The number of likes of article #${props.item.id.value} updated to ${value}`
   );
+  //ты мутируешь пропс, а так нельзя
   props.item.value = value;
 };
 

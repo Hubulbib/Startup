@@ -7,7 +7,7 @@
 <script setup>
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import { ref } from "vue";
-// import { useClickOutside } from "@/hooks/useClickOutside.js";
+import { useClickOutside } from "@/hooks/useClickOutside.js";
 
 const props = defineProps({
   modelValue: String,
@@ -18,7 +18,7 @@ const props = defineProps({
 })
 const value = ref(props.modelValue);
 const visible = ref(false);
-// const root = ref(null);
+const root = ref(null);
 
 const toggle = () => {
   return (visible.value = !visible.value);
@@ -28,11 +28,12 @@ const select = (option) => {
   return (value.value = option);
 };
 
-// useClickOutside(root, () => visible.value ? toggle() : null)
+useClickOutside(root, () => visible.value ? toggle() : null)
 </script>
 
 <template>
-  <div v-click-outside="(toggle, visible.value)" class="select" ref="root">
+  <!-- <div v-click-outside="(toggle, visible.value)" class="select"> -->
+  <div class="select" ref="root">
     <div
       class="select__wrapper"
       @keydown.enter="toggle"
@@ -75,6 +76,7 @@ const select = (option) => {
   </div>
 </template>
 
+<style src="vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css" />
 <style scoped lang="scss">
 .select {
   width: 100%;
@@ -160,5 +162,14 @@ const select = (option) => {
 .ps {
   width: 100%;
   height: 168px;
+}
+
+.select__list::-webkit-scrollbar {
+  display: none;
+}
+
+.select__list {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 </style>

@@ -7,12 +7,17 @@ import articleRouter from './infrastructure/routers/article.router'
 import authRouter from './infrastructure/routers/auth.router'
 import subscribeRouter from './infrastructure/routers/subscribe.router'
 
+import cors from 'cors'
+
 //import { AuthMiddleware } from './infrastructure/middlewares/auth.middleware'
 
 const app = express()
 const PORT = process.env.PORT
 
 app.use(express.json())
+app.use(cors({
+    origin: '*'
+}))
 
 /*app.use('/api/user', [AuthMiddleware], userRouter)
 app.use('/api/article', [AuthMiddleware], articleRouter)
