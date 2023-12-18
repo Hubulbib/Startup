@@ -1,5 +1,10 @@
 <script setup>
-const props = defineProps(['firstName', 'lastName', 'description', 'rating'])
+const props = defineProps([
+  'firstName', 
+  'lastName', 
+  'description', 
+  'rating'
+])
 </script>
 
 <template>
@@ -14,6 +19,7 @@ const props = defineProps(['firstName', 'lastName', 'description', 'rating'])
     <div class="mentors__info-group">
       <div class="mentors__rating-group">
         <span>{{ props.rating }}</span>
+        <!-- в ui -->
         <svg
           xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <path fill="gold" d="m5.825 22l1.625-7.025L2 10.25l7.2-.625L12 3l2.8 6.625l7.2.625l-5.45 4.725L18.175 22L12 18.275z"/>

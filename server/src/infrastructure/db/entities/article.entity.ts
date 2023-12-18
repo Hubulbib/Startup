@@ -19,6 +19,7 @@ const schema = new Schema<IArticle>({
         subTitle: { type: String, required: true },
         subTitleText: { type: String, required: true },
         _id: false,
+        //перевернуть на true
       },
     ],
     tasks: [
@@ -26,6 +27,7 @@ const schema = new Schema<IArticle>({
         taskTitle: { type: String, required: true },
         taskText: { type: String, required: true },
         _id: false,
+        //перевернуть на true
       },
     ],
     _id: false,

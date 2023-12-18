@@ -4,7 +4,7 @@
   import MentorsItem from './MentorsItem.vue';
   import MentorsData from '../mockups/MentorsMockup.js';
 
-  let mentorsVisible = ref(9);
+  const mentorsVisible = ref(3);
 
   const mentorsData = ref(MentorsData);
 
@@ -16,7 +16,7 @@
     return mentorsVisible.value < mentorsData.value.length;
   })
 
-  function addMoreUsers() {
+  const addMoreUsers = () => {
     mentorsVisible.value = mentorsData.value.length;
   }
 </script>
