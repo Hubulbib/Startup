@@ -61,7 +61,6 @@ import ArticleList from "@/components/ArticleList.vue";
 import MentorsList from '@/components/MentorsList.vue';
 import Header from "@/components/Header.vue";
 import axios from "axios";
-import RegistrationForm from "./components/RegistrationForm.vue";
 
 const deafaultValue = ref("Выберите...");
 const optionsData = ref(MySelectMockup);
