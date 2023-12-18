@@ -48,6 +48,9 @@
 
     <h2>Article List</h2>
     <article-list />
+
+    <h2>Mentors List</h2>
+    <mentors-list></mentors-list>
   </div>
 </template>
 
@@ -55,6 +58,7 @@
 import { onMounted, ref } from "vue";
 import MySelectMockup from "@/mockups/MySelectMockup.js";
 import ArticleList from "@/components/ArticleList.vue";
+import MentorsList from '@/components/MentorsList.vue';
 import Header from "@/components/Header.vue";
 import axios from "axios";
 import RegistrationForm from "./components/RegistrationForm.vue";
