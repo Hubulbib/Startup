@@ -1,5 +1,5 @@
-export function publishedString(item) {
-    const publishedDate = new Date(item.published),
+export function publishedString(date) {
+    const publishedDate = new Date(date),
         currentDate = new Date();
 
     if (publishedDate > currentDate) {
