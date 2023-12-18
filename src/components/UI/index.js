@@ -7,6 +7,7 @@ import UserAvatar from "@/components/UI/UserAvatar.vue"
 import AvatarInitials from '@/components/UI/AvatarInitials.vue'
 import MyDialog from '@/components/UI/MyDialog.vue'
 import MyInput from '@/components/UI/MyInput.vue'
+import ArticleAuthor from '@/components/UI/ArticleAuthor.vue';
 
 
 export default [
@@ -18,5 +19,6 @@ export default [
     UserAvatar,
     AvatarInitials,
     MyDialog,
-    MyInput
+    MyInput,
+    ArticleAuthor
 ]

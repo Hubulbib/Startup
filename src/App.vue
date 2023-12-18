@@ -48,6 +48,11 @@
 
     <h2>Article List</h2>
     <article-list />
+
+    <h2>Article Full-text</h2>
+    <article-fulltext />
+
+
   </div>
 </template>
 
@@ -57,7 +62,9 @@ import MySelectMockup from "@/mockups/MySelectMockup.js";
 import ArticleList from "@/components/ArticleList.vue";
 import Header from "@/components/Header.vue";
 import axios from "axios";
-import RegistrationForm from "./components/RegistrationForm.vue";
+import RegistrationForm from "@/components/RegistrationForm.vue";
+import ArticleFulltext from '@/components/ArticleFulltext.vue';
+
 
 const deafaultValue = ref("Выберите...");
 const optionsData = ref(MySelectMockup);
