@@ -14,14 +14,6 @@ const emit = defineEmits([
   'onHide',
 ])
 
-const updateLikes = (value) => {
-  console.log(
-    `The number of likes of article #${props.item.id.value} updated to ${value}`
-  );
-  //ты мутируешь пропс, а так нельзя
-  props.item.value = value;
-};
-
 const onHide = () => {
   emit('onHide', props.item.id)
 }
@@ -42,7 +34,7 @@ const user = computed(() => {
   // also Array.find will be replaced by fetch function, this one is only for demo
 });
 
-const published = publishedString(props.item);
+const published = publishedString(props.item.published);
 </script>
 
 <template>
@@ -55,10 +47,7 @@ const published = publishedString(props.item);
         <a href="">{{ item.title }}</a>
       </h2>
       <div class="article-card__meta">
-        <div class="article-card__author author">
-          <img class="author-avatar" src="" alt="" />
-          <a class="author-name" href="">{{ user.name }} {{ user.surname }}</a>
-        </div>
+        <article-author :user="user" />
         <div class="article-card__published">
           {{ published }}
         </div>
@@ -66,7 +55,6 @@ const published = publishedString(props.item);
           <article-counter
             :article="item"
             :isAuthorized="true"
-            @update:likes="updateLikes"
           />
         </div>
       </div>
