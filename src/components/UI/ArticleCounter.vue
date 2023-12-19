@@ -26,7 +26,7 @@ export default {
     }
   },
 
-  setup(props, { emit }) {
+  setup(props) {
     const views = ref(props.article.views);
     let likes = ref(props.article.likes),
       isLiked = ref(false);
@@ -35,7 +35,8 @@ export default {
       if (props.isAuthorized) {
         isLiked.value ? likes.value-- : likes.value++;
         isLiked.value = !isLiked.value;
-        emit('update:likes', likes.value);
+        // update value
+        console.log(`Current number of likes: ${likes.value}`);
       } else {
         console.log("Open login modal"); // open login modal
       }

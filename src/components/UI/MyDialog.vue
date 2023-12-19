@@ -1,6 +1,13 @@
 <template>
-  <div class="dialog" v-if="props.show" @click="hideDialog">
-    <div @click.stop class="dialog__content">
+  <div class="dialog" v-if="props.show" @mousedown="hideDialog">
+    <div @mousedown.stop class="dialog__content">
+      <Icon
+        @click="hideDialog"
+        icon="material-symbols:close-small-outline-rounded"
+        class="icon--close"
+        width="40"
+        size="40"
+      />
       <slot></slot>
     </div>
   </div>
@@ -36,12 +43,24 @@ const hideDialog = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-
   &__content {
+    position: relative;
     margin: auto;
     padding: 40px;
     background-color: #fff;
     border-radius: 4px;
+  }
+}
+
+.icon--close {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  transition: color .15s ease-in-out;
+
+  &:hover {
+    color: #4bb4ff;
   }
 }
 </style>

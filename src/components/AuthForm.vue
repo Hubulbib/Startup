@@ -26,13 +26,11 @@ const auth = async () => {
     .post("http://localhost:3000/api/auth", {
       email: login.value,
       password: password.value,
-
     })
     .then((r) => console.log(r.data))
     .catch((error) => {
       console.log(error);
     });
-
 };
 </script>
 
