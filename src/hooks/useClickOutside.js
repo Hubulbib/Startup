@@ -20,13 +20,12 @@ export function useClickOutside (el, callback) {
     }
 
     onMounted(() => {
-        window.addEventListener('click', clickOutside)
+        window.addEventListener('mousedown', clickOutside)
         window.addEventListener('keydown', keyBreake)
     })
     onBeforeMount(() =>{
-        window.removeEventListener('clcik', clickOutside)
+        window.removeEventListener('mousedown', clickOutside)
         window.removeEventListener('keydown', keyBreake)
-
     })
 
     return {
