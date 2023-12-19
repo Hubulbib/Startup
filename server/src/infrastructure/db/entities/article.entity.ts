@@ -18,17 +18,14 @@ const schema = new Schema<IArticle>({
       {
         subTitle: { type: String, required: true },
         subTitleText: { type: String, required: true },
-        _id: false,
       },
     ],
     tasks: [
       {
         taskTitle: { type: String, required: true },
         taskText: { type: String, required: true },
-        _id: false,
       },
     ],
-    _id: false,
   },
   createdAt: { type: Date, default: Date.now() },
   updatedAt: {

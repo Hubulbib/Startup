@@ -1,12 +1,9 @@
-import { SubscribeEntity } from './subscribe.entity'
-
 export class UserEntity {
   constructor(
     readonly _id: string,
     readonly name: string,
     readonly surname: string,
     readonly email: string,
-    readonly password: string,
     readonly role: string,
     readonly rating: Rating[],
     readonly avatar: string,
