@@ -5,23 +5,50 @@ import { AuthRepositoryImpl } from '../db/repositories/auth.repository.impl.js'
 class AuthController {
   constructor(readonly authService: AuthService) {}
 
-  createOne = async (req: Request, res: Response) => {
+  signIn = async (req: Request, res: Response) => {
     try {
+      const detail = { ua: req.get('User-Agent'), ip: req.ip }
       const authBody = req.body
-      const authData = await this.authService.createOne(authBody)
+      const authData = await this.authService.signIn(authBody, detail)
       res.json(authData)
     } catch (err) {
       res.status(500).json(err)
+      console.log(err)
     }
   }
 
-  auth = async (req: Request, res: Response) => {
+  signUp = async (req: Request, res: Response) => {
     try {
-      const { email, password } = req.body
-      const authData = await this.authService.auth(email, password)
+      const detail = { ua: req.get('User-Agent'), ip: req.ip }
+      const authBody = req.body
+      const authData = await this.authService.signUp(authBody, detail)
+      return res.status(201).json(authData)
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  }
+
+  refresh = async (req: Request, res: Response) => {
+    try {
+      const detail = { ua: req.get('User-Agent'), ip: req.ip }
+      const authBody = req.body
+      const authData = await this.authService.refresh(authBody, detail)
       return res.json(authData)
     } catch (err) {
       res.status(500).json(err)
+      console.log(err)
+    }
+  }
+
+  logout = async (req: Request, res: Response) => {
+    try {
+      const { refreshToken } = req.body
+      const authData = await this.authService.logout(refreshToken)
+      return res.json(authData)
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
     }
   }
 }

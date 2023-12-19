@@ -4,22 +4,40 @@ import authController from '../controllers/auth.controller.js'
 const router = Router()
 
 router.post(
-  '/registration',
+  '/sign-in',
   [
     /*  authMiddleware,
   //могут получить все (+не авториз.), но надо валидировать ответ от приватных полей
   validate(userFields)*/
   ],
-  authController.createOne,
+  authController.signIn,
 )
 
 router.post(
-  '/',
+  '/sign-up',
   [
     /*  authMiddleware,
   roleMiddleware(['admin']),*/
   ],
-  authController.auth,
+  authController.signUp,
+)
+
+router.get(
+  '/refresh',
+  [
+    /*  authMiddleware,
+  roleMiddleware(['admin']),*/
+  ],
+  authController.refresh,
+)
+
+router.post(
+  '/logout',
+  [
+    /*  authMiddleware,
+  roleMiddleware(['admin']),*/
+  ],
+  authController.logout,
 )
 
 export default router

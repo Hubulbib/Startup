@@ -1,47 +1,69 @@
-import { model } from 'mongoose'
-import jwt from 'jsonwebtoken'
 import { compare, hash } from 'bcrypt'
-import { AuthRepository } from '../../../core/repositories/AuthRepository/auth.repository.js'
-import { UserEntity } from '../../../core/entites/user.entity.js'
-import { CreateBodyDto } from '../../../core/repositories/AuthRepository/dtos/create-body.dto.js'
-import { UserMapper } from '../mappers/user.mapper.js'
-import { AuthBackDto } from '../../../core/repositories/AuthRepository/dtos/auth-back.dto'
-import { IUserDoc } from '../entities/user.entity'
 import 'dotenv/config.js'
+import { UserMapper } from '../mappers/user.mapper.js'
+import { IUserDoc, User } from '../entities/user.entity'
+import { TokenRepositoryImpl } from './TokenReposiory/token.repository.impl'
+import { AuthRepository } from '../../../core/repositories/AuthRepository/auth.repository.js'
+import { AuthBackDto } from '../../../core/repositories/AuthRepository/dtos/auth-back.dto'
+import { SignInDto } from '../../../core/repositories/AuthRepository/dtos/sign-in.dto'
+import { SignUpDto } from '../../../core/repositories/AuthRepository/dtos/sign-up.dto'
+import { RefreshDto } from '../../../core/repositories/AuthRepository/dtos/refresh.dto'
+import { DetailDto } from '../../../core/repositories/AuthRepository/dtos/detail.dto'
 
 export class AuthRepositoryImpl implements AuthRepository {
-  private readonly userRepository = model('User')
+  private readonly userRepository = User
 
-  async createOne(createBody: CreateBodyDto): Promise<UserEntity> {
-    const candidate = await this.userRepository.findOne({ email: createBody.email })
-    if (candidate) {
-      throw new Error('Пользователь с таким e-mail уже зарегистрирован')
-    }
-
-    const userPassword = await hash(createBody.password, 7)
-    return UserMapper.toDomain(await this.userRepository.create({ ...createBody, password: userPassword }))
-  }
-
-  async auth(email: string, password: string): Promise<AuthBackDto> {
-    const user = await this.userRepository.findOne({ email })
+  public signIn = async (signInDto: SignInDto, detail: DetailDto): Promise<AuthBackDto> => {
+    const user = await this.userRepository.findOne({ email: signInDto.email })
     if (!user) {
-      throw Error('Пользователь с таким e-mail не найден')
+      throw Error('Пользователь не найден')
+      //throw ApiError.BadRequest('Пользователь с таким username не найден')
     }
-
-    if (!(await compare(password, user.password))) {
-      throw Error('Неверный пароль')
+    const comparePassword = await compare(signInDto.password, user.password)
+    if (!comparePassword) {
+      throw Error('Неверные данные при входе')
+      //throw ApiError.BadRequest('Неверные данные при входе')
     }
+    return await this.responseData(user, detail.ua, detail.ip)
+  }
+  public signUp = async (signUpDto: SignUpDto, detail: DetailDto): Promise<AuthBackDto> => {
+    const candidate = await this.userRepository.findOne({ email: signUpDto.email })
+    if (candidate) {
+      throw Error('Пользователь уже существует')
+      //throw ApiError.BadRequest('Пользователь с таким username уже существует')
+    }
+    const hashedPassword = await hash(signUpDto.password, 4)
+    const user = await this.userRepository.create({ ...signUpDto, password: hashedPassword })
 
-    return this.generateAccessToken(user)
+    return await this.responseData(user, detail.ua, detail.ip)
+  }
+  public logout = async (refreshToken: string): Promise<void> => {
+    return await new TokenRepositoryImpl().removeToken(refreshToken)
   }
 
-  private generateAccessToken(user: IUserDoc): AuthBackDto {
-    const payload = { userId: user._id, role: user.role }
-    const JWT_SECRET = process.env.JWT_SECRET
-    const accessToken = jwt.sign(payload, JWT_SECRET, { expiresIn: '24h' })
+  public refresh = async (refreshDto: RefreshDto, detail: DetailDto): Promise<AuthBackDto> => {
+    if (!refreshDto.refreshToken) {
+      throw 'Пользователь не авторизован'
+      //throw ApiError.UnauthorizedError()
+    }
+    const userData = new TokenRepositoryImpl().validateRefreshToken(refreshDto.refreshToken)
+    const tokenFromDB = await new TokenRepositoryImpl().findToken(refreshDto.refreshToken)
+    if (!userData || !tokenFromDB) {
+      throw 'Пользователь не авторизован'
+      //throw ApiError.UnauthorizedError()
+    }
+    const user = await this.userRepository.findById(userData['_doc']._id)
+
+    return await this.responseData(user, detail.ua, detail.ip)
+  }
+
+  private responseData = async (userData: IUserDoc, ua: string, ip: string): Promise<AuthBackDto> => {
+    const tokens = new TokenRepositoryImpl().generateTokens({ ...userData })
+    await new TokenRepositoryImpl().saveToken({ userId: userData._id, refreshToken: tokens.refreshToken, ua, ip })
+
     return {
-      user: UserMapper.toDomain(user),
-      accessToken,
+      ...tokens,
+      user: UserMapper.toDomain(userData),
     }
   }
 }
