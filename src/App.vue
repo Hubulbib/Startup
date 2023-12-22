@@ -1,6 +1,9 @@
 <template>
   <Header></Header>
   <div class="app">
+    <h2>Article cms</h2>
+    <article-cms />
+
     <h2>UI select</h2>
     <my-select :optionsData="optionsData" v-model="deafaultValue" />
 
@@ -67,7 +70,7 @@ import MenthorsList from '@/components/MenthorsList.vue';
 import Header from "@/components/Header.vue";
 import axios from "axios";
 import ArticleFulltext from '@/components/ArticleFulltext.vue';
-
+import ArticleCms from "@/modules/ArticleCms.vue";
 
 const deafaultValue = ref("Выберите...");
 const optionsData = ref(MySelectMockup);
@@ -113,6 +116,12 @@ onMounted(async () => {
   box-sizing: border-box;
 }
 
+.flex-c {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 ul {
   list-style: none;
 }
@@ -121,6 +130,10 @@ a {
   text-decoration: none;
   cursor: pointer;
   color: currentColor;
+}
+
+textarea {
+  resize: none;
 }
 
 input {
@@ -143,6 +156,10 @@ button:disabled {
   color: rgba($color: #000000, $alpha: 0.5) !important;
   pointer-events: none;
   user-select: none;
+}
+
+svg {
+  display: block;
 }
 
 @font-face {

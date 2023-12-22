@@ -8,6 +8,8 @@ import AvatarInitials from '@/components/UI/AvatarInitials.vue'
 import MyDialog from '@/components/UI/MyDialog.vue'
 import MyInput from '@/components/UI/MyInput.vue'
 import ArticleAuthor from '@/components/UI/ArticleAuthor.vue';
+import MyTextarea from '@/components/UI/MyTextarea.vue';
+import MyTippyContextMenu from '@/components/UI/MyTippyContextMenu.vue';
 
 
 export default [
@@ -20,5 +22,7 @@ export default [
     AvatarInitials,
     MyDialog,
     MyInput,
-    ArticleAuthor
+    ArticleAuthor,
+    MyTextarea,
+    MyTippyContextMenu
 ]
