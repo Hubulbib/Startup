@@ -41,17 +41,17 @@ onMounted(() => {
   // } finally {
   //   firstLoad.value = false
   // }
-  
+
   // v-intersection triggers callback whenever its element is mounted therefore the first fetch will happen automatically => onMounted method doesnt needed
 });
 </script>
 
 <template>
-  <ul class="article-list">
-    <li v-for="article in articles" :key="article.id">
+  <transition-group name="article-list" class="article-list" tag="ul">
+    <li class="article-list__item" v-for="article in articles" :key="article.id">
       <ArticleListItem :item="article" @onHide="hide" />
     </li>
-  </ul>
+  </transition-group>
   <my-button
     v-if="!isFull"
     v-intersection="fetchArticles"
@@ -63,12 +63,39 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .article-list {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  position: relative;
+
+  &__item:not(:last-child) {
+    border-bottom: 1px solid #666;
+  }
 }
 
 .loadmore-btn {
   align-self: center;
 }
+
+// transitions
+.article-list-move,
+.article-list-enter-active {
+  transition: all 0.6s ease-in-out;
+}
+
+.article-list-enter-from,
+.article-list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.article-list-enter-to,
+.article-list-leave-from {
+  opacity: 1;
+  transform: none;
+}
+
+.article-list-leave-active {
+  transition: all 0.3s ease-in-out;
+  position: absolute;
+}
+
+
 </style>
