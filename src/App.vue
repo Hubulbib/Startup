@@ -3,6 +3,15 @@
   <div class="app">
     <h2>Article cms</h2>
     <article-cms />
+   
+    <h2>Article List</h2>
+    <article-list />
+
+    <h2>Mentors List</h2>
+    <menthors-list></menthors-list>
+
+    <h2>Article Full-text</h2>
+    <article-fulltext />
 
     <h2>UI select</h2>
     <my-select :optionsData="optionsData" v-model="deafaultValue" />
@@ -48,16 +57,6 @@
       <user-avatar />
       <user-avatar :user="user2" />
     </div>
-
-    <h2>Article List</h2>
-    <article-list />
-
-
-    <h2>Mentors List</h2>
-    <menthors-list></menthors-list>
-
-    <h2>Article Full-text</h2>
-    <article-fulltext />
 
   </div>
 </template>
