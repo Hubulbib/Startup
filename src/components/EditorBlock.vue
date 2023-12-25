@@ -1,15 +1,19 @@
 <template>
   <li class="item">
-    <input type="text" class="input-header" placeholder="Заголовок" />
+    <input v-model="subTitle" type="text" class="input-header" placeholder="Заголовок" />
+    <!-- :modules="modules" -->
     <QuillEditor
       class="quill-editor"
       :toolbar="[
         ['bold', 'italic', 'underline', 'strike'],
         ['blockquote', 'code-block'],
-        ['link', 'image'],
+        ['link'],
         [{ list: 'ordered' }, { list: 'bullet' }],
         ['clean'],
       ]"
+      v-model:content="content"
+      contentType="html"
+      content="html"
       placeholder="Контент"
     >
     </QuillEditor>
@@ -17,7 +21,59 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref, h } from "vue";
+// import ImageUploader from "quill-image-uploader";
+// import axios from "axios";
+
+// const props = defineProps({
+//   id: {
+//     type: String,
+//     required: true
+//   }
+// })
+
+// const emits = defineEmits([
+//   'onTextChange'
+// ])
+
+const content = ref("");
+const subTitle = ref("")
+
+// const modules = {
+//   name: "imageUploader",
+//   module: ImageUploader,
+//   options: {
+//     upload: (file) => {
+//       return new Promise((resolve, reject) => {
+//         const formData = new FormData();
+//         formData.append("image", file);
+
+//         axios
+//           .post("/upload-image", formData)
+//           .then((res) => {
+//             console.log(res);
+//             resolve(res.data.url);
+//           })
+//           .catch((err) => {
+//             reject("Upload failed");
+//             console.error("Error:", err);
+//           });
+//       });
+//     },
+//   },
+// };
+
+// const onTextChange = () => {
+//   emits('onTextChange', {
+//     id: props.id,
+//     content: content.value
+//   })
+// }
+
+defineExpose({
+  content,
+  subTitle
+})
 
 onMounted(() => {
   const lastSpan = document.querySelectorAll(".ql-formats");
