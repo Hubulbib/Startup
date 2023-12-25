@@ -1,7 +1,7 @@
 <script setup>
 import UsersMockup from "@/mockups/UsersMockup.js";
 import { publishedString } from "@/helpers/publishedStringValidator.js";
-import { computed } from "vue";
+import { ref, computed, onMounted, nextTick } from "vue";
 
 const props = defineProps({
   item: {
@@ -18,12 +18,24 @@ const onHide = () => {
   emit('onHide', props.item.id)
 }
 
-const description = computed(() => {
-  if (props.item.description.length > 200) {
-    return props.item.description.substring(0, 197) + "...";
-  } else {
-    return props.item.description;
+const articleCard = ref(null);
+const description = ref(props.item.description);
+
+const cropDescription = async () => {
+  const imageHeight = document.querySelector('.article-item__img').offsetHeight;
+  let text = props.item.description;
+
+  articleCard.value.style.maxHeight = `${imageHeight}px`;
+
+  while (articleCard.value.scrollHeight > articleCard.value.clientHeight) {
+    text = text.substring(0, text.lastIndexOf(' ')) + '...'
+    description.value = text;
+    await nextTick();
   }
+};
+
+onMounted(() => {
+  cropDescription();
 });
 
 const user = computed(() => {
@@ -42,7 +54,7 @@ const published = publishedString(props.item.published);
     <div class="article-item__img">
       <img class="img" :src="item.img" :alt="item.title" />
     </div>
-    <div class="article-item__card article-card">
+    <div class="article-item__card article-card" ref="articleCard">
       <h2 class="article-card__title">
         <a href="">{{ item.title }}</a>
       </h2>
@@ -52,10 +64,7 @@ const published = publishedString(props.item.published);
           {{ published }}
         </div>
         <div class="article-card__counters">
-          <article-counter
-            :article="item"
-            :isAuthorized="true"
-          />
+          <article-counter :article="item" :isAuthorized="true" />
         </div>
       </div>
       <div class="article-card__description">{{ description }}</div>
