@@ -79,10 +79,10 @@ const createArticle = () => {
         <ul class="list">
           <editor-block ref="body" v-for="key in data.body" :key="key" />
         </ul>
-        <my-button @click="add('body')" class="list-btn" type="button">
-          <Icon icon="material-symbols:add" width="28" height="28" />
-        </my-button>
       </div>
+      <my-button @click="add('body')" class="list-btn" type="button">
+        <Icon icon="material-symbols:add" width="28" height="28" />
+      </my-button>
     </div>
 
     <div class="tasks flex-c">
@@ -91,10 +91,10 @@ const createArticle = () => {
         <ul class="list">
           <editor-block ref="tasks" v-for="key in data.tasks" :key="key" />
         </ul>
-        <my-button @click="add('tasks')" class="list-btn">
-          <Icon icon="material-symbols:add" width="28" height="28" />
-        </my-button>
       </div>
+      <my-button @click="add('tasks')" class="list-btn">
+        <Icon icon="material-symbols:add" width="28" height="28" />
+      </my-button>
     </div>
 
     <my-button class="article-form__submit" type="submit">Send</my-button>
@@ -160,7 +160,7 @@ const createArticle = () => {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-block: 10px;
+  padding-top: 10px;
   border: 1px solid #cacaca;
   border-radius: 4px;
 }

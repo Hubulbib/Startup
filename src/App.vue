@@ -123,6 +123,7 @@ onMounted(async () => {
 .ql-toolbar.ql-snow,
 .ql-container.ql-snow {
   border-inline: none !important;
+  border-block-end: none !important;
 }
 
 .ql-editor {
