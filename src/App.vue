@@ -3,7 +3,7 @@
   <div class="app">
     <h2>Article cms</h2>
     <article-cms />
-   
+
     <h2>Article List</h2>
     <article-list />
 
@@ -57,7 +57,6 @@
       <user-avatar />
       <user-avatar :user="user2" />
     </div>
-
   </div>
 </template>
 
@@ -65,10 +64,10 @@
 import { onMounted, ref } from "vue";
 import MySelectMockup from "@/mockups/MySelectMockup.js";
 import ArticleList from "@/components/ArticleList.vue";
-import MenthorsList from '@/components/MenthorsList.vue';
+import MenthorsList from "@/components/MenthorsList.vue";
 import Header from "@/components/Header.vue";
 import axios from "axios";
-import ArticleFulltext from '@/components/ArticleFulltext.vue';
+import ArticleFulltext from "@/components/ArticleFulltext.vue";
 import ArticleCms from "@/modules/ArticleCms.vue";
 
 const deafaultValue = ref("Выберите...");
@@ -119,6 +118,11 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.ql-editor {
+  min-height: 200px;
+  font-size: 18px;
 }
 
 ul {
