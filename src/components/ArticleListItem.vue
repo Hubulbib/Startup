@@ -8,7 +8,13 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  blockHeight: {
+    type: Number,
+    default: 150
+  }
 });
+
+const blockHeightStyle = `max-height: ${props.blockHeight}px`;
 
 const emit = defineEmits([
   'onHide',
@@ -22,10 +28,8 @@ const articleCard = ref(null);
 const description = ref(props.item.description);
 
 const cropDescription = async () => {
-  const imageHeight = document.querySelector('.article-item__img').offsetHeight;
   let text = props.item.description;
-
-  articleCard.value.style.maxHeight = `${imageHeight}px`;
+  articleCard.value.style.maxHeight = `${props.blockHeight}px`;
 
   while (articleCard.value.scrollHeight > articleCard.value.clientHeight) {
     text = text.substring(0, text.lastIndexOf(' ')) + '...'
@@ -51,7 +55,7 @@ const published = publishedString(props.item.published);
 
 <template>
   <div class="article-item">
-    <div class="article-item__img">
+    <div class="article-item__img" :style="blockHeightStyle">
       <img class="img" :src="item.img" :alt="item.title" />
     </div>
     <div class="article-item__card article-card" ref="articleCard">
@@ -100,7 +104,6 @@ p {
   &__img {
     flex-shrink: 0;
     width: 300px;
-    height: 150px;
     border: 1px solid #ddd;
     border-radius: 15px;
     overflow: hidden;
@@ -139,13 +142,6 @@ p {
       align-items: center;
       gap: 30px;
     }
-
-    // &__description {
-    //   max-width: 400px;
-    //   white-space: nowrap;
-    //   overflow: hidden;
-    //   text-overflow: ellipsis;
-    // }
   }
 }
 </style>
