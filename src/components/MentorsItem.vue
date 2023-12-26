@@ -1,24 +1,29 @@
 <script setup>
-const props = defineProps([
-  'firstName',
-  'lastName',
-  'description',
-  'rating'
-])
+const props = defineProps({
+  user: {
+    type: Object,
+    required: true,
+  }
+})
+
+const { firstName } = props.user;
+const { lastName } = props.user;
+const { description } = props.user;
+const { rating } = props.user;
 </script>
 
 <template>
   <li class="mentors__item">
     <div class="mentors__data-group">
       <img src="@/assets/empty-avatar.svg" alt="Mentor avatar" class="mentors__avatar">
-      <h2 class="mentors__name">{{ props.firstName }} {{ props.lastName }}</h2>
+      <h2 class="mentors__name">{{ firstName }} {{ lastName }}</h2>
     </div>
     <p class="mentor__descr">
-      {{ props.description }}
+      {{ description }}
     </p>
     <div class="mentors__info-group">
       <div class="mentors__rating-group">
-        <span>{{ props.rating }}</span>
+        <span>{{ rating }}</span>
         <my-svg name="star"></my-svg>
       </div>
       <button class="mentors__btn-call">Связаться</button>

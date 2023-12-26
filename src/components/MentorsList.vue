@@ -1,12 +1,12 @@
 <script setup>
   import { computed, ref } from 'vue';
 
-  import MentorsItem from './MentorsItem.vue';
-  import MentorsData from '../mockups/MentorsMockup.js';
+  import MentorsItem from '@/components/MentorsItem.vue';
+  import MentorsData from '@/mockups/MentorsMockup.js';
 
   const mentorsVisible = ref(3);
-
   const mentorsData = ref(MentorsData);
+  const renderMentorsCount = ref(3)
 
   const visibleMentors = computed(() => {
     return mentorsData.value.slice(0, mentorsVisible.value)
@@ -17,6 +17,8 @@
   })
 
   const addMoreUsers = () => {
+    mentorsVisible.value + renderMentorsCount.value < mentorsData.value.length ?
+    mentorsVisible.value += renderMentorsCount.value :
     mentorsVisible.value = mentorsData.value.length;
   }
 </script>
@@ -30,14 +32,15 @@
     :last-name="mentorData.lastName"
     :description="mentorData.description"
     :rating="mentorData.rating"
+    :user="mentorData"
     >
     </mentors-item>
   </ul>
-  <button
+  <my-button
   class="mentors__btn-loadmore"
   @click="addMoreUsers"
   v-if="isAllMentorsDisplayed"
-  >Загрузить еще...</button>
+  >Загрузить еще...</my-button>
 </template>
 
 <style scoped>
