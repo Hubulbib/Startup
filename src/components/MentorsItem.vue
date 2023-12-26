@@ -6,10 +6,7 @@ const props = defineProps({
   }
 })
 
-const { firstName } = props.user;
-const { lastName } = props.user;
-const { description } = props.user;
-const { rating } = props.user;
+const { firstName, lastName, description, rating } = props.user;
 </script>
 
 <template>
