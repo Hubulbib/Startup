@@ -1,14 +1,25 @@
 <script setup>
 import EditorBlock from "@/components/EditorBlock.vue";
 import { nanoid } from "nanoid";
-import { ref } from "vue";
+import { ref, computed, watch } from "vue";
 
-const title = ref(null);
-const description = ref(null);
+const title = ref("");
+const description = ref("");
 
 const form = ref(null);
+
 const body = ref(null);
 const tasks = ref(null);
+
+const count = computed(() => {
+  return 200 - description.value.length;
+});
+
+watch(count, () => {
+  if (count.value < 0) {
+    description.value = description.value.slice(0, 200)
+  }
+})
 
 const data = ref({
   body: [nanoid(5)],
@@ -25,25 +36,41 @@ const createArticle = () => {
   formData.append("title", title.value);
   formData.append("description", description.value);
 
-  for (const item of body.value) {
-    formData.append(item.subTitle, item.content);
+  title.value = "";
+  description.value = "";
+
+  for (const array of [body.value, tasks.value]) {
+    for (const item of array) {
+      formData.append(item.subTitle, item.content);
+      item.resetContent();
+    }
   }
 
-  for (const item of tasks.value) {
-    formData.append(item.subTitle, item.content);
-  }
+  // for (const item of body.value) {
+  //   formData.append(item.subTitle, item.content);
+  //   item.resetContent()
+  // }
+
+  // for (const item of tasks.value) {
+  //   formData.append(item.subTitle, item.content);
+  //   item.resetContent()
+  // }
 };
 </script>
 
 <template>
   <form ref="form" @submit.prevent="createArticle" class="article-form">
     <div class="meta flex-c">
-      <input ref="title" type="text" placeholder="Название статьи" />
-      <textarea
-        ref="description"
-        rows="1"
-        placeholder="Краткое описание"
-      ></textarea>
+      <input v-model="title" type="text" placeholder="Название статьи" />
+      <div class="flex-c">
+        <textarea
+          class="description"
+          v-model="description"
+          rows="5"
+          placeholder="Краткое описание"
+        ></textarea>
+        <div class="symbols">Осталось симоволов: {{ count }}</div>
+      </div>
     </div>
 
     <div class="content flex-c">
@@ -88,9 +115,10 @@ const createArticle = () => {
 
   & input,
   & textarea {
-    border: none;
-    border-radius: 0;
-    padding: 0;
+    border-radius: 4px;
+    border: 1px solid #cacaca !important;
+
+    padding: 10px;
 
     font-size: 22px;
 
@@ -116,11 +144,25 @@ const createArticle = () => {
   }
 }
 
+.description {
+  display: block;
+  width: 100%;
+}
+
+.symbols {
+  align-self: flex-end;
+  color: #969696;
+  font-size: 14px;
+}
+
 .wrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding: 10px;
+  border: 1px solid #cacaca;
+  border-radius: 4px;
 }
 
 .list-btn {

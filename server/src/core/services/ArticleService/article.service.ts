@@ -10,6 +10,10 @@ export class ArticleService {
     return await this.articleRepository.createOne(createBody)
   }
 
+  getDetail = async (articleId: string) => {
+    return await this.articleRepository.getDetail(articleId)
+  }
+
   getAll = async (getAllBody: GetAllBodyDto) => {
     return await this.articleRepository.getAll(getAllBody)
   }

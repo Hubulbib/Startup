@@ -14,18 +14,7 @@ const schema = new Schema<IArticle>({
     // },
     recommended: { type: [String] },
     title: { type: String, required: true },
-    body: [
-      {
-        subTitle: { type: String, required: true },
-        subTitleText: { type: String, required: true },
-      },
-    ],
-    tasks: [
-      {
-        taskTitle: { type: String, required: true },
-        taskText: { type: String, required: true },
-      },
-    ],
+    description: { type: String, required: true },
   },
   createdAt: { type: Date, default: Date.now() },
   updatedAt: {
@@ -39,7 +28,7 @@ const schema = new Schema<IArticle>({
   },
   likes: { type: Number, default: 0 },
   views: { type: Number, default: 0 },
-  tags: { type: [String], required: true }, //отдельная валидация фронт + бек + фильтрация
+  tags: { type: [String], required: true },
 })
 
 export const Article = model('Article', schema)
