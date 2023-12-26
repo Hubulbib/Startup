@@ -120,6 +120,11 @@ onMounted(async () => {
   gap: 20px;
 }
 
+.ql-toolbar.ql-snow,
+.ql-container.ql-snow {
+  border-inline: none !important;
+}
+
 .ql-editor {
   min-height: 200px;
   font-size: 18px;
