@@ -15,6 +15,8 @@ router.get(
   articleController.getAll,
 )
 
+router.get('/:id/detail', articleController.getDetail)
+
 router.get(
   '/:id',
   [

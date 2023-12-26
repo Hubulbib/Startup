@@ -15,16 +15,5 @@ export interface IArticle {
 interface IContent {
   recommended: string[]
   title: string
-  body: IBody[]
-  tasks: ITask[]
-}
-
-interface IBody {
-  subTitle: string
-  subTitleText: string
-}
-
-interface ITask {
-  taskTitle: string
-  taskText: string
+  description: string
 }

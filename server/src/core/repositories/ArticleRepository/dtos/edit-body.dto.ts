@@ -14,8 +14,15 @@ class Content {
   constructor(
     readonly recommended?: string[],
     readonly title?: string,
-    readonly body?: Body[],
-    readonly tasks?: Task[],
+    readonly description?: string,
+    readonly detail?: ArticleDetail,
+  ) {}
+}
+
+class ArticleDetail {
+  constructor(
+    readonly body?: Body,
+    readonly tasks?: Task,
   ) {}
 }
 
