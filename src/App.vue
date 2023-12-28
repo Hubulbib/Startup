@@ -8,7 +8,7 @@
     <article-list />
 
     <h2>Mentors List</h2>
-    <menthors-list></menthors-list>
+    <mentors-list></mentors-list>
 
     <h2>Article Full-text</h2>
     <article-fulltext />
@@ -64,7 +64,7 @@
 import { onMounted, ref } from "vue";
 import MySelectMockup from "@/mockups/MySelectMockup.js";
 import ArticleList from "@/components/ArticleList.vue";
-import MenthorsList from "@/components/MenthorsList.vue";
+import MentorsList from '@/components/MentorsList.vue';
 import Header from "@/components/Header.vue";
 import axios from "axios";
 import ArticleFulltext from "@/components/ArticleFulltext.vue";
