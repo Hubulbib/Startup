@@ -3,7 +3,7 @@
     <input v-model="subTitle" type="text" class="input-header" placeholder="Заголовок" />
     <!-- :modules="modules" -->
     <QuillEditor
-      class="quill-editor"
+      ref="editor"
       :toolbar="[
         ['bold', 'italic', 'underline', 'strike'],
         ['blockquote', 'code-block'],
@@ -21,23 +21,18 @@
 </template>
 
 <script setup>
-import { onMounted, ref, h } from "vue";
+import { ref, h } from "vue";
 // import ImageUploader from "quill-image-uploader";
 // import axios from "axios";
-
-// const props = defineProps({
-//   id: {
-//     type: String,
-//     required: true
-//   }
-// })
-
-// const emits = defineEmits([
-//   'onTextChange'
-// ])
+const editor = ref(null)
 
 const content = ref("");
 const subTitle = ref("")
+
+const resetContent = () => {
+  editor.value.setContents([])
+  subTitle.value = ''
+}
 
 // const modules = {
 //   name: "imageUploader",
@@ -63,23 +58,11 @@ const subTitle = ref("")
 //   },
 // };
 
-// const onTextChange = () => {
-//   emits('onTextChange', {
-//     id: props.id,
-//     content: content.value
-//   })
-// }
-
 defineExpose({
   content,
-  subTitle
+  subTitle,
+  resetContent
 })
-
-onMounted(() => {
-  const lastSpan = document.querySelectorAll(".ql-formats");
-
-  lastSpan[lastSpan.length - 1].style.cssText = "margin-right: 0";
-});
 </script>
 
 <style lang="scss" scoped>
@@ -95,7 +78,7 @@ onMounted(() => {
 
 .input-header {
   display: block;
-  padding: 0 1px;
+  padding: 0 16px;
   margin-bottom: 20px;
   border: none;
   border-radius: 0;

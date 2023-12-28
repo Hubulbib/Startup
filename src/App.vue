@@ -57,7 +57,6 @@
       <user-avatar />
       <user-avatar :user="user2" />
     </div>
-
   </div>
 </template>
 
@@ -68,7 +67,7 @@ import ArticleList from "@/components/ArticleList.vue";
 import MentorsList from '@/components/MentorsList.vue';
 import Header from "@/components/Header.vue";
 import axios from "axios";
-import ArticleFulltext from '@/components/ArticleFulltext.vue';
+import ArticleFulltext from "@/components/ArticleFulltext.vue";
 import ArticleCms from "@/modules/ArticleCms.vue";
 
 const deafaultValue = ref("Выберите...");
@@ -119,6 +118,17 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.ql-toolbar.ql-snow,
+.ql-container.ql-snow {
+  border-inline: none !important;
+  border-block-end: none !important;
+}
+
+.ql-editor {
+  min-height: 200px;
+  font-size: 18px;
 }
 
 ul {
