@@ -78,8 +78,7 @@ defineExpose({
 
 .input-header {
   display: block;
-  padding: 0 16px;
-  margin-bottom: 20px;
+  padding: 10px 16px;
   border: none;
   border-radius: 0;
 
