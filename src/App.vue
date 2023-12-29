@@ -120,10 +120,13 @@ onMounted(async () => {
   gap: 20px;
 }
 
-.ql-toolbar.ql-snow,
 .ql-container.ql-snow {
   border-inline: none !important;
   border-block-end: none !important;
+}
+
+.ql-toolbar.ql-snow {
+  border-inline: none !important;
 }
 
 .ql-editor {

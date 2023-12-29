@@ -4,8 +4,9 @@
   import MentorsItem from '@/components/MentorsItem.vue';
   import MentorsData from '@/mockups/MentorsMockup.js';
 
-  const mentorsVisible = ref(3);
   const mentorsData = ref(MentorsData);
+
+  const mentorsVisible = ref(3);
   const renderMentorsCount = ref(3)
 
   const visibleMentors = computed(() => {

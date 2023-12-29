@@ -160,7 +160,6 @@ const createArticle = () => {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-top: 10px;
   border: 1px solid #cacaca;
   border-radius: 4px;
 }
