@@ -1,8 +1,9 @@
 <script setup>
 const props = defineProps([
-  'firstName', 
-  'lastName', 
-  'description', 
+  'id',
+  'firstName',
+  'lastName',
+  'description',
   'rating'
 ])
 </script>
@@ -11,7 +12,9 @@ const props = defineProps([
   <li class="mentors__item">
     <div class="mentors__data-group">
       <img src="../assets/empty-avatar.svg" alt="Mentor avatar" class="mentors__avatar">
-      <h2 class="mentors__name">{{ props.firstName }} {{ props.lastName }}</h2>
+      <router-link :to="{name: 'profile.show', params: {id:props.id}}" >
+        <h2 class="mentors__name">{{ props.firstName }} {{ props.lastName }}</h2>
+      </router-link>
     </div>
     <p class="mentor__descr">
       {{ props.description }}

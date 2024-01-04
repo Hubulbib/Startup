@@ -26,6 +26,7 @@
     <mentors-item
     v-for="mentorData in visibleMentors"
     :key="mentorData.id"
+    :id="mentorData.id"
     :first-name="mentorData.firstName"
     :last-name="mentorData.lastName"
     :description="mentorData.description"
