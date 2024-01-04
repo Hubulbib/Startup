@@ -25,13 +25,19 @@
 </script>
 
 <template>
-  <ul class="mentors__list">
-    <mentors-item
-    v-for="mentorData in visibleMentors"
-    :key="mentorData.id"
-    :user="mentorData"
-    >
-    </mentors-item>
+  <ul>
+    <transition-group tag="ul" name="mentors-list" class="mentors__list">
+      <mentors-item
+      v-for="mentorData in visibleMentors"
+      :key="mentorData.id"
+      :first-name="mentorData.firstName"
+      :last-name="mentorData.lastName"
+      :description="mentorData.description"
+      :rating="mentorData.rating"
+      :user="mentorData"
+      >
+      </mentors-item>
+    </transition-group>
   </ul>
   <my-button
   class="mentors__btn-loadmore"
@@ -57,5 +63,21 @@
     border-bottom: 2px solid #000;
     cursor: pointer;
     background-color: transparent;
+  }
+
+  .mentors-list-enter-from,
+  .mentors-list-leave-to {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  .mentors-list-enter-active,
+  .mentors-list-leave-active {
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  }
+  .mentors-list-enter-to,
+  .mentors-list-leave-from {
+    opacity: 1;
+    transform: translateX(0);
   }
 </style>
