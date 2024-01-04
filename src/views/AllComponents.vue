@@ -3,7 +3,7 @@
 
     <h2>Mentors List</h2>
     <p>Имя ментора - ссылка на профайл</p>
-    <menthors-list></menthors-list>
+    <mentors-list></mentors-list>
 
 
     <h2>UI select</h2>
@@ -56,7 +56,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import MySelectMockup from "@/mockups/MySelectMockup.js";
-import MenthorsList from '@/components/MenthorsList.vue';
+import MentorsList from '@/components/MentorsList.vue';
 import axios from "axios";
 
 const deafaultValue = ref("Выберите...");
@@ -89,7 +89,7 @@ onMounted(async () => {
     const response = await axios.get("http://localhost:3000/api/user");
     console.log(response.data);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 });
 </script>
