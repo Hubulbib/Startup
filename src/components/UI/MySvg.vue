@@ -1,7 +1,7 @@
 <template>
   <component :is="icon" :value="name"/>
 </template>
-  
+
 <script>
 import icons from "@/assets/svg/index.js";
 import { computed } from "vue";

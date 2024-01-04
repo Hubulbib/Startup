@@ -15,6 +15,8 @@ router.get(
   articleController.getAll,
 )
 
+router.get('/:id/detail', articleController.getDetail)
+
 router.get(
   '/:id',
   [
@@ -24,6 +26,13 @@ router.get(
   articleController.getOneById,
 )
 
+
+// миддлвар на админа/автора при непосредственном редактировании
+// автор меняет content
+// админ меняет status
+
+// если просмотры, то пут запрос без Authorization
+// остальное - с хедером -> аус гвард
 router.put(
   '/:id',
   [

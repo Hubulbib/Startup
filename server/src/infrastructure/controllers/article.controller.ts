@@ -16,6 +16,16 @@ class ArticleController {
     }
   }
 
+  getDetail = async (req: IAuthRequest, res: Response) => {
+    try {
+      const { id } = req.params
+      const articleDetailData = await this.articleService.getDetail(id)
+      res.json(articleDetailData)
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  }
+
   getAll = async (req: IAuthRequest, res: Response) => {
     try {
       const { interval, pages } = req.query
@@ -44,6 +54,7 @@ class ArticleController {
       const articleData = await this.articleService.editOne(id, articleBody)
       return res.json(articleData)
     } catch (err) {
+      console.log(err)
       res.status(500).json(err)
     }
   }

@@ -26,6 +26,20 @@ import MyNav from "@/components/MyNav.vue"
   gap: 20px;
 }
 
+.ql-container.ql-snow {
+  border-inline: none !important;
+  border-block-end: none !important;
+}
+
+.ql-toolbar.ql-snow {
+  border-inline: none !important;
+}
+
+.ql-editor {
+  min-height: 200px;
+  font-size: 18px;
+}
+
 ul {
   list-style: none;
 }
