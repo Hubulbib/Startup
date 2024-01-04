@@ -33,8 +33,7 @@
         width="30"
         height="30"
         v-else />
-      <span>{{ isBodyHidden ? 'Показать' : 'Скрыть' }}</span>
-
+      <span class="toggle-span">{{ isBodyHidden ? 'Показать' : 'Скрыть' }}</span>
     </div>
     <TransitionGroup name="body">
       <div
@@ -133,6 +132,9 @@ const updatedAt = publishedString(article.value.updatedAt);
 </script>
 
 <style scoped lang="scss">
+.toggle-span {
+  cursor: pointer;
+}
 .article {
   background-color: #f5f5f5;
   padding: 20px;
