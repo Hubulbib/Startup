@@ -30,10 +30,6 @@
       <mentors-item
       v-for="mentorData in visibleMentors"
       :key="mentorData.id"
-      :first-name="mentorData.firstName"
-      :last-name="mentorData.lastName"
-      :description="mentorData.description"
-      :rating="mentorData.rating"
       :user="mentorData"
       >
       </mentors-item>
