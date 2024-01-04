@@ -3,7 +3,7 @@
     <div class="header">
       <div class="header__wrapper">
         <a class="header__logo" ref="#">Logo</a>
-        <h2 class="header__desc">Солянка компонентов</h2>
+        <h2 class="header__desc">Шапка сайта</h2>
       </div>
       <div class="header__account">
         <my-button class="header__account--switch">THEME</my-button>
@@ -20,7 +20,7 @@
   </div>
 </template>
 
-<!-- 
+<!--
     TODO:
     SMART STICKY ANIMATED HEADER
 -->

@@ -1,14 +1,22 @@
 <template>
   <div class="author">
-    <a class="author__image" href="#">
+    <router-link
+    :to="{name: 'profile.show', params: {id: user._id}}"
+    class="author__image">
       <img v-if="user.avatar" :src="user.avatar" :alt="user.name" class="author__img" />
       <avatar-initials v-else :user="user" class="author__svg" />
-    </a>
-    <a class="author__name" href="#">{{ user.name }} {{ user.surname }}</a>
+    </router-link>
+    <router-link
+    :to="{name: 'profile.show', params: {id: user._id}}"
+     class="author__name">
+      {{ user.name }} {{ user.surname }}
+    </router-link>
   </div>
 </template>
 
 <script>
+import UserProfile from '@/views/UserProfile.vue';
+
 export default {
   name: 'article-author',
   props: {

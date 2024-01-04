@@ -79,7 +79,10 @@ import UsersMockup from '@/mockups/UsersMockup'; // for development purposes onl
 
 
 const props = defineProps({
-  articleId: String
+  articleId: {
+    type: Number,
+    required: true
+  }
 });
 
 const article = ref(ArticleMockup); // will be computed or onMounted fetch
