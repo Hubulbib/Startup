@@ -5,7 +5,7 @@ import components from "@/components/UI"
 // import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
 import directives from '@/directives/index.js';
 import { Icon } from '@iconify/vue';
-// import router from '@/router/router.js';
+import router from '@/router/router.js';
 import VueTippy from 'vue-tippy'
 // import { plugin as VueTippy } from 'vue-tippy'
 import 'tippy.js/dist/tippy.css'
@@ -26,7 +26,7 @@ app
     .component('Icon', Icon)
     .component('QuillEditor', QuillEditor)
     // .use(PerfectScrollbar)
-    // .use(router)
+    .use(router)
     .use(
         VueTippy,
         // optional

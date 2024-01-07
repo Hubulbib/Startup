@@ -6,14 +6,16 @@ const props = defineProps({
   }
 })
 
-const { firstName, lastName, description, rating } = props.user;
+const { _id, firstName, lastName, description, rating } = props.user;
 </script>
 
 <template>
   <li class="mentors__item">
     <div class="mentors__data-group">
       <img src="@/assets/empty-avatar.svg" alt="Mentor avatar" class="mentors__avatar">
-      <h2 class="mentors__name">{{ firstName }} {{ lastName }}</h2>
+      <router-link :to="{name: 'profile.show', params: {id:_id}}" >
+        <h2 class="mentors__name">{{ firstName }} {{ lastName }}</h2>
+      </router-link>
     </div>
     <p class="mentor__descr">
       {{ description }}

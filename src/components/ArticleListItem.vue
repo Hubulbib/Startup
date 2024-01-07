@@ -45,7 +45,7 @@ onMounted(() => {
 const user = computed(() => {
   // here will be a funciton that fetches user name, surname and avatar src
   // requesting data by this.item.author_id
-  return UsersMockup.find((obj) => obj.id === props.item.author_id);
+  return UsersMockup.find((obj) => obj._id === props.item.author_id);
   // the author_id is a unique value, so it shouldn't cause incorrect behaviour
   // also Array.find will be replaced by fetch function, this one is only for demo
 });
@@ -60,7 +60,10 @@ const published = publishedString(props.item.published);
     </div>
     <div class="article-item__card article-card" ref="articleCard">
       <h2 class="article-card__title">
-        <a href="">{{ item.title }}</a>
+        <router-link :to="{ name: 'article.show', params: {
+          id: item._id,
+          title: item.title}}">
+          {{ item.title }}</router-link>
       </h2>
       <div class="article-card__meta">
         <article-author :user="user" />

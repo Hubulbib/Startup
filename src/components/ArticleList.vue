@@ -48,8 +48,11 @@ onMounted(() => {
 
 <template>
   <transition-group name="article-list" class="article-list" tag="ul">
-    <li class="article-list__item" v-for="article in articles" :key="article.id">
+    <li class="article-list__item" v-for="article in articles" :key="article._id">
       <ArticleListItem :item="article" @onHide="hide" />
+      <!-- потом убрать -->
+      <router-link style="margin-bottom: 10px; color: red" :to="{name: 'cms.edit', params: {id: article._id}}">Редактировать статью (для теста роутера, потом уберу)</router-link>
+      <!-- потом убрать -->
     </li>
   </transition-group>
   <my-button

@@ -1,0 +1,47 @@
+<template>
+  <nav class="nav">
+    <router-link :to="{name: 'home'}" class="nav__item">Homepage</router-link>
+    <router-link :to="{name: 'cms'}" class="nav__item">Создание статьи</router-link>
+    <router-link :to="{name: 'allcomponents'}" class="nav__item">Солянка</router-link>
+    <router-link :to="{name: 'account'}" class="nav__item">Личный кабинет</router-link>
+    <router-link :to="{name: 'profile'}" class="nav__item">Профайл</router-link>
+    <router-link :to="{name: 'login'}" class="nav__item">Логин</router-link>
+    <router-link :to="{name: 'signup'}" class="nav__item">Регистрация</router-link>
+  </nav>
+</template>
+
+<script setup>
+</script>
+
+<style lang="scss">
+.nav {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+
+  &__item {
+    padding: 15px 25px;
+    font-size: 18px;
+    color: white;
+    background-color: #666;
+    border-radius: 15px;
+    cursor: pointer;
+
+    &.link--active {
+      background-color: #999;
+    }
+
+    &:hover {
+      background-color: #9b9b9b;
+    }
+  }
+}
+
+.h-1 {
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #666;
+  }
+
+
+</style>

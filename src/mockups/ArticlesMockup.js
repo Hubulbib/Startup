@@ -1,6 +1,6 @@
 export default [
   {
-    id: 1,
+    _id: 1,
     title: "Introduction to JavaScript",
     img: "/images/articles/1.jpeg",
     author_id: 2,
@@ -10,7 +10,7 @@ export default [
     description: "JavaScript is a programming language that allows you to implement complex features on web pages. This article provides an overview of JS and gets you started. Learn about JS history, its use cases, integration with HTML and CSS, syntax, variables, operators, data types, conditionals, loops, functions."
   },
   {
-    id: 2,
+    _id: 2,
     title: "JavaScript Syntax and Data Types",
     img: "/images/articles/2.jpeg",
     author_id: 1,
@@ -20,7 +20,7 @@ export default [
     description: "Get familiar with the building blocks of JS. Understand syntax basics like semicolons, spacing, comments to write valid code. Declare variables with var, let and const. Use operators like arithmetic, assignment, comparison for calculations. Work with primitive string, number, boolean, null, undefined and symbol data types."
   },
   {
-    id: 3,
+    _id: 3,
     title: "Functions and Scope in JS",
     img: "/images/articles/3.jpeg",
     author_id: 3,
@@ -30,7 +30,7 @@ export default [
     description: "Functions are key building blocks in JS. Learn how to define functions, understand scope, arrow functions, and more."
   },
   {
-    id: 4,
+    _id: 4,
     title: "Objects and Prototypes in JavaScript",
     img: "/images/articles/4.jpeg",
     author_id: 2,
@@ -40,7 +40,7 @@ export default [
     description: "Objects allow you to store data and code together. Understand JS objects, prototypes, inheritance, and other object-oriented concepts."
   },
   {
-    id: 5,
+    _id: 5,
     title: "The DOM and Events in JavaScript",
     img: "/images/articles/5.jpeg",
     author_id: 1,
@@ -50,7 +50,7 @@ export default [
     description: "Explore the DOM API and how to use events to create interactive web pages. Includes selecting/traversing DOM elements, event listeners."
   },
   {
-    id: 6,
+    _id: 6,
     title: "Asynchronous Programming and AJAX",
     img: "/images/articles/6.jpeg",
     author_id: 3,
@@ -60,7 +60,7 @@ export default [
     description: "Learn how asynchronous JavaScript works via callbacks, promises, and async/await. Also covers making AJAX requests in JS."
   },
   {
-    id: 7,
+    _id: 7,
     title: "ECMAScript 6/2015 Features",
     img: "/images/articles/7.jpeg",
     author_id: 2,
@@ -70,7 +70,7 @@ export default [
     description: "Major additions in ES6 like arrow functions, classes, template literals, destructuring assignments, default parameters, and more."
   },
   {
-    id: 8,
+    _id: 8,
     title: "JavaScript Best Practices",
     img: "/images/articles/8.jpeg",
     author_id: 1,
@@ -79,24 +79,24 @@ export default [
     views: 107,
     description: "Write better JS code through tips on variable/function naming, code style/formatting, error handling, comments, modularity patterns."
   },
-  // {
-  //   id: 9,
-  //   title: "Tooling for JavaScript Development",
-  //   img: "/images/articles/9.jpeg",
-  //   author_id: 3,
-  //   published: "2022-09-29T12:57:38.456Z",
-  //   likes: 19,
-  //   views: 92,
-  //   description: "Set up a productive dev environment. Covers source control, package managers, build tools, editors, linters, testing frameworks, and more."
-  // },
-  // {
-  //   id: 10,
-  //   title: "JavaScript Frameworks and Libraries",
-  //   img: "/images/articles/10.jpeg",
-  //   author_id: 2,
-  //   published: "2022-10-15T08:22:12.345Z",
-  //   likes: 26,
-  //   views: 124,
-  //   description: "Introduces popular JS frontend frameworks like React, Angular, and Vue. Build dynamic web apps by leveraging these frameworks."
-  // }
+  {
+    _id: 9,
+    title: "Tooling for JavaScript Development",
+    img: "/images/articles/9.jpeg",
+    author_id: 3,
+    published: "2022-09-29T12:57:38.456Z",
+    likes: 19,
+    views: 92,
+    description: "Set up a productive dev environment. Covers source control, package managers, build tools, editors, linters, testing frameworks, and more."
+  },
+  {
+    _id: 10,
+    title: "JavaScript Frameworks and Libraries",
+    img: "/images/articles/10.jpeg",
+    author_id: 2,
+    published: "2022-10-15T08:22:12.345Z",
+    likes: 26,
+    views: 124,
+    description: "Introduces popular JS frontend frameworks like React, Angular, and Vue. Build dynamic web apps by leveraging these frameworks."
+  }
 ]
