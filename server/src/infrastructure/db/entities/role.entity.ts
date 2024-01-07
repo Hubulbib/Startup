@@ -1,18 +1,18 @@
 import { Schema, model, Document } from 'mongoose'
-// import { IUser } from './interfaces/user.interface.js'
+import { IRole } from './interfaces/role.interface'
 
-// export type IUserDoc = Document<any, any, IUser> & IUser
+export type IRoleDoc = Document<any, any, IRole> & IRole
 
-const schema = new Schema({
-    name: {
-        type: String,
-        unique: true
-    },
-    permissions: [String], 
+const schema = new Schema<IRole>({
+  name: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  permissions: { type: [String], default: [] },
 })
 
 export const Role = model('Role', schema)
-
 
 // const user = {
 //     name: 'user',
@@ -21,7 +21,7 @@ export const Role = model('Role', schema)
 
 // const mentor = {
 //     name: 'mentor',
-//     permissions: [s
+//     permissions: [
 //         'create',
 //         'edit',
 //     ]

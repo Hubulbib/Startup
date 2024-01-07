@@ -9,7 +9,7 @@ export class UserMapper {
       entity.name,
       entity.surname,
       entity.email,
-      entity.role,
+      entity.roleDoc,
       entity.rating,
       entity.avatar,
       entity.userSubscribes,

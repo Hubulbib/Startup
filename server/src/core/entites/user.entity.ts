@@ -1,10 +1,12 @@
+import { RoleEntity } from './role.entity'
+
 export class UserEntity {
   constructor(
     readonly _id: string,
     readonly name: string,
     readonly surname: string,
     readonly email: string,
-    readonly role: string,
+    readonly role: RoleEntity,
     readonly rating: Rating[],
     readonly avatar: string,
     readonly userSubscribes?: string[],

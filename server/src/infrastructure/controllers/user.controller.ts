@@ -13,6 +13,7 @@ class UserController {
       const userData = await this.userService.getAll({ options })
       res.json(userData)
     } catch (err) {
+      console.log(err)
       res.status(500).json(err)
     }
   }
