@@ -1,5 +1,6 @@
 <template>
   <nav class="nav">
+    <Icon style="cursor: pointer;" @click="$router.back()" icon="ion:arrow-back-circle-outline" width="75" height="75" />
     <router-link :to="{name: 'home'}" class="nav__item">Homepage</router-link>
     <router-link :to="{name: 'cms'}" class="nav__item">Создание статьи</router-link>
     <router-link :to="{name: 'allcomponents'}" class="nav__item">Солянка</router-link>

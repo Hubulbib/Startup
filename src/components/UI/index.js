@@ -10,6 +10,7 @@ import MyInput from '@/components/UI/MyInput.vue'
 import ArticleAuthor from '@/components/UI/ArticleAuthor.vue';
 import MyTextarea from '@/components/UI/MyTextarea.vue';
 import MyTippyContextMenu from '@/components/UI/MyTippyContextMenu.vue';
+import AppLink from '@/components/UI/AppLink.vue';
 
 
 export default [
@@ -24,5 +25,6 @@ export default [
     MyInput,
     ArticleAuthor,
     MyTextarea,
-    MyTippyContextMenu
+    MyTippyContextMenu,
+    AppLink
 ]
