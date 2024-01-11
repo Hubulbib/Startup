@@ -6,6 +6,5 @@
 </template>
 
 <script setup>
-  import ArticleList from "@/components/ArticleList.vue";
-
+import ArticleList from "@/components/ArticleList.vue";
 </script>

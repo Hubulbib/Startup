@@ -2,21 +2,19 @@
   <div class="wrapper">
     <div class="header">
       <div class="header__wrapper">
-        <a class="header__logo" ref="#">Logo</a>
+        <router-link class="header__logo" :to="{ name: 'home' } ">Logo</router-link>
         <h2 class="header__desc">Шапка сайта</h2>
       </div>
       <div class="header__account">
         <my-button class="header__account--switch">THEME</my-button>
-        <div v-if="props.user" class="header__account--user">
+        <router-link :to="{ name: 'account' }" v-if="isLogged" class="header__account--user">
           <img src="@/assets/empty-avatar.svg" alt="Аватарка пользователя" />
-          <span>{{ props.user.name }} {{ props.user.surname }}</span>
-        </div>
-        <button  @click="show" href="#" class="header__account--login">Войти</button>
+          <span>{{ user.name }} {{ user.surname }}</span>
+        </router-link>
+        <router-link v-else :to="{ name: 'login' }" class="header__account--login">Войти</router-link>
       </div>
+      <my-button v-if="isLogged" @click="logOut" class="">Выйти</my-button>
     </div>
-    <my-dialog :show="isVisible" @hide="show">
-      <LoginModule></LoginModule>
-    </my-dialog>
   </div>
 </template>
 
@@ -26,21 +24,32 @@
 -->
 
 <script setup>
-import { ref } from 'vue'
-import LoginModule from '@/modules/LoginModule.vue';
+import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 
-const props = defineProps({
-  user: {
-    type: Object,
-    default: null,
-  },
-});
+const router = useRouter()
 
-const isVisible = ref(false)
+const isLogged = ref(false)
+const user = ref(null)
 
-const show = () => {
-  isVisible.value = !isVisible.value
+const logOut = () => {
+  localStorage.removeItem('logged')
+
+  isLogged.value = false
+  user.value = null
 }
+
+watch(router.currentRoute, () => {
+  console.log('watching')
+
+  const data = JSON.parse(localStorage.getItem('logged'))
+  
+  if (data === null) return
+
+  isLogged.value = true
+  user.value = data.user
+}, { immediate: true })
+
 </script>
 
 <style lang="scss" scoped>

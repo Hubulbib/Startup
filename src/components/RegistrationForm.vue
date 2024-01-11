@@ -40,6 +40,7 @@
 </template>
 
 <script setup>
+import { useSignIn } from "@/hooks/useSignIn";
 import axios from "axios";
 import { ref } from "vue";
 
@@ -75,13 +76,12 @@ const registration = async () => {
     role: userCategory.value,
   };
 
-  if (!validation(user)) {
-    return;
-  }
+  if (!validation(user)) return;
 
-  axios
-    .post("http://localhost:3000/api/auth/registration", user)
-    .then((r) => console.log(r.data));
+  axios.post("http://localhost:3000/api/auth/sign-up", user).then((r) => {
+    localStorage.setItem("logged", JSON.stringify(r.data));
+    router.push({ name: "home" });
+  });
 };
 </script>
 

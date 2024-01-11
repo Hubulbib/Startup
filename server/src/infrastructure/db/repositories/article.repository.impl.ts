@@ -14,6 +14,7 @@ export class ArticleRepositoryImpl implements ArticleRepository {
   private readonly subscribeRepository = model('Subscribe')
 
   async createOne(createBody: CreateBodyDto): Promise<ArticleEntity> {
+    console.log(createBody)
     const articleTags = [...new Set(createBody.tags)]
     const article = await this.articleRepository.create({ ...createBody, tags: articleTags })
 
@@ -59,10 +60,10 @@ export class ArticleRepositoryImpl implements ArticleRepository {
   async editOne(articleId: string, editBody: EditBodyDto): Promise<ArticleEntity> {
     const article = await this.articleRepository.findById(articleId)
     if (!article) {
-      throw Error('Такой записи не существует')
+      throw Error('Такой записи не существует article')
     }
     const articleDetail = await this.articleDetailRepository.findOne({ articleId })
-    if (!articleDetail) throw Error('Такой записи не существует')
+    if (!articleDetail) throw Error('Такой записи не существует article-detail')
     articleDetail.body = editBody.content.detail.body
     articleDetail.tasks = editBody.content.detail.tasks
     await articleDetail.save()

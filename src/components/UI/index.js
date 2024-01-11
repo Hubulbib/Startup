@@ -8,10 +8,8 @@ import AvatarInitials from '@/components/UI/AvatarInitials.vue'
 import MyDialog from '@/components/UI/MyDialog.vue'
 import MyInput from '@/components/UI/MyInput.vue'
 import ArticleAuthor from '@/components/UI/ArticleAuthor.vue';
-import MyTextarea from '@/components/UI/MyTextarea.vue';
-import MyTippyContextMenu from '@/components/UI/MyTippyContextMenu.vue';
 import AppLink from '@/components/UI/AppLink.vue';
-
+import Separator from '@/components/UI/Separator.vue';
 
 export default [
     MySelect,
@@ -24,7 +22,6 @@ export default [
     MyDialog,
     MyInput,
     ArticleAuthor,
-    MyTextarea,
-    MyTippyContextMenu,
-    AppLink
+    AppLink,
+    Separator
 ]
