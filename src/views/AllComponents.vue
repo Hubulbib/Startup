@@ -32,8 +32,8 @@
     </my-button>
     <h2>UI buttons</h2>
     <div style="margin-bottom: 20px; display: flex; gap: 20px">
-      <my-button @click="testClick">Button 1</my-button>
-      <my-button @click="testClick" :disabled="true">Button 2</my-button>
+      <my-button>Button 1</my-button>
+      <my-button :disabled="true">Button 2</my-button>
     </div>
     <h2>UI User Avatar</h2>
     <div
@@ -83,7 +83,7 @@ onMounted(async () => {
     const response = await axios.get("http://localhost:3000/api/user");
     console.log(response.data);
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 });
 </script>

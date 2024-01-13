@@ -61,8 +61,18 @@ const auth = async () => {
       password: password.value,
     })
     .then((r) => {
-      localStorage.setItem("logged", JSON.stringify(r.data));
-      router.push({ name: "home" });
+      const newData = {
+        ...r.data
+      }
+      axios
+        .get(`http://localhost:3000/api/user/${r.data.user._id}`)
+        .then((r) => {
+          newData.user = {
+            ...r.data
+          }
+          localStorage.setItem("logged", JSON.stringify(newData));
+          router.push({ name: "home" });
+        });
     })
     .catch((error) => {
       console.log(error);

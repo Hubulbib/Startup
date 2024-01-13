@@ -37,6 +37,8 @@ const logOut = () => {
 
   isLogged.value = false
   user.value = null
+
+  window.location.reload()
 }
 
 watch(router.currentRoute, () => {

@@ -2,7 +2,7 @@
   <nav class="nav">
     <!-- <Icon style="cursor: pointer;" @click="$router.back()" icon="ion:arrow-back-circle-outline" width="75" height="75" /> -->
     <!-- <router-link :to="{name: 'home'}" class="nav__item">Homepage</router-link> -->
-    <router-link :to="{name: 'cms'}" class="nav__item">Создание статьи</router-link>
+    <router-link v-if="isMentor" :to="{name: 'cms'}" class="nav__item">Создание статьи</router-link>
     <router-link :to="{name: 'allcomponents'}" class="nav__item">Солянка</router-link>
     <!-- <router-link :to="{name: 'account'}" class="nav__item">Личный кабинет</router-link> -->
     <router-link :to="{name: 'profile'}" class="nav__item">Профайл</router-link>
@@ -12,6 +12,19 @@
 </template>
 
 <script setup>
+import { ref, watch } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter()
+const isMentor = ref(false)
+
+watch(router.currentRoute, () => {
+  const data = JSON.parse(localStorage.getItem('logged'))
+
+  if (!data) return isMentor.value = false
+
+  if (data.user.role.name === 'mentor') return isMentor.value = true
+}, { immediate: true })
 </script>
 
 <style lang="scss">
