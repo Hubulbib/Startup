@@ -77,10 +77,6 @@ const changeIconName = (name) => {
   dynamicIcon.value = name;
 };
 
-const testClick = () => {
-  console.log("clicked");
-};
-
 onMounted(async () => {
   // http://localhost:3000/api/...
   try {

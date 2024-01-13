@@ -30,6 +30,11 @@ import MyNav from "@/components/MyNav.vue"
   gap: 20px;
 }
 
+.view-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
 .ql-container.ql-snow {
   border-inline: none !important;
   border-block-end: none !important;

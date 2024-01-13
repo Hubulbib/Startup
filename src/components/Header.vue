@@ -40,8 +40,6 @@ const logOut = () => {
 }
 
 watch(router.currentRoute, () => {
-  console.log('watching')
-
   const data = JSON.parse(localStorage.getItem('logged'))
   
   if (data === null) return
