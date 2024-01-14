@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@formkit/addons": "^1.4.0",
+    "@formkit/pro": "^0.119.5",
     "@formkit/vue": "^1.4.0",
     "@iconify/vue": "^4.1.1",
     "@vueup/vue-quill": "^1.2.0",

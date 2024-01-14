@@ -1,25 +1,16 @@
 <script setup>
 import EditorBlock from "@/components/EditorBlock.vue";
 import { nanoid } from "nanoid";
-import { ref, computed, watch } from "vue";
+import { ref } from "vue";
+import TagsMockup from "@/mockups/TagsMockup.js";
+import axios from "axios";
 
-const title = ref("");
 const description = ref("");
 
 const form = ref(null);
 
 const body = ref(null);
 const tasks = ref(null);
-
-const count = computed(() => {
-  return 200 - description.value.length;
-});
-
-watch(count, () => {
-  if (count.value < 0) {
-    description.value = description.value.slice(0, 200)
-  }
-})
 
 const data = ref({
   body: [nanoid(5)],
@@ -30,51 +21,116 @@ const add = (name) => {
   data.value[name].push(nanoid(5));
 };
 
-const createArticle = () => {
-  const formData = new FormData(form.value);
+const createArticle = (data) => {
+  const article = {
+    author: JSON.parse(localStorage.getItem("logged")).user._id,
+    content: {
+      title: data.title,
+      description: data.description,
+      recommended: data.recommended,
+    },
+    tags: data.tags,
+  };
 
-  formData.append("title", title.value);
-  formData.append("description", description.value);
+  const detail = {
+    body: [],
+    tasks: [],
+  };
 
-  title.value = "";
-  description.value = "";
-
-  for (const array of [body.value, tasks.value]) {
-    for (const item of array) {
-      formData.append(item.subTitle, item.content);
-      item.resetContent();
-    }
+  for (const item of body.value) {
+    detail.body = [
+      ...detail.body,
+      {
+        subTitle: item.subTitle,
+        content: item.content,
+      },
+    ];
   }
 
-  // for (const item of body.value) {
-  //   formData.append(item.subTitle, item.content);
-  //   item.resetContent()
-  // }
+  for (const item of tasks.value) {
+    detail.tasks = [
+      ...detail.tasks,
+      {
+        subTitle: item.subTitle,
+        content: item.content,
+      },
+    ];
+  }
 
-  // for (const item of tasks.value) {
-  //   formData.append(item.subTitle, item.content);
-  //   item.resetContent()
-  // }
+  article.content.detail = detail;
+  console.log(article);
+};
+
+const postArticle = () => {
+  // добавить хедер authorization
+  axios
+    .post("http://localhost:3000/api/article", createArticle(data))
+    .then((r) => console.log(r.data));
 };
 </script>
 
 <template>
-  <form ref="form" @submit.prevent="createArticle" class="article-form">
+  <FormKit
+    ref="form"
+    type="form"
+    :actions="false"
+    @submit="postArticle"
+    class="article-form"
+  >
     <div class="meta flex-c">
-      <input v-model="title" type="text" placeholder="Название статьи" />
-      <div class="flex-c">
-        <textarea
-          class="description"
-          v-model="description"
-          rows="5"
-          placeholder="Краткое описание"
-        ></textarea>
-        <div class="symbols">Осталось симоволов: {{ count }}</div>
-      </div>
+      <FormKit
+        name="title"
+        type="text"
+        placeholder="Название статьи"
+        validation="required"
+        validation-visibility="blur"
+        :validation-messages="{
+          required: 'Поле должно быть заполнено',
+        }"
+      />
+      <FormKit
+        type="textarea"
+        name="description"
+        auto-height
+        v-model="description"
+        placeholder="Краткое описание"
+        :help="`${description ? description.length : 0} / 200`"
+        validation="required|length:0,200"
+        validation-visibility="blur"
+        :validation-messages="{
+          length: 'Описание не должно превышать 200 символов.',
+          required: 'Поле должно быть заполнено',
+        }"
+      />
+      <FormKit
+        type="taglist"
+        name="tags"
+        placeholder="Выберите язык программирования"
+        open-on-focus
+        open-on-remove
+        :options="TagsMockup"
+        :filter="
+          (option, search) =>
+            option.label.toLowerCase().startsWith(search.toLowerCase())
+        "
+        :tag-class="{
+          'custom-tag': true,
+        }"
+      />
     </div>
 
     <div class="content flex-c">
       <h3>Контент статьи</h3>
+      <FormKit
+        type="text"
+        name="recommended"
+        validation="required"
+        validation-visibility="blur"
+        :validation-messages="{
+          required: 'Поле должно быть заполнено',
+        }"
+        placeholder="Для кого рекомендована статья?"
+      />
       <div class="wrapper">
         <ul class="list">
           <editor-block ref="body" v-for="key in data.body" :key="key" />
@@ -92,13 +148,13 @@ const createArticle = () => {
           <editor-block ref="tasks" v-for="key in data.tasks" :key="key" />
         </ul>
       </div>
-      <my-button @click="add('tasks')" class="list-btn">
+      <my-button @click="add('tasks')" class="list-btn" type="button">
         <Icon icon="material-symbols:add" width="28" height="28" />
       </my-button>
     </div>
 
-    <my-button class="article-form__submit" type="submit">Send</my-button>
-  </form>
+    <FormKit type="submit" class="article-form__submit">Создать</FormKit>
+  </FormKit>
 </template>
 
 <style lang="scss" scoped>
@@ -115,9 +171,6 @@ const createArticle = () => {
 
   & input,
   & textarea {
-    border-radius: 4px;
-    border: 1px solid #cacaca !important;
-
     padding: 10px;
 
     font-size: 22px;
@@ -149,19 +202,11 @@ const createArticle = () => {
   width: 100%;
 }
 
-.symbols {
-  align-self: flex-end;
-  color: #969696;
-  font-size: 14px;
-}
-
 .wrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  border: 1px solid #cacaca;
-  border-radius: 4px;
 }
 
 .list-btn {

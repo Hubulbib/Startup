@@ -3,11 +3,19 @@
     <h2 class="h-2 form-header">Авторизация</h2>
 
     <FormKit type="form" :actions="false" class="form" @submit="auth">
-      <FormKit v-focus type="text" label="Введите логин" v-model="login" />
+      <FormKit
+        v-focus
+        type="email"
+        label="Введите логин"
+        placeholder="example@example.com"
+        name="email"
+        validation="required|*email"
+      />
       <FormKit
         type="password"
         label="Введите пароль"
-        v-model="password"
+        name="password"
+        placeholder="qwerty123"
         prefix-icon="password"
         suffix-icon="eyeClosed"
         @suffix-icon-click="pwVisibile"
@@ -44,35 +52,18 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import pwVisibile from "@/helpers/pwVisibile.js";
 
 const router = useRouter();
 
-const login = ref("user@user.ru");
-const password = ref("user");
-
-const auth = async () => {
+const auth = async (data) => {
   axios
-    .post("http://localhost:3000/api/auth/sign-in", {
-      email: login.value,
-      password: password.value,
-    })
+    .post("http://localhost:3000/api/auth/sign-in", data)
     .then((r) => {
-      const newData = {
-        ...r.data
-      }
-      axios
-        .get(`http://localhost:3000/api/user/${r.data.user._id}`)
-        .then((r) => {
-          newData.user = {
-            ...r.data
-          }
-          localStorage.setItem("logged", JSON.stringify(newData));
-          router.push({ name: "home" });
-        });
+      localStorage.setItem("logged", JSON.stringify(r.data));
+      router.push({ name: "home" });
     })
     .catch((error) => {
       console.log(error);
