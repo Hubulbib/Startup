@@ -63,17 +63,36 @@ export class ArticleRepositoryImpl implements ArticleRepository {
     }
     const articleDetail = await this.articleDetailRepository.findOne({ articleId })
     if (!articleDetail) throw Error('Такой записи не существует')
-    articleDetail.body = editBody.content.detail.body
-    articleDetail.tasks = editBody.content.detail.tasks
+    articleDetail.body = editBody.content?.detail?.body ? editBody.content?.detail?.body : articleDetail.body
+    articleDetail.tasks = editBody.content?.detail?.tasks ? editBody.content?.detail?.tasks : articleDetail.tasks
     await articleDetail.save()
-
     return ArticleMapper.toDomain(
       await this.articleRepository.findByIdAndUpdate(
         article._id,
-        { ...editBody, updatedAt: new Date() },
+        { ...editBody, content: { ...article.content, ...editBody.content }, updatedAt: new Date() },
         { new: true },
       ),
     )
+  }
+
+  async incView(articleId: string): Promise<number> {
+    const article = await this.articleRepository.findById(articleId)
+    if (!article) {
+      throw Error('Такой записи не существует')
+    }
+    article.views++
+    await article.save()
+    return article.views
+  }
+
+  async incLike(articleId: string): Promise<number> {
+    const article = await this.articleRepository.findById(articleId)
+    if (!article) {
+      throw Error('Такой записи не существует')
+    }
+    article.likes++
+    await article.save()
+    return article.likes
   }
 
   async removeOne(articleId: string): Promise<ArticleEntity> {

@@ -10,7 +10,7 @@ export class UserMapper {
       entity.surname,
       entity.email,
       entity.roleDoc,
-      entity.rating,
+      entity.rating.reduce((acc, el) => acc + el, 0) / entity.rating.length,
       entity.avatar,
       entity.userSubscribes,
       entity.articles,
@@ -18,7 +18,13 @@ export class UserMapper {
   }
 
   public static toDomainForList(entity: IUserToDomain): UserForListEntity {
-    return new UserForListEntity(entity._id, entity.name, entity.surname, entity.rating, entity.avatar)
+    return new UserForListEntity(
+      entity._id,
+      entity.name,
+      entity.surname,
+      entity.rating.reduce((acc, el) => acc + el, 0) / entity.rating.length,
+      entity.avatar,
+    )
   }
 
   public static toEntity(domain: UserEntity): IUserDoc {

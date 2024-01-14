@@ -2,11 +2,11 @@ import express from 'express'
 import { dbConnect } from './infrastructure/db'
 import 'dotenv/config.js'
 
-import userRouter from './infrastructure/routers/user.router'
-import articleRouter from './infrastructure/routers/article.router'
-import authRouter from './infrastructure/routers/auth.router'
-import subscribeRouter from './infrastructure/routers/subscribe.router'
-import roleRouter from './infrastructure/routers/role.router'
+import userRouter from './infrastructure/routers/userRouter/user.router'
+import articleRouter from './infrastructure/routers/articleRouter/article.router'
+import authRouter from './infrastructure/routers/authRouter/auth.router'
+import subscribeRouter from './infrastructure/routers/subscribeRouter/subscribe.router'
+import roleRouter from './infrastructure/routers/roleRouter/role.router'
 
 import cors from 'cors'
 

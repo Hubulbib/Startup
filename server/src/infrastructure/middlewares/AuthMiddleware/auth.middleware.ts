@@ -4,19 +4,19 @@ import 'dotenv/config.js'
 
 export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const JWT_SECRET = process.env.JWT_SECRET
-    if (!req.headers.authorization) return res.status(401)
+    const JWT_SECRET = process.env.SECRET_ACCESS_JWT
+    if (!req.headers.authorization) return res.status(401).end()
 
     const accessToken = req.headers?.authorization.split(' ')[1]
 
     if (!accessToken) {
-      return res.status(401)
+      return res.status(401).end()
     }
 
     const userData = jwt.verify(accessToken, JWT_SECRET)
 
     if (!userData || typeof userData === 'string') {
-      return res.status(400)
+      return res.status(400).end()
     }
 
     req['user'] = {

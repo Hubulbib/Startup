@@ -5,12 +5,6 @@ export interface IUser {
   email: string
   password: string
   role: string
-  rating: Rating[]
+  rating: number[]
   avatar: string
-}
-
-interface Rating {
-  speed: number
-  learn: number
-  polite: number
 }

@@ -26,6 +26,14 @@ export class ArticleService {
     return await this.articleRepository.editOne(articleId, editBody)
   }
 
+  incView = async (articleId: string) => {
+    return await this.articleRepository.incView(articleId)
+  }
+
+  incLike = async (articleId: string) => {
+    return await this.articleRepository.incLike(articleId)
+  }
+
   removeOne = async (articleId: string) => {
     return await this.articleRepository.removeOne(articleId)
   }

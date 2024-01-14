@@ -29,14 +29,7 @@ const schema = new Schema<IUser>({
     default: UserRoleEnum.user,
     enum: Object.values(UserRoleEnum),
   },
-  rating: [
-    {
-      speed: Number,
-      learn: Number,
-      polite: Number,
-      _id: false,
-    },
-  ],
+  rating: [Number], // на фронт отправляем среднее
   //добавить средний рейтинг
   avatar: String, //gridFS или по ключу с облака //дефолтная функция кешируется????
 

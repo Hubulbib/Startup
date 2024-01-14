@@ -59,6 +59,28 @@ class ArticleController {
     }
   }
 
+  incView = async (req: IAuthRequest, res: Response) => {
+    try {
+      const { id } = req.params
+      const articleData = await this.articleService.incView(id)
+      return res.json(articleData)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json(err)
+    }
+  }
+
+  incLike = async (req: IAuthRequest, res: Response) => {
+    try {
+      const { id } = req.params
+      const articleData = await this.articleService.incLike(id)
+      return res.json(articleData)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json(err)
+    }
+  }
+
   removeOne = async (req: IAuthRequest, res: Response) => {
     try {
       const { id } = req.params

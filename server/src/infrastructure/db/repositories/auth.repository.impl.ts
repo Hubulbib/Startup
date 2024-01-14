@@ -9,9 +9,11 @@ import { SignInDto } from '../../../core/repositories/AuthRepository/dtos/sign-i
 import { SignUpDto } from '../../../core/repositories/AuthRepository/dtos/sign-up.dto'
 import { RefreshDto } from '../../../core/repositories/AuthRepository/dtos/refresh.dto'
 import { DetailDto } from '../../../core/repositories/AuthRepository/dtos/detail.dto'
+import { Role } from '../entities/role.entity'
 
 export class AuthRepositoryImpl implements AuthRepository {
   private readonly userRepository = User
+  private readonly roleRepository = Role
 
   public signIn = async (signInDto: SignInDto, detail: DetailDto): Promise<AuthBackDto> => {
     const user = await this.userRepository.findOne({ email: signInDto.email })
@@ -60,10 +62,10 @@ export class AuthRepositoryImpl implements AuthRepository {
   private responseData = async (userData: IUserDoc, ua: string, ip: string): Promise<AuthBackDto> => {
     const tokens = new TokenRepositoryImpl().generateTokens({ ...userData })
     await new TokenRepositoryImpl().saveToken({ userId: userData._id, refreshToken: tokens.refreshToken, ua, ip })
-
+    const user = { ...userData, roleDoc: await this.roleRepository.findOne({ name: userData.role }) }
     return {
       ...tokens,
-      user: UserMapper.toDomain(userData),
+      user: UserMapper.toDomain({ ...user['_doc'], roleDoc: user.roleDoc }),
     }
   }
 }

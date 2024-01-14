@@ -4,16 +4,8 @@ export class EditBodyDto {
     readonly surname?: string,
     readonly email?: string,
     readonly password?: string,
-    readonly rating?: Rating[],
+    readonly rating?: number[],
     readonly avatar?: string,
     readonly userSubscribes?: string[],
-  ) {}
-}
-
-class Rating {
-  constructor(
-    readonly speed?: number,
-    readonly learn?: number,
-    readonly polite?: number,
   ) {}
 }
