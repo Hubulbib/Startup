@@ -1,14 +1,16 @@
 <script setup>
-import axios from "axios";
 import pwVisibile from "@/helpers/pwVisibile.js";
 import { useRouter } from "vue-router";
+import ls from "@/helpers/localStorageHelpers.js";
+import { $api } from "@/http/api.js";
 
-const router = useRouter()
+const router = useRouter();
 
 const registration = async (data) => {
-  const { password_confirm, ...payload } = data 
-  axios.post("http://localhost:3000/api/auth/sign-up", payload).then((r) => {
-    localStorage.setItem("logged", JSON.stringify(r.data));
+  const { password_confirm, ...payload } = data;
+  $api.post("/auth/sign-up", payload).then((r) => {
+    ls.saveUser(r.data.user);
+    ls.saveToken(r.data.accessToken);
     router.push({ name: "home" });
   });
 };

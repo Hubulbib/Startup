@@ -2,7 +2,7 @@
   <div class="root">
     <h2 class="h-2 form-header">Авторизация</h2>
 
-    <FormKit type="form" :actions="false" class="form" @submit="auth">
+    <FormKit type="form" :actions="false" class="form" @submit="signIn">
       <FormKit
         v-focus
         type="email"
@@ -53,16 +53,19 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import { $api }from '@/http/api.js'
 import axios from "axios";
 import pwVisibile from "@/helpers/pwVisibile.js";
+import ls from '@/helpers/localStorageHelpers.js'
 
 const router = useRouter();
 
-const auth = async (data) => {
-  axios
+const signIn = async (data) => {
+  $api
     .post("http://localhost:3000/api/auth/sign-in", data)
     .then((r) => {
-      localStorage.setItem("logged", JSON.stringify(r.data));
+      ls.saveUser(r.data.user)
+      ls.saveToken(r.data.accessToken)
       router.push({ name: "home" });
     })
     .catch((error) => {

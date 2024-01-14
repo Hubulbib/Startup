@@ -18,7 +18,8 @@ const PORT = process.env.PORT
 app.use(express.json())
 app.use(
   cors({
-    origin: '*',
+    origin: 'http://localhost:8080',
+    credentials: true,
   }),
 )
 

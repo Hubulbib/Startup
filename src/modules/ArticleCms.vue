@@ -7,8 +7,6 @@ import axios from "axios";
 
 const description = ref("");
 
-const form = ref(null);
-
 const body = ref(null);
 const tasks = ref(null);
 
@@ -71,7 +69,6 @@ const postArticle = () => {
 
 <template>
   <FormKit
-    ref="form"
     type="form"
     :actions="false"
     @submit="postArticle"
