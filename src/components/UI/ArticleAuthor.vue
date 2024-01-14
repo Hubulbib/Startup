@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import UserProfile from '@/views/UserProfile.vue';
-
 export default {
   name: 'article-author',
   props: {
@@ -24,10 +22,7 @@ export default {
       type: Object,
       required: true
     },
-  },
-  // setup(props): {
-
-  // }
+  }
 }
 
 </script>

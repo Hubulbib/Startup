@@ -10,19 +10,17 @@ const props = defineProps({
   },
   blockHeight: {
     type: Number,
-    default: 150
-  }
+    default: 150,
+  },
 });
 
 const blockHeightStyle = `max-height: ${props.blockHeight}px`;
 
-const emit = defineEmits([
-  'onHide',
-])
+const emit = defineEmits(["onHide"]);
 
 const onHide = () => {
-  emit('onHide', props.item.id)
-}
+  emit("onHide", props.item.id);
+};
 
 const articleCard = ref(null);
 const description = ref(props.item.description);
@@ -32,7 +30,7 @@ const cropDescription = async () => {
   articleCard.value.style.maxHeight = `${props.blockHeight}px`;
 
   while (articleCard.value.scrollHeight > articleCard.value.clientHeight) {
-    text = text.substring(0, text.lastIndexOf(' ')) + '...'
+    text = text.substring(0, text.lastIndexOf(" ")) + "...";
     description.value = text;
     await nextTick();
   }
@@ -60,10 +58,17 @@ const published = publishedString(props.item.published);
     </div>
     <div class="article-item__card article-card" ref="articleCard">
       <h2 class="article-card__title">
-        <router-link :to="{ name: 'article.show', params: {
-          id: item._id,
-          title: item.title}}">
-          {{ item.title }}</router-link>
+        <router-link
+          :to="{
+            name: 'article.show',
+            params: {
+              id: item._id,
+              title: item.title.replace(/\s/g, '_'),
+            },
+          }"
+        >
+          {{ item.title }}
+        </router-link>
       </h2>
       <div class="article-card__meta">
         <article-author :user="user" />

@@ -56,6 +56,7 @@ onMounted(() => {
     </li>
   </transition-group>
   <my-button
+    @click="fetchArticles"
     v-if="!isFull"
     v-intersection="fetchArticles"
     class="loadmore-btn"

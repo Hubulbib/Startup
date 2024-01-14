@@ -1,8 +1,9 @@
 <template>
-  <h1 class="h-1">Авторизация</h1>
-  <LoginModule />
+  <div class="view-container">
+    <Login/>
+  </div>
 </template>
 
 <script setup>
-import LoginModule from '@/modules/LoginModule.vue';
+import Login from '@/modules/Login.vue';
 </script>

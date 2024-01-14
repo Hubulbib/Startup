@@ -2,7 +2,11 @@
   <Header></Header>
   <div class="app">
     <my-nav />
-    <router-view :key="$route.path" />
+    <router-view v-slot="{ Component }">
+      <transition name="route" mode="out-in">
+        <component :is="Component" :key="$route.path" />
+      </transition>
+    </router-view>
   </div>
 </template>
 
@@ -24,6 +28,11 @@ import MyNav from "@/components/MyNav.vue"
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.view-container {
+  width: 100%;
+  margin: 0 auto;
 }
 
 .ql-container.ql-snow {
@@ -104,5 +113,17 @@ svg {
 
 .stopscroll {
   overflow: hidden !important;
+}
+
+// router-view transitions
+
+.route-enter-active,
+.route-leave-active {
+  transition: all .25s ease-in-out;
+}
+
+.route-enter-from,
+.route-leave-to {
+  opacity: 0;
 }
 </style>
