@@ -44,11 +44,11 @@ export class AuthRepositoryImpl implements AuthRepository {
   }
 
   public refresh = async (refreshDto: RefreshDto, detail: DetailDto): Promise<AuthBackDto> => {
-    console.log(refreshDto, detail)
     if (!refreshDto.refreshToken) {
       throw 'Пользователь не авторизован'
       //throw ApiError.UnauthorizedError()
     }
+    
     const userData = new TokenRepositoryImpl().validateRefreshToken(refreshDto.refreshToken)
     const tokenFromDB = await new TokenRepositoryImpl().findToken(refreshDto.refreshToken)
     if (!userData || !tokenFromDB) {
