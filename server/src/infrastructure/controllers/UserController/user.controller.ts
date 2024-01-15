@@ -1,12 +1,12 @@
-import { Response } from 'express'
-import { UserService } from '../../core/services/UserService/user.service.js'
-import { UserRepositoryImpl } from '../db/repositories/user.repository.impl.js'
-import { IAuthRequest } from './interfaces/auth-request.interface'
+import { Request, Response } from 'express'
+import { UserService } from '../../../core/services/UserService/user.service.js'
+import { UserRepositoryImpl } from '../../db/repositories/user.repository.impl.js'
+import { IAuthRequest } from '../../interfaces/auth-request.interface'
 
 class UserController {
   constructor(readonly userService: UserService) {}
 
-  getAll = async (req: IAuthRequest, res: Response) => {
+  getAll = async (req: Request, res: Response) => {
     try {
       const { interval, pages } = req.query
       const options = { interval: +interval, pages: +pages }
@@ -18,7 +18,7 @@ class UserController {
     }
   }
 
-  getAllForList = async (req: IAuthRequest, res: Response) => {
+  getAllForList = async (req: Request, res: Response) => {
     try {
       const { interval, pages } = req.query
       const options = { interval: +interval, pages: +pages }
@@ -30,7 +30,7 @@ class UserController {
     }
   }
 
-  getOneById = async (req: IAuthRequest, res: Response) => {
+  getOneById = async (req: Request, res: Response) => {
     try {
       const { id } = req.params
       const userData = await this.userService.getOneById(id)

@@ -1,7 +1,7 @@
 import { Response } from 'express'
-import { IAuthRequest } from './interfaces/auth-request.interface'
-import { SubscribeRepositoryImpl } from '../db/repositories/subscribe.repository.impl'
-import { SubscribeService } from '../../core/services/SubscribeService/subscribe.service'
+import { IAuthRequest } from '../../interfaces/auth-request.interface'
+import { SubscribeRepositoryImpl } from '../../db/repositories/subscribe.repository.impl'
+import { SubscribeService } from '../../../core/services/SubscribeService/subscribe.service'
 
 class SubscribeController {
   constructor(private readonly subscribeService: SubscribeService) {}
