@@ -16,14 +16,14 @@ export default {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #4bb4ff;
-  border: 2px solid #4bb4ff;
+  background-color: var(--fk-bg-submit);
+  border: 2px solid var(--fk-bg-submit);
   color: white;
   font-size: 16px;
   cursor: pointer;
 
   &:hover {
-    background-color: #7dc9ff;
+    background-color: var(--fk-bg-submit);
   }
 
   &:active {

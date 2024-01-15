@@ -1,6 +1,11 @@
 <template>
   <li class="item">
-    <input v-model="subTitle" type="text" class="input-header" placeholder="Заголовок" />
+    <input
+      v-model="subTitle"
+      type="text"
+      class="input-header"
+      placeholder="Заголовок"
+    />
     <!-- :modules="modules" -->
     <QuillEditor
       ref="editor"
@@ -24,15 +29,15 @@
 import { ref, h } from "vue";
 // import ImageUploader from "quill-image-uploader";
 // import axios from "axios";
-const editor = ref(null)
+const editor = ref(null);
 
+const subTitle = ref("");
 const content = ref("");
-const subTitle = ref("")
 
 const resetContent = () => {
-  editor.value.setContents([])
-  subTitle.value = ''
-}
+  editor.value.setContents([]);
+  subTitle.value = "";
+};
 
 // const modules = {
 //   name: "imageUploader",
@@ -59,10 +64,10 @@ const resetContent = () => {
 // };
 
 defineExpose({
-  content,
   subTitle,
-  resetContent
-})
+  content,
+  resetContent,
+});
 </script>
 
 <style lang="scss" scoped>
@@ -71,16 +76,27 @@ defineExpose({
   flex-direction: column;
   width: 100%;
 
+  border: 1px solid var(--fk-color-border);
+  border-radius: .35em;
+
   &:not(:last-child) {
     margin-bottom: 40px;
   }
+}
+
+.formkit-outer {
+  margin: 0;
+}
+
+.ql-toolbar,
+.ql-snow {
+  border-color: var(--fk-color-border) !important;
 }
 
 .input-header {
   display: block;
   padding: 10px 16px;
   border: none;
-  border-radius: 0;
 
   width: 100%;
 

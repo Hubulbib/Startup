@@ -1,25 +1,16 @@
 <script setup>
-import axios from "axios";
-import { ref } from "vue";
 import pwVisibile from "@/helpers/pwVisibile.js";
+import { useRouter } from "vue-router";
+import ls from "@/helpers/localStorageHelpers.js";
+import { $api } from "@/http/api.js";
 
-const name = ref("");
-const surname = ref("");
-const email = ref("");
-const password = ref("");
-const userCategory = ref(null);
+const router = useRouter();
 
-const registration = async () => {
-  const user = {
-    name: name.value,
-    surname: surname.value,
-    email: email.value,
-    password: password.value,
-    role: userCategory.value,
-  };
-
-  axios.post("http://localhost:3000/api/auth/sign-up", user).then((r) => {
-    localStorage.setItem("logged", JSON.stringify(r.data));
+const registration = async (data) => {
+  const { password_confirm, ...payload } = data;
+  $api.post("/auth/sign-up", payload).then((r) => {
+    ls.saveUser(r.data.user);
+    ls.saveToken(r.data.accessToken);
     router.push({ name: "home" });
   });
 };
@@ -33,21 +24,21 @@ const registration = async () => {
         v-focus
         type="text"
         label="Имя"
-        v-model="name"
+        name="name"
         validation="required|length:3"
         placeholder="Иван"
       />
       <FormKit
         type="text"
         label="Фамилия"
-        v-model="surname"
+        name="surname"
         validation="required|length:3"
         placeholder="Иванов"
       />
       <FormKit
         type="email"
         label="Почта"
-        v-model="email"
+        name="email"
         placeholder="example@example.com"
         validation="required|length:5|*email"
       />
@@ -55,12 +46,10 @@ const registration = async () => {
         type="password"
         label="Пароль"
         name="password"
-        v-model="password"
         validation="required"
         prefix-icon="password"
         suffix-icon="eyeClosed"
         @suffix-icon-click="pwVisibile"
-        suffix-icon-class="hover:text-blue-500"
       />
       <FormKit
         type="password"
@@ -70,12 +59,11 @@ const registration = async () => {
         prefix-icon="password"
         suffix-icon="eyeClosed"
         @suffix-icon-click="pwVisibile"
-        suffix-icon-class="hover:text-blue-500"
       />
       <FormKit
         type="radio"
-        v-model="userCategory"
         label="Роль"
+        name="role"
         validation="required"
         :options="{
           user: 'Пользователь',

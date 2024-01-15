@@ -41,6 +41,7 @@ import MyNav from "@/components/MyNav.vue"
 }
 
 .ql-toolbar.ql-snow {
+  border-color: var(--fk-color-border) !important;
   border-inline: none !important;
 }
 

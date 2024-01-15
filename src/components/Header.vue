@@ -2,18 +2,29 @@
   <div class="wrapper">
     <div class="header">
       <div class="header__wrapper">
-        <router-link class="header__logo" :to="{ name: 'home' } ">Logo</router-link>
+        <router-link class="header__logo" :to="{ name: 'home' }"
+          >Logo</router-link
+        >
         <h2 class="header__desc">Шапка сайта</h2>
       </div>
       <div class="header__account">
         <my-button class="header__account--switch">THEME</my-button>
-        <router-link :to="{ name: 'account' }" v-if="isLogged" class="header__account--user">
+        <router-link
+          :to="{ name: 'account' }"
+          v-if="isLogged"
+          class="header__account--user"
+        >
           <img src="@/assets/empty-avatar.svg" alt="Аватарка пользователя" />
           <span>{{ user.name }} {{ user.surname }}</span>
         </router-link>
-        <router-link v-else :to="{ name: 'login' }" class="header__account--login">Войти</router-link>
+        <router-link
+          v-else
+          :to="{ name: 'login' }"
+          class="header__account--login"
+          >Войти</router-link
+        >
       </div>
-      <my-button v-if="isLogged" @click="logOut" class="">Выйти</my-button>
+      <my-button v-if="isLogged" @click="logout" class="">Выйти</my-button>
     </div>
   </div>
 </template>
@@ -24,32 +35,43 @@
 -->
 
 <script setup>
-import { ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, watch } from "vue";
+import { useRouter } from "vue-router";
+import { $api } from "@/http/api.js";
+import ls from "@/helpers/localStorageHelpers.js";
+import axios from "axios";
 
-const router = useRouter()
+const router = useRouter();
 
-const isLogged = ref(false)
-const user = ref(null)
+const isLogged = ref(false);
+const user = ref(null);
 
-const logOut = () => {
-  localStorage.removeItem('logged')
+const logout = async () => {
+  $api.post("/logout").then(() => {
+    ls.logout();
+    window.location.reload();
+  });
+};
 
-  isLogged.value = false
-  user.value = null
+const isAuth = async () => {
+  try {
+    const response = await axios.get("http://localhost:3000/api/auth/refresh", { withCredentials: true });
 
-  window.location.reload()
-}
+    ls.saveUser(response.data.user);
+    ls.saveToken(response.data.accessToken);
+
+    isLogged.value = true;
+    user.value = user;
+  } catch (error) {
+    console.log(error)
+  }
+};
 
 watch(router.currentRoute, () => {
-  const data = JSON.parse(localStorage.getItem('logged'))
-  
-  if (data === null) return
-
-  isLogged.value = true
-  user.value = data.user
-}, { immediate: true })
-
+  if (ls.getToken()) {
+    isAuth()
+  }
+}, { immediate: true });
 </script>
 
 <style lang="scss" scoped>
