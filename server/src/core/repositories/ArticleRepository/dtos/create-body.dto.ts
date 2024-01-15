@@ -12,7 +12,7 @@ export class CreateBodyDto {
 
 class Content {
   constructor(
-    readonly recommended: string[] = [],
+    readonly recommended: string[],
     readonly title: string,
     readonly description: string,
     readonly detail: ArticleDetail,

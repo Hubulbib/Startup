@@ -1,4 +1,4 @@
-import { IAuthRequest } from '../../controllers/interfaces/auth-request.interface'
+import { IAuthRequest } from '../../interfaces/auth-request.interface'
 import { NextFunction, Response } from 'express'
 import { UserRoleEnum } from '../../db/entities/enums/user-role.enum'
 

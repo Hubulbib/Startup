@@ -1,7 +1,7 @@
-import { Response } from 'express'
-import { IAuthRequest } from './interfaces/auth-request.interface'
-import { ArticleService } from '../../core/services/ArticleService/article.service.js'
-import { ArticleRepositoryImpl } from '../db/repositories/article.repository.impl.js'
+import { Request, Response } from 'express'
+import { IAuthRequest } from '../../interfaces/auth-request.interface'
+import { ArticleService } from '../../../core/services/ArticleService/article.service.js'
+import { ArticleRepositoryImpl } from '../../db/repositories/article.repository.impl.js'
 
 class ArticleController {
   constructor(readonly articleService: ArticleService) {}
@@ -17,7 +17,7 @@ class ArticleController {
     }
   }
 
-  getDetail = async (req: IAuthRequest, res: Response) => {
+  getDetail = async (req: Request, res: Response) => {
     try {
       const { id } = req.params
       const articleDetailData = await this.articleService.getDetail(id)
@@ -27,7 +27,7 @@ class ArticleController {
     }
   }
 
-  getAll = async (req: IAuthRequest, res: Response) => {
+  getAll = async (req: Request, res: Response) => {
     try {
       const { interval, pages } = req.query
       const options = { interval: +interval, pages: +pages }
@@ -38,7 +38,7 @@ class ArticleController {
     }
   }
 
-  getOneById = async (req: IAuthRequest, res: Response) => {
+  getOneById = async (req: Request, res: Response) => {
     try {
       const { id } = req.params
       const articleData = await this.articleService.getOneById(id)
@@ -60,7 +60,7 @@ class ArticleController {
     }
   }
 
-  incView = async (req: IAuthRequest, res: Response) => {
+  incView = async (req: Request, res: Response) => {
     try {
       const { id } = req.params
       const articleData = await this.articleService.incView(id)

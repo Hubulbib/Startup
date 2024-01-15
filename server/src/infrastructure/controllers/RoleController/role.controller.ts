@@ -1,7 +1,7 @@
 import { Response } from 'express'
-import { IAuthRequest } from './interfaces/auth-request.interface'
-import { RoleService } from '../../core/services/RoleService/role.service'
-import { RoleRepositoryImpl } from '../db/repositories/role.repository.impl'
+import { IAuthRequest } from '../../interfaces/auth-request.interface'
+import { RoleService } from '../../../core/services/RoleService/role.service'
+import { RoleRepositoryImpl } from '../../db/repositories/role.repository.impl'
 
 class RoleController {
   constructor(readonly roleService: RoleService) {}
