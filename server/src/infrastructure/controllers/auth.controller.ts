@@ -32,7 +32,8 @@ class AuthController {
   refresh = async (req: Request, res: Response) => {
     try {
       const detail = { ua: req.get('User-Agent'), ip: req.ip }
-      const authBody = req.body
+      const cookies = req.cookies
+      const authBody = cookies.refreshToken
       const authData = await this.authService.refresh(authBody, detail)
       return res.json(authData)
     } catch (err) {

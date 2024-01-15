@@ -61,9 +61,10 @@ import ls from '@/helpers/localStorageHelpers.js'
 const router = useRouter();
 
 const signIn = async (data) => {
-  $api
+  axios
     .post("http://localhost:3000/api/auth/sign-in", data)
     .then((r) => {
+      console.log(r.data)
       ls.saveUser(r.data.user)
       ls.saveToken(r.data.accessToken)
       router.push({ name: "home" });

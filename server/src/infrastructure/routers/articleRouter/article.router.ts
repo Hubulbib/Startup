@@ -12,6 +12,7 @@ router.get('', [], articleController.getAll)
 
 router.get('/:id/detail', [], articleController.getDetail)
 
+// а зачем он нужен?
 router.get('/:id', [], articleController.getOneById)
 
 router.put('/:id', [EditOneMiddleware], articleController.editOne)

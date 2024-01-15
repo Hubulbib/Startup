@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import { ref } from "vue";
 import TagsMockup from "@/mockups/TagsMockup.js";
 import axios from "axios";
+import { $api } from "@/http/api.js";
 
 const description = ref("");
 
@@ -21,7 +22,7 @@ const add = (name) => {
 
 const createArticle = (data) => {
   const article = {
-    author: JSON.parse(localStorage.getItem("logged")).user._id,
+    author: JSON.parse(localStorage.getItem("user"))._id,
     content: {
       title: data.title,
       description: data.description,
@@ -57,12 +58,15 @@ const createArticle = (data) => {
 
   article.content.detail = detail;
   console.log(article);
+
+  return article
 };
 
-const postArticle = () => {
+const postArticle = (data) => {
   // добавить хедер authorization
-  axios
-    .post("http://localhost:3000/api/article", createArticle(data))
+  // createArticle(data)
+  $api
+    .post("/article", createArticle(data))
     .then((r) => console.log(r.data));
 };
 </script>
