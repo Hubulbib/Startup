@@ -79,12 +79,12 @@ const changeIconName = (name) => {
 
 onMounted(async () => {
   // http://localhost:3000/api/...
-  try {
-    const response = await axios.get("http://localhost:3000/api/user");
-    console.log(response.data);
-  } catch (error) {
-    console.log(error);
-  }
+  // try {
+  //   const response = await axios.get("http://localhost:3000/api/user");
+  //   console.log(response.data);
+  // } catch (error) {
+  //   console.log(error);
+  // }
 });
 </script>
 

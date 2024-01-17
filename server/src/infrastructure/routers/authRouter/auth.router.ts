@@ -8,7 +8,7 @@ router.post('/sign-in', [], authController.signIn)
 
 router.post('/sign-up', [], authController.signUp)
 
-router.get('/refresh', [AuthMiddleware], authController.refresh)
+router.get('/refresh', authController.refresh)
 
 router.post('/logout', [AuthMiddleware], authController.logout)
 

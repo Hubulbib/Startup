@@ -7,6 +7,7 @@ import { $api } from "@/http/api.js";
 const router = useRouter();
 
 const registration = async (data) => {
+  console.log('signup $api')
   const { password_confirm, ...payload } = data;
   $api.post("/auth/sign-up", payload).then((r) => {
     ls.saveUser(r.data.user);

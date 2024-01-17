@@ -1,3 +1,27 @@
+<script setup>
+import { useRouter } from "vue-router";
+import { $api } from "@/http/api.js";
+import pwVisibile from "@/helpers/pwVisibile.js";
+import ls from "@/helpers/localStorageHelpers.js";
+
+const router = useRouter();
+
+const signIn = async (data) => {
+  console.log('signin $api');
+  $api
+    .post("auth/sign-in", data)
+    .then((r) => {
+      console.log(r.data)
+      ls.saveUser(r.data.user);
+      ls.saveToken(r.data.accessToken);
+      router.push({ name: "home" });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+</script>
+
 <template>
   <div class="root">
     <h2 class="h-2 form-header">Авторизация</h2>
@@ -50,29 +74,6 @@
     </ul>
   </div>
 </template>
-
-<script setup>
-import { useRouter } from "vue-router";
-import { $api }from '@/http/api.js'
-import pwVisibile from "@/helpers/pwVisibile.js";
-import ls from '@/helpers/localStorageHelpers.js'
-
-const router = useRouter();
-
-const signIn = async (data) => {
-  $api
-    .post("auth/sign-in", data)
-    .then((r) => {
-      console.log(r.data)
-      ls.saveUser(r.data.user)
-      ls.saveToken(r.data.accessToken)
-      router.push({ name: "home" });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
-</script>
 
 <style lang="scss" scoped>
 .root {

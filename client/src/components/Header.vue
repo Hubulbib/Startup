@@ -25,6 +25,8 @@
         >
       </div>
       <my-button v-if="isLogged" @click="logout" class="">Выйти</my-button>
+      <my-button @click="isAuth" class="">Обновить</my-button>
+      <my-button @click="test" class="">Get Mentor req</my-button>
     </div>
   </div>
 </template>
@@ -35,11 +37,10 @@
 -->
 
 <script setup>
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { $api } from "@/http/api.js";
 import ls from "@/helpers/localStorageHelpers.js";
-import axios from "axios";
 
 const router = useRouter();
 
@@ -47,31 +48,34 @@ const isLogged = ref(false);
 const user = ref(null);
 
 const logout = async () => {
-  $api.post("/logout").then(() => {
+  $api.post("/auth/logout").then(() => {
     ls.logout();
     window.location.reload();
   });
 };
 
+const test = () => {
+  $api.get('/role/mentor').then(r => console.log(r.data))
+}
+
 const isAuth = async () => {
-  try {
-    const response = await axios.get("http://localhost:3000/api/auth/refresh", { withCredentials: true });
+  if (!ls.getToken()) return;
 
-    ls.saveUser(response.data.user);
-    ls.saveToken(response.data.accessToken);
+  $api
+    .get("/auth/refresh")
+    .then((r) => {
+      ls.saveUser(r.data.user);
+      ls.saveToken(r.data.accessToken);
 
-    isLogged.value = true;
-    user.value = user;
-  } catch (error) {
-    console.log(error)
-  }
+      isLogged.value = true;
+      user.value = r.data.user;
+    })
+    .catch((error) => console.log(error));
 };
 
-watch(router.currentRoute, () => {
-  if (ls.getToken()) {
-    isAuth()
-  }
-}, { immediate: true });
+onMounted(() => {
+  isAuth()
+})
 </script>
 
 <style lang="scss" scoped>
