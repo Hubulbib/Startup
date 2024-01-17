@@ -30,4 +30,4 @@ app.use('/api/subscribe', subscribeRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/role', roleRouter)
 
-await dbConnect().then(() => app.listen(PORT, () => console.log(`Server has been started on ${PORT}`)))
+dbConnect();
