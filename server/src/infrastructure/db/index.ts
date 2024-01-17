@@ -1,8 +1,24 @@
-import { connect } from 'mongoose'
+import mongoose from 'mongoose'
 import 'dotenv/config.js'
 
-const MONGO_URL = process.env.MONGO_URL
+export function dbConnect(): void {
+  const dbUri = process.env.MONGO_URL
+  mongoose.set("strictQuery", false);
+  mongoose.connection.on("reconnected", () => {
+    console.log({ msg: "mongoDb.reconnected" });
+  });
 
-export const dbConnect = async () => {
-  await connect(MONGO_URL).then(() => console.log('Database has started'))
+  mongoose.connection.on("disconnected", () => {
+    console.log({ msg: "mongoDb.disconnected" });
+  });
+
+  mongoose.connection.on("open", () => {
+    console.log({ msg: "mongoDb.connected", data: { uri: dbUri } });
+  });
+
+  try {
+    mongoose.connect(dbUri);
+  } catch (err) {
+    console.log({ msg: "mongoDb.failed", err });
+  }
 }
