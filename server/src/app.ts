@@ -24,10 +24,12 @@ app.use(
 
 // http://localhost:3000
 
+// API
 app.use('/api/user', userRouter)
 app.use('/api/article', articleRouter)
 app.use('/api/subscribe', subscribeRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/role', roleRouter)
 
+// dbs
 dbConnect();
