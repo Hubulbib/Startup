@@ -5,17 +5,17 @@
         <router-link class="header__logo" :to="{ name: 'home' }"
           >Logo</router-link
         >
-        <h2 class="header__desc">Привет, {{ authStore.user.value ? `${authStore.user.value.name} ${authStore.user.value.surname}` : 'анонимус' }}</h2>
+        <h2 class="header__desc">Шапка сайта</h2>
       </div>
       <div class="header__account">
         <my-button class="header__account--switch">THEME</my-button>
         <router-link
           :to="{ name: 'account' }"
-          v-if="authStore.isAuth"
+          v-if="isLogged"
           class="header__account--user"
         >
           <img src="@/assets/empty-avatar.svg" alt="Аватарка пользователя" />
-          <span>{{ authStore.user.name }} {{ authStore.user.surname }}</span>
+          <span>{{ user.name }} {{ user.surname }}</span>
         </router-link>
         <router-link
           v-else
@@ -24,7 +24,9 @@
           >Войти</router-link
         >
       </div>
-      <my-button v-if="authStore.isAuth" @click="authStore.logout" class="">Выйти</my-button>
+      <my-button v-if="isLogged" @click="logout" class="">Выйти</my-button>
+      <my-button @click="isAuth" class="">Обновить</my-button>
+      <my-button @click="test" class="">Get Mentor req</my-button>
     </div>
   </div>
 </template>
@@ -35,50 +37,45 @@
 -->
 
 <script setup>
-import { useAuthStore } from '@/stores/AuthStore';
+import { onMounted, ref, watch } from "vue";
+import { useRouter } from "vue-router";
+import { $api } from "@/http/api.js";
+import ls from "@/helpers/localStorageHelpers.js";
 
-const authStore = useAuthStore();
+const router = useRouter();
 
+const isLogged = ref(false);
+const user = ref(null);
 
-// import { ref, watch } from "vue";
-// import { useRouter } from "vue-router";
-// import { $api } from "@/http/api.js";
-// import ls from "@/helpers/localStorageHelpers.js";
-// import axios from "axios";
+const logout = async () => {
+  $api.post("/auth/logout").then(() => {
+    ls.logout();
+    window.location.reload();
+  });
+};
 
+const test = () => {
+  $api.get('/role/mentor').then(r => console.log(r.data))
+}
 
+const isAuth = async () => {
+  if (!ls.getToken()) return;
 
-// const router = useRouter();
+  $api
+    .get("/auth/refresh")
+    .then((r) => {
+      ls.saveUser(r.data.user);
+      ls.saveToken(r.data.accessToken);
 
-// const isLogged = ref(false);
-// const user = ref(null);
+      isLogged.value = true;
+      user.value = r.data.user;
+    })
+    .catch((error) => console.log(error));
+};
 
-// const logout = async () => {
-//   $api.post("/logout").then(() => {
-//     ls.logout();
-//     window.location.reload();
-//   });
-// };
-
-// const isAuth = async () => {
-//   try {
-//     const response = await axios.get("http://localhost:3000/api/auth/refresh", { withCredentials: true });
-
-//     ls.saveUser(response.data.user);
-//     ls.saveToken(response.data.accessToken);
-
-//     isLogged.value = true;
-//     user.value = user;
-//   } catch (error) {
-//     // console.log(error)
-//   }
-// };
-
-// watch(router.currentRoute, () => {
-//   if (ls.getToken()) {
-//     isAuth()
-//   }
-// }, { immediate: true });
+onMounted(() => {
+  isAuth()
+})
 </script>
 
 <style lang="scss" scoped>

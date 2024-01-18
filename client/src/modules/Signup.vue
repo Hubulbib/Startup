@@ -3,21 +3,24 @@ import pwVisibile from "@/helpers/pwVisibile.js";
 import { useRouter } from "vue-router";
 import ls from "@/helpers/localStorageHelpers.js";
 import { $api } from "@/http/api.js";
-import { useAuthStore } from "@/stores/AuthStore";
 
-const authStore = useAuthStore();
 const router = useRouter();
 
-const signUp = (data) => {
+const registration = async (data) => {
+  console.log('signup $api')
   const { password_confirm, ...payload } = data;
-  authStore.signup(payload);
+  $api.post("/auth/sign-up", payload).then((r) => {
+    ls.saveUser(r.data.user);
+    ls.saveToken(r.data.accessToken);
+    router.push({ name: "home" });
+  });
 };
 </script>
 
 <template>
   <div class="wrapper">
     <h2 class="form-header">Регистрация</h2>
-    <FormKit type="form" :actions="false" @submit="signUp">
+    <FormKit type="form" :actions="false" @submit="registration">
       <FormKit
         v-focus
         type="text"

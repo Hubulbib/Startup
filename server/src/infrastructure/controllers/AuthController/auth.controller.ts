@@ -16,7 +16,7 @@ class AuthController {
       this.resCookieRefreshToken(res, authData.refreshToken)
       res.json(new ResponseTokenDto(authData))
     } catch (err) {
-      res.status(500).json(err)
+      res.status(401).json(err)
       console.log(err)
     }
   }
@@ -29,12 +29,13 @@ class AuthController {
       this.resCookieRefreshToken(res, authData.refreshToken)
       return res.status(201).json(new ResponseTokenDto(authData))
     } catch (err) {
-      res.status(500).json(err)
+      res.status(401).json(err)
       console.log(err)
     }
   }
 
   refresh = async (req: IAuthRequest, res: Response) => {
+    // console.log(req.cookies)
     try {
       const detail = { ua: req.get('User-Agent'), ip: req.ip }
       const authBody = req.cookies
@@ -42,7 +43,7 @@ class AuthController {
       this.resCookieRefreshToken(res, authData.refreshToken)
       return res.json(new ResponseTokenDto(authData))
     } catch (err) {
-      res.status(500).json(err)
+      res.status(401).json(err)
       console.log(err)
     }
   }
@@ -54,7 +55,7 @@ class AuthController {
       res.clearCookie('refreshToken')
       return res.json(authData)
     } catch (err) {
-      res.status(500).json(err)
+      res.status(401).json(err)
       console.log(err)
     }
   }

@@ -52,7 +52,7 @@ export class AuthRepositoryImpl implements AuthRepository {
     const userData = new TokenRepositoryImpl().validateRefreshToken(refreshDto.refreshToken)
     const tokenFromDB = await new TokenRepositoryImpl().findToken(refreshDto.refreshToken)
     if (!userData || !tokenFromDB) {
-      throw 'Пользователь не авторизован'
+      throw 'userdata || db Пользователь не авторизован'
       //throw ApiError.UnauthorizedError()
     }
     const user = await this.userRepository.findById(userData['_doc']._id)

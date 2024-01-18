@@ -13,6 +13,9 @@ import roleRouter from './infrastructure/routers/roleRouter/role.router'
 const app = express()
 const PORT = process.env.PORT
 
+// dbs
+dbConnect();
+
 app.use(express.json())
 app.use(cookieParser())
 app.use(
@@ -24,10 +27,15 @@ app.use(
 
 // http://localhost:3000
 
+// API
 app.use('/api/user', userRouter)
 app.use('/api/article', articleRouter)
 app.use('/api/subscribe', subscribeRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/role', roleRouter)
 
-await dbConnect().then(() => app.listen(PORT, () => console.log(`Server has been started on ${PORT}`)))
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
