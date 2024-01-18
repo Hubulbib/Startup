@@ -12,15 +12,6 @@ const signUp = (data) => {
   const { password_confirm, ...payload } = data;
   authStore.signup(payload);
 }
-// const registration = async (data) => {
-//   console.log('signup $api')
-//   const { password_confirm, ...payload } = data;
-//   $api.post("/auth/sign-up", payload).then((r) => {
-//     ls.saveUser(r.data.user);
-//     ls.saveToken(r.data.accessToken);
-//     router.push({ name: "home" });
-//   });
-// };
 </script>
 
 <template>

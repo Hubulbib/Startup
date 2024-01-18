@@ -3,30 +3,11 @@ import { useAuthStore } from '@/stores/AuthStore';
 import { ref } from 'vue';
 import pwVisibile from "@/helpers/pwVisibile.js";
 
-// import { useRouter } from "vue-router";
-// import { $api } from "@/http/api.js";
-// import ls from "@/helpers/localStorageHelpers.js";
-// const router = useRouter();
-
 const email = ref();
 const password = ref();
 const authStore = useAuthStore();
 const login = () => authStore.login(email.value, password.value);
 
-// const signIn = async (data) => {
-//   console.log('signin $api');
-//   $api
-//     .post("auth/sign-in", data)
-//     .then((r) => {
-//       console.log(r.data)
-//       ls.saveUser(r.data.user);
-//       ls.saveToken(r.data.accessToken);
-//       router.push({ name: "home" });
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-// };
 </script>
 
 <template>

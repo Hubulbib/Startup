@@ -2,27 +2,23 @@
   <div class="wrapper">
     <div class="header">
       <div class="header__wrapper">
-        <router-link class="header__logo" :to="{ name: 'home' }"
-          >Logo</router-link
-        >
-        <h2 class="header__desc">Привет, {{ authStore.user.value ? `${authStore.user.value.name} ${authStore.user.value.surname}` : 'анонимус' }}</h2>
+        <router-link class="header__logo" :to="{ name: 'home' }">Logo</router-link>
+        <h2 class="header__desc">Привет, {{ authStore.user.value ? `${authStore.user.value.name}
+                  ${authStore.user.value.surname}` : 'анонимус' }}</h2>
       </div>
       <div class="header__account">
         <my-button class="header__account--switch">THEME</my-button>
         <router-link
           :to="{ name: 'account' }"
           v-if="authStore.isAuth"
-          class="header__account--user"
-        >
+          class="header__account--user">
           <img src="@/assets/empty-avatar.svg" alt="Аватарка пользователя" />
           <span>{{ authStore.user.name }} {{ authStore.user.surname }}</span>
         </router-link>
         <router-link
           v-else
           :to="{ name: 'login' }"
-          class="header__account--login"
-          >Войти</router-link
-        >
+          class="header__account--login">Войти</router-link>
       </div>
       <my-button v-if="authStore.isAuth" @click="authStore.logout" class="">Выйти</my-button>
       <my-button @click="authStore.onLoadAuthCheck()" class="">Обновить</my-button>
@@ -44,49 +40,11 @@ const authStore = useAuthStore();
 
 const test = () => {
   try {
-  const res = $api.get('/role/mentor').then(r => console.log(r.data)).catch(e => console.log(e.message))
-} catch(e) {
-  console.log(e)
+    const res = $api.get('/role/mentor').then(r => console.log(r.data)).catch(e => console.log(e.message))
+  } catch (e) {
+    console.log(e)
+  }
 }
-}
-
-// import { onMounted, ref, watch } from "vue";
-// import { useRouter } from "vue-router";
-
-// import ls from "@/helpers/localStorageHelpers.js";
-
-// const router = useRouter();
-
-// const isLogged = ref(false);
-// const user = ref(null);
-
-// const logout = async () => {
-//   $api.post("/auth/logout").then(() => {
-//     ls.logout();
-//     window.location.reload();
-//   });
-// };
-
-
-
-// const isAuth = async () => {
-//   if (!ls.getToken()) return;
-
-//   $api
-//     .get("/auth/refresh")
-//     .then((r) => {
-//       ls.saveUser(r.data.user);
-//       ls.saveToken(r.data.accessToken);
-
-//       isLogged.value = true;
-//       user.value = r.data.user;
-//     })
-//     .catch((error) => console.log(error));
-// };
-
-// onMounted(() => {
-//   isAuth()
-// })
 </script>
 
 <style lang="scss" scoped>
@@ -98,6 +56,7 @@ const test = () => {
 
   margin-bottom: 40px;
 }
+
 .header {
   max-width: 1200px;
   margin: 0 auto;
@@ -117,7 +76,7 @@ const test = () => {
 
     margin-right: auto;
 
-    & > * {
+    &>* {
       display: flex;
       align-items: center;
     }
