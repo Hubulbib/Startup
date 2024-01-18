@@ -5,17 +5,17 @@
         <router-link class="header__logo" :to="{ name: 'home' }"
           >Logo</router-link
         >
-        <h2 class="header__desc">Шапка сайта</h2>
+        <h2 class="header__desc">Привет, {{ authStore.user.value ? `${authStore.user.value.name} ${authStore.user.value.surname}` : 'анонимус' }}</h2>
       </div>
       <div class="header__account">
         <my-button class="header__account--switch">THEME</my-button>
         <router-link
           :to="{ name: 'account' }"
-          v-if="isLogged"
+          v-if="authStore.isAuth"
           class="header__account--user"
         >
           <img src="@/assets/empty-avatar.svg" alt="Аватарка пользователя" />
-          <span>{{ user.name }} {{ user.surname }}</span>
+          <span>{{ authStore.user.name }} {{ authStore.user.surname }}</span>
         </router-link>
         <router-link
           v-else
@@ -24,8 +24,8 @@
           >Войти</router-link
         >
       </div>
-      <my-button v-if="isLogged" @click="logout" class="">Выйти</my-button>
-      <my-button @click="isAuth" class="">Обновить</my-button>
+      <my-button v-if="authStore.isAuth" @click="authStore.logout" class="">Выйти</my-button>
+      <my-button @click="authStore.onLoadAuthCheck()" class="">Обновить</my-button>
       <my-button @click="test" class="">Get Mentor req</my-button>
     </div>
   </div>
@@ -37,45 +37,56 @@
 -->
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import { useRouter } from "vue-router";
+import { useAuthStore } from '@/stores/AuthStore';
 import { $api } from "@/http/api.js";
-import ls from "@/helpers/localStorageHelpers.js";
 
-const router = useRouter();
-
-const isLogged = ref(false);
-const user = ref(null);
-
-const logout = async () => {
-  $api.post("/auth/logout").then(() => {
-    ls.logout();
-    window.location.reload();
-  });
-};
+const authStore = useAuthStore();
 
 const test = () => {
-  $api.get('/role/mentor').then(r => console.log(r.data))
+  try {
+  const res = $api.get('/role/mentor').then(r => console.log(r.data)).catch(e => console.log(e.message))
+} catch(e) {
+  console.log(e)
+}
 }
 
-const isAuth = async () => {
-  if (!ls.getToken()) return;
+// import { onMounted, ref, watch } from "vue";
+// import { useRouter } from "vue-router";
 
-  $api
-    .get("/auth/refresh")
-    .then((r) => {
-      ls.saveUser(r.data.user);
-      ls.saveToken(r.data.accessToken);
+// import ls from "@/helpers/localStorageHelpers.js";
 
-      isLogged.value = true;
-      user.value = r.data.user;
-    })
-    .catch((error) => console.log(error));
-};
+// const router = useRouter();
 
-onMounted(() => {
-  isAuth()
-})
+// const isLogged = ref(false);
+// const user = ref(null);
+
+// const logout = async () => {
+//   $api.post("/auth/logout").then(() => {
+//     ls.logout();
+//     window.location.reload();
+//   });
+// };
+
+
+
+// const isAuth = async () => {
+//   if (!ls.getToken()) return;
+
+//   $api
+//     .get("/auth/refresh")
+//     .then((r) => {
+//       ls.saveUser(r.data.user);
+//       ls.saveToken(r.data.accessToken);
+
+//       isLogged.value = true;
+//       user.value = r.data.user;
+//     })
+//     .catch((error) => console.log(error));
+// };
+
+// onMounted(() => {
+//   isAuth()
+// })
 </script>
 
 <style lang="scss" scoped>

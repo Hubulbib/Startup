@@ -1,26 +1,32 @@
 <script setup>
 import pwVisibile from "@/helpers/pwVisibile.js";
 import { useRouter } from "vue-router";
-import ls from "@/helpers/localStorageHelpers.js";
-import { $api } from "@/http/api.js";
+// import ls from "@/helpers/localStorageHelpers.js";
+// import { $api } from "@/http/api.js";
+import { useAuthStore } from "@/stores/AuthStore";
 
+const authStore = useAuthStore();
 const router = useRouter();
 
-const registration = async (data) => {
-  console.log('signup $api')
+const signUp = (data) => {
   const { password_confirm, ...payload } = data;
-  $api.post("/auth/sign-up", payload).then((r) => {
-    ls.saveUser(r.data.user);
-    ls.saveToken(r.data.accessToken);
-    router.push({ name: "home" });
-  });
-};
+  authStore.signup(payload);
+}
+// const registration = async (data) => {
+//   console.log('signup $api')
+//   const { password_confirm, ...payload } = data;
+//   $api.post("/auth/sign-up", payload).then((r) => {
+//     ls.saveUser(r.data.user);
+//     ls.saveToken(r.data.accessToken);
+//     router.push({ name: "home" });
+//   });
+// };
 </script>
 
 <template>
   <div class="wrapper">
     <h2 class="form-header">Регистрация</h2>
-    <FormKit type="form" :actions="false" @submit="registration">
+    <FormKit type="form" :actions="false" @submit="signUp">
       <FormKit
         v-focus
         type="text"

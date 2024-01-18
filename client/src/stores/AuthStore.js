@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import { ref, reactive, computed } from 'vue';
-import { API_URL, $api } from "@/http/api";
+import { ref, reactive } from 'vue';
+import { API_URL } from "@/http/api";
 import AuthService from '@/services/AuthService';
 import ls from '@/helpers/localStorageHelpers.js'
 import { useRouter, useRoute } from "vue-router";
@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
       user.value = res.data.user;
     }
     catch (e) {
-      console.log(e);
+      console.log(e?.message);
       console.log(e?.response?.data);
     }
   }

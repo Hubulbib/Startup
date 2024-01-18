@@ -1,41 +1,49 @@
 <script setup>
-import { useRouter } from "vue-router";
-import { $api } from "@/http/api.js";
+import { useAuthStore } from '@/stores/AuthStore';
+import { ref } from 'vue';
 import pwVisibile from "@/helpers/pwVisibile.js";
-import ls from "@/helpers/localStorageHelpers.js";
 
-const router = useRouter();
+// import { useRouter } from "vue-router";
+// import { $api } from "@/http/api.js";
+// import ls from "@/helpers/localStorageHelpers.js";
+// const router = useRouter();
 
-const signIn = async (data) => {
-  console.log('signin $api');
-  $api
-    .post("auth/sign-in", data)
-    .then((r) => {
-      console.log(r.data)
-      ls.saveUser(r.data.user);
-      ls.saveToken(r.data.accessToken);
-      router.push({ name: "home" });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+const email = ref();
+const password = ref();
+const authStore = useAuthStore();
+const login = () => authStore.login(email.value, password.value);
+
+// const signIn = async (data) => {
+//   console.log('signin $api');
+//   $api
+//     .post("auth/sign-in", data)
+//     .then((r) => {
+//       console.log(r.data)
+//       ls.saveUser(r.data.user);
+//       ls.saveToken(r.data.accessToken);
+//       router.push({ name: "home" });
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// };
 </script>
 
 <template>
   <div class="root">
     <h2 class="h-2 form-header">Авторизация</h2>
 
-    <FormKit type="form" :actions="false" class="form" @submit="signIn">
+    <FormKit type="form" :actions="false" class="form" @submit="login">
       <FormKit
         v-focus
+        v-model="email"
         type="email"
         label="Введите логин"
         placeholder="example@example.com"
         name="email"
-        validation="required|*email"
-      />
+        validation="required|*email" />
       <FormKit
+        v-model="password"
         type="password"
         label="Введите пароль"
         name="password"
@@ -43,8 +51,7 @@ const signIn = async (data) => {
         prefix-icon="password"
         suffix-icon="eyeClosed"
         @suffix-icon-click="pwVisibile"
-        suffix-icon-class="hover:text-blue-500"
-      />
+        suffix-icon-class="hover:text-blue-500" />
       <div class="flex">
         <router-link :to="{ name: 'signup' }" class="sign-up">
           Регистрация
