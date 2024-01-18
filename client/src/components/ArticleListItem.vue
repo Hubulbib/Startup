@@ -19,7 +19,7 @@ const blockHeightStyle = `max-height: ${props.blockHeight}px`;
 const emit = defineEmits(["onHide"]);
 
 const onHide = () => {
-  emit("onHide", props.item.id);
+  emit("onHide", props.item._id);
 };
 
 const articleCard = ref(null);
