@@ -9,8 +9,8 @@ const articles = ref([]);
 const isFull = ref(false)
 
 const hide = (id) => {
-  ArticlesMockup = ArticlesMockup.filter(item => item.id !== id)
-  articles.value = articles.value.filter(item => item.id !== id)
+  ArticlesMockup = ArticlesMockup.filter(item => item._id !== id)
+  articles.value = articles.value.filter(item => item._id !== id)
 }
 
 const fetchArticles = () => {

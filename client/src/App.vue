@@ -13,6 +13,13 @@
 <script setup>
 import Header from "@/components/Header.vue";
 import MyNav from "@/components/MyNav.vue"
+
+import { useAuthStore } from '@/stores/AuthStore';
+
+const authStore = useAuthStore();
+
+authStore.onLoadAuthCheck();
+
 </script>
 
 <style lang="scss">
