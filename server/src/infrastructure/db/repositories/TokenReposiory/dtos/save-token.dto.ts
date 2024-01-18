@@ -1,8 +1,7 @@
 export class SaveTokenDto {
   constructor(
-    readonly userId: string,
+    readonly uuidUser: string,
+    readonly uuidDevice: string,
     readonly refreshToken: string,
-    readonly ua: string,
-    readonly ip: string,
   ) {}
 }

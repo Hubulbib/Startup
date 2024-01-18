@@ -1,7 +1,7 @@
 import { compare, hash } from 'bcrypt'
 import 'dotenv/config.js'
 import { UserMapper } from '../mappers/user.mapper.js'
-import { IUserDoc, User } from '../entities/user.entity'
+import { User, userModel } from '../entities/user.entity'
 import { TokenRepositoryImpl } from './TokenReposiory/token.repository.impl'
 import { AuthRepository } from '../../../core/repositories/AuthRepository/auth.repository.js'
 import { AuthBackDto } from '../../../core/repositories/AuthRepository/dtos/auth-back.dto'
@@ -10,12 +10,14 @@ import { SignUpDto } from '../../../core/repositories/AuthRepository/dtos/sign-u
 import { RefreshDto } from '../../../core/repositories/AuthRepository/dtos/refresh.dto'
 import { DetailDto } from '../../../core/repositories/AuthRepository/dtos/detail.dto'
 import { Role } from '../entities/role.entity'
+import { genUuid } from '../../utils/generate.js'
 
 export class AuthRepositoryImpl implements AuthRepository {
-  private readonly userRepository = User
+  private readonly userRepository = userModel
   private readonly roleRepository = Role
 
-  public signIn = async (signInDto: SignInDto, detail: DetailDto): Promise<AuthBackDto> => {
+  // TODO: tmp: any
+  public signIn = async (signInDto: SignInDto, detail: DetailDto): Promise<any> => {
     const user = await this.userRepository.findOne({ email: signInDto.email })
     if (!user) {
       throw Error('Пользователь не найден')
@@ -26,24 +28,31 @@ export class AuthRepositoryImpl implements AuthRepository {
       throw Error('Неверные данные при входе')
       //throw ApiError.BadRequest('Неверные данные при входе')
     }
-    return await this.responseData(user, detail.ua, detail.ip)
+    //return await this.responseData(user, detail.ua, detail.ip)
   }
+
   public signUp = async (signUpDto: SignUpDto, detail: DetailDto): Promise<AuthBackDto> => {
     const candidate = await this.userRepository.findOne({ email: signUpDto.email })
     if (candidate) {
       throw Error('Пользователь уже существует')
       //throw ApiError.BadRequest('Пользователь с таким username уже существует')
     }
+    const device = {
+      ...detail,
+      uuid: genUuid()
+    }
     const hashedPassword = await hash(signUpDto.password, 4)
-    const user = await this.userRepository.create({ ...signUpDto, password: hashedPassword })
+    const user = await this.userRepository.create({ ...signUpDto, uuid: genUuid(), password: hashedPassword, devices: [device] })
 
-    return await this.responseData(user, detail.ua, detail.ip)
+    return await this.responseData(user, device.uuid)
   }
+
   public logout = async (refreshToken: string): Promise<void> => {
     return await new TokenRepositoryImpl().removeToken(refreshToken)
   }
 
-  public refresh = async (refreshDto: RefreshDto, detail: DetailDto): Promise<AuthBackDto> => {
+  // TODO: tmp any
+  public refresh = async (refreshDto: RefreshDto, detail: DetailDto): Promise<any> => {
     if (!refreshDto.refreshToken) {
       throw 'Пользователь не авторизован'
       //throw ApiError.UnauthorizedError()
@@ -57,12 +66,12 @@ export class AuthRepositoryImpl implements AuthRepository {
     }
     const user = await this.userRepository.findById(userData['_doc']._id)
 
-    return await this.responseData(user, detail.ua, detail.ip)
+    //return await this.responseData(user, uuidDevice)
   }
 
-  private responseData = async (userData: IUserDoc, ua: string, ip: string): Promise<AuthBackDto> => {
+  private responseData = async (userData: User, uuidDevice: string): Promise<AuthBackDto> => {
     const tokens = new TokenRepositoryImpl().generateTokens({ ...userData })
-    await new TokenRepositoryImpl().saveToken({ userId: userData._id, refreshToken: tokens.refreshToken, ua, ip })
+    await new TokenRepositoryImpl().saveToken({ uuidUser: userData.uuid, refreshToken: tokens.refreshToken, uuidDevice})
     const user = { ...userData, roleDoc: await this.roleRepository.findOne({ name: userData.role }) }
     return {
       ...tokens,

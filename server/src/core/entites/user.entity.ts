@@ -2,7 +2,7 @@ import { RoleEntity } from './role.entity'
 
 export class UserEntity {
   constructor(
-    readonly _id: string,
+    readonly uuid: string,
     readonly name: string,
     readonly surname: string,
     readonly email: string,

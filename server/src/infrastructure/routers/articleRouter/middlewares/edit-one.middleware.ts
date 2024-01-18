@@ -3,7 +3,7 @@ import 'dotenv/config.js'
 import { NextFunction, Response } from 'express'
 import { RoleMiddleware } from '../../../middlewares/RoleMiddleware/role.middleware'
 import { IAuthRequest } from '../../../interfaces/auth-request.interface'
-import { UserRoleEnum } from '../../../db/entities/enums/user-role.enum'
+import { EUserRole } from '../../../db/entities/enums/user-role.enum'
 import { AdminReqBodyDto } from './dtos/admin.req-body.dto'
 import { MentorReqBodyDto } from './dtos/mentor.req-body.dto'
 import { UserReqBodyDto } from './dtos/user.req-body.dto'
@@ -26,13 +26,13 @@ export const EditOneMiddleware = (req: IAuthRequest, res: Response, next: NextFu
           ip: req.ip,
         },
       }
-      if (req['user'].role === UserRoleEnum.admin) {
+      if (req['user'].role === EUserRole.admin) {
         req.body = new AdminReqBodyDto(req.body)
         return RoleMiddleware.AdminRole(req, res, next)
-      } else if (req['user'].role === UserRoleEnum.mentor) {
+      } else if (req['user'].role === EUserRole.mentor) {
         req.body = new MentorReqBodyDto(req.body)
         return RoleMiddleware.MentorRole(req, res, next)
-      } else if (req['user'].role === UserRoleEnum.user) {
+      } else if (req['user'].role === EUserRole.user) {
         req.body = new UserReqBodyDto(req.body)
         return RoleMiddleware.UserRole(req, res, next)
       } else res.status(403).end()

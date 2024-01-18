@@ -8,19 +8,20 @@ import { UserRepository } from '../../../core/repositories/UserRepository/user.r
 import { EditBodyDto } from '../../../core/repositories/UserRepository/dtos/edit-body.dto'
 import { GetAllBodyDto } from '../../../core/repositories/UserRepository/dtos/get-all-body.dto'
 import { RoleMapper } from '../mappers/role.mapper'
+import { userModel } from '../entities/user.entity'
 
 export class UserRepositoryImpl implements UserRepository {
   private readonly articleRepository = Article
   private readonly subscribeRepository = Subscribe
   private readonly roleRepository = Role
-  private readonly userRepository = model('User')
+  private readonly userRepository = userModel
 
   async getOneById(userId: string): Promise<UserEntity> {
     let user = await this.userRepository.findById(userId)
     if (!user) {
       throw Error('Такого пользователя не существует')
     }
-    const newUser = {
+    const newUser: any = {
       ...user,
       roleDoc: await this.roleRepository.findOne({ name: user.role }),
       userSubscribes: await this.getAllSubscribe(userId),
@@ -38,7 +39,7 @@ export class UserRepositoryImpl implements UserRepository {
     //Promise<Promise<UserEntity>[]>
     return await Promise.all(
       (await this.userRepository.find({}, null, { limit: getAllBody.options.interval * getAllBody.options.pages })).map(
-        async (el) =>
+        async (el: any) =>
           UserMapper.toDomain({
             ...el._doc,
             roleDoc: RoleMapper.toDomain(await this.roleRepository.findOne({ name: el.role })),
@@ -52,7 +53,7 @@ export class UserRepositoryImpl implements UserRepository {
   async getAllForList(getAllBody: GetAllBodyDto): Promise<UserForListEntity[]> {
     return (
       await this.userRepository.find({}, null, { limit: getAllBody.options.interval * getAllBody.options.pages })
-    ).map((el) => UserMapper.toDomainForList(el._doc))
+    ).map((el: any) => UserMapper.toDomainForList(el._doc))
   }
 
   async editOne(userId: string, editBody: EditBodyDto): Promise<UserEntity> {
@@ -67,8 +68,8 @@ export class UserRepositoryImpl implements UserRepository {
     const user = await this.userRepository.findById(userId)
     if (!user) {
       throw Error('Такого пользователя не существует')
-    }
-    return UserMapper.toDomain(await user.deleteOne({}))
+    }await this.userRepository.deleteOne({_id: userId})
+    return UserMapper.toDomain(user)
   }
 
   private async getAllSubscribe(userId: string): Promise<string[]> {

@@ -1,6 +1,6 @@
 import { JwtPayload } from 'jsonwebtoken'
 import { SaveTokenDto } from '../dtos/save-token.dto'
-import { TokenDoc } from '../../../entities/token.entity'
+import { Session } from '../../../entities/token.entity'
 import { GenerateTokensResult } from '../dtos/generate-tokens-result.dto'
 
 export interface TokenRepository {
@@ -8,5 +8,5 @@ export interface TokenRepository {
   validateAccessToken(accessToken: string): string | JwtPayload
   saveToken(saveTokenDto: SaveTokenDto): Promise<void>
   removeToken(refreshToken: string): Promise<void>
-  findToken(refreshToken: string): Promise<TokenDoc>
+  findToken(refreshToken: string): Promise<Session>
 }

@@ -1,12 +1,14 @@
 import jwt from 'jsonwebtoken'
-import { Token } from '../../entities/token.entity'
+import { Session, sessionModel } from '../../entities/token.entity'
 import { TokenRepository } from './interfaces/token.interface'
 import { SaveTokenDto } from './dtos/save-token.dto'
 import { GenerateTokensResult } from './dtos/generate-tokens-result.dto'
 import 'dotenv/config.js'
+import { genUuid } from '../../../utils/generate'
+import { tsUnix } from '../../../utils/date'
 
 export class TokenRepositoryImpl implements TokenRepository {
-  private readonly tokenRepository = Token
+  private readonly session = sessionModel
 
   private readonly SECRET_ACCESS_JWT = process.env.SECRET_ACCESS_JWT
   private readonly SECRET_REFRESH_JWT = process.env.SECRET_REFRESH_JWT
@@ -37,33 +39,46 @@ export class TokenRepositoryImpl implements TokenRepository {
   }
 
   public saveToken = async (saveTokenDto: SaveTokenDto) => {
-    const EXPIRES_IN = Date.now() + this.MAX_AGE_TOKEN
+    const EXPIRES_IN = Math.round((Date.now() + this.MAX_AGE_TOKEN) / 1000)
 
-    const tokenData = await this.tokenRepository.find({ userId: saveTokenDto.userId }, null, { sort: { createdAt: 1 } })
+    // const tokenData = await this.session.find({ userId: saveTokenDto.userId }, null, { sort: { createdAt: 1 } })
 
-    if (tokenData.length == 5) {
-      tokenData[4].refreshToken = saveTokenDto.refreshToken
-      tokenData[4].ua = saveTokenDto.ua
-      tokenData[4].ip = saveTokenDto.ip
-      tokenData[4].expiresIn = EXPIRES_IN
-      tokenData[4].createdAt = new Date()
+    // if (tokenData.length == 5) {
+    //   tokenData[4].refreshToken = saveTokenDto.refreshToken
+    //   tokenData[4].ua = saveTokenDto.ua
+    //   tokenData[4].ip = saveTokenDto.ip
+    //   tokenData[4].expiresIn = EXPIRES_IN
+    //   tokenData[4].createdAt = new Date()
 
-      tokenData.map((el) => {
-        this.removeToken(el.refreshToken)
-      })
+    //   tokenData.map((el) => {
+    //     this.removeToken(el.refreshToken)
+    //   })
 
-      await tokenData[4].save()
-      return
+    //   await tokenData[4].save()
+    //   return
+    // }
+    const sessionData: Session = {
+      uuid: genUuid(),
+      ids: {
+        // TODO: from user device
+        uuidDevice: `${saveTokenDto.uuidDevice}`,
+        uuidUser: `${saveTokenDto.uuidUser}`
+      },
+      refreshToken: {token: saveTokenDto.refreshToken, expire: EXPIRES_IN},
+      dates: {
+        created: tsUnix(),
+        updated: tsUnix()
+      }
     }
 
-    await this.tokenRepository.create({ ...saveTokenDto, expiresIn: EXPIRES_IN, createdAt: new Date() })
+    await this.session.create(sessionData)
   }
 
   public removeToken = async (refreshToken: string) => {
-    await this.tokenRepository.deleteOne({ refreshToken })
+    await this.session.deleteOne({ refreshToken })
   }
 
   public findToken = async (refreshToken: string) => {
-    return this.tokenRepository.findOne({ refreshToken })
+    return this.session.findOne({ "refreshToken.token": refreshToken })
   }
 }
