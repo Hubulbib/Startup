@@ -37,6 +37,13 @@ class SessionRefreshToken {
   @prop({ type: Number, required: true })
   expire: number;
 }
+
+class SessionAccessToken {
+  @prop({ type: String, required: true })
+  token: string;
+  @prop({ type: Number, required: true })
+  expire: number;
+}
 @modelOptions({
   schemaOptions: { collection: "session" },
   options: {
@@ -51,6 +58,8 @@ export class Session {
   ids: SessionIds;
   @prop({ type: () => SessionRefreshToken, default: {}, required: true, _id: false })
   refreshToken: SessionRefreshToken;
+  @prop({ type: () => SessionAccessToken, default: {}, required: true, _id: false })
+  accessToken: SessionAccessToken;
   @prop({ type: () => BaseDates, default: {}, required: true, _id: false })
   dates: BaseDates
 }

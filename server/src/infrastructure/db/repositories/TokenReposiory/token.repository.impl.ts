@@ -39,7 +39,7 @@ export class TokenRepositoryImpl implements TokenRepository {
   }
 
   public saveToken = async (saveTokenDto: SaveTokenDto) => {
-    const EXPIRES_IN = Math.round((Date.now() + this.MAX_AGE_TOKEN) / 1000)
+    const expire = Math.round((Date.now() + this.MAX_AGE_TOKEN) / 1000)
 
     // const tokenData = await this.session.find({ userId: saveTokenDto.userId }, null, { sort: { createdAt: 1 } })
 
@@ -64,7 +64,8 @@ export class TokenRepositoryImpl implements TokenRepository {
         uuidDevice: `${saveTokenDto.uuidDevice}`,
         uuidUser: `${saveTokenDto.uuidUser}`
       },
-      refreshToken: {token: saveTokenDto.refreshToken, expire: EXPIRES_IN},
+      refreshToken: {token: saveTokenDto.tokens.refreshToken, expire,},
+      accessToken: {token: saveTokenDto.tokens.accessToken, expire,},
       dates: {
         created: tsUnix(),
         updated: tsUnix()
@@ -75,10 +76,14 @@ export class TokenRepositoryImpl implements TokenRepository {
   }
 
   public removeToken = async (refreshToken: string) => {
-    await this.session.deleteOne({ refreshToken })
+    await this.session.deleteOne({ "refreshToken.token": refreshToken })
   }
 
   public findToken = async (refreshToken: string) => {
     return this.session.findOne({ "refreshToken.token": refreshToken })
+  }
+
+  public findTokensByIds = async (ids: {uuidUser: string, uuidDevice: string}) => {
+    return this.session.findOne({ ids })
   }
 }

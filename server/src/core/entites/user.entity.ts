@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongoose';
 import { RoleEntity } from './role.entity'
 
 export class UserEntity {
