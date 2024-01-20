@@ -63,9 +63,12 @@ export class ArticleRepositoryImpl implements ArticleRepository {
     }
     const articleDetail = await this.articleDetailRepository.findOne({ articleId })
     if (!articleDetail) throw Error('Такой записи не существует')
-    articleDetail.body = editBody.content?.detail?.body ? editBody.content?.detail?.body : articleDetail.body
-    articleDetail.tasks = editBody.content?.detail?.tasks ? editBody.content?.detail?.tasks : articleDetail.tasks
-    await articleDetail.save()
+    await this.articleDetailRepository.findByIdAndUpdate(
+        articleDetail._id,
+        {...editBody.content?.detail},
+        {new: true}
+    )
+    console.log(editBody)
     return ArticleMapper.toDomain(
       await this.articleRepository.findByIdAndUpdate(
         article._id,

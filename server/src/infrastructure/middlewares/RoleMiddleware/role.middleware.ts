@@ -16,7 +16,7 @@ export class RoleMiddleware {
 
   public static MentorRole = (req: IAuthRequest, res: Response, next: NextFunction) => {
     try {
-      if (req.user['_doc'].role !== UserRoleEnum.mentor) {
+      if (req.user['_doc'] && req.user['_doc'].role !== UserRoleEnum.mentor || req.user.role !== UserRoleEnum.mentor) {
         return res.status(403).end()
       }
       next()

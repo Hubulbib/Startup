@@ -26,6 +26,7 @@ export const EditOneMiddleware = (req: IAuthRequest, res: Response, next: NextFu
           ip: req.ip,
         },
       }
+      console.log(req['user'])
       if (req['user'].role === UserRoleEnum.admin) {
         req.body = new AdminReqBodyDto(req.body)
         return RoleMiddleware.AdminRole(req, res, next)
