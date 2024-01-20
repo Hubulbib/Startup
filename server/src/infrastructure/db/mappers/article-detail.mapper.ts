@@ -1,4 +1,4 @@
-import { ArticleDetail, IArticleDetailDoc } from '../entities/article-detail.entity'
+import { ArticleDetail, type IArticleDetailDoc } from '../entities/article-detail.entity'
 import { ArticleDetailEntity } from '../../../core/entites/article-detail.entity'
 
 export class ArticleDetailMapper {

@@ -1,9 +1,9 @@
-import { Request, Response } from 'express'
+import { type Request, type Response } from 'express'
 import { AuthService } from '../../../core/services/AuthService/auth.service.js'
 import { AuthRepositoryImpl } from '../../db/repositories/auth.repository.impl.js'
 import 'dotenv/config'
 import { ResponseTokenDto } from './dtos/response-token.dto'
-import { IAuthRequest } from '../../interfaces/auth-request.interface'
+import { type IAuthRequest } from '../../interfaces/auth-request.interface'
 
 class AuthController {
   constructor(readonly authService: AuthService) {}
@@ -60,7 +60,7 @@ class AuthController {
     }
   }
 
-  private resCookieRefreshToken = (res: Response, refreshToken: string) => {
+  private readonly resCookieRefreshToken = (res: Response, refreshToken: string) => {
     res.cookie('refreshToken', refreshToken, { maxAge: +process.env.MAX_AGE_TOKEN, httpOnly: true, path: '/api/auth' })
   }
 }

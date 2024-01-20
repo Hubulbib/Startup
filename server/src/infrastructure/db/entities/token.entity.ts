@@ -19,51 +19,59 @@ import { tsUnix } from '../../utils/date'
 
 // TODO: shared
 export class BaseDates {
-	@prop({ type: Number, default: () => tsUnix() })
-	created: number;
-	@prop({ type: Number, default: () => tsUnix() })
-	updated: number;
+  @prop({ type: Number, default: () => tsUnix() })
+  created: number
+
+  @prop({ type: Number, default: () => tsUnix() })
+  updated: number
 }
-class SessionIds {
+export class SessionIds {
   @prop({ type: String, required: true })
-  uuidUser: string;
+  uuidUser: string
+
   @prop({ type: String, required: true })
-  uuidDevice: string;
+  uuidDevice: string
 }
 
 class SessionRefreshToken {
   @prop({ type: String, required: true })
-  token: string;
+  token: string
+
   @prop({ type: Number, required: true })
-  expire: number;
+  expire: number
 }
 
 class SessionAccessToken {
   @prop({ type: String, required: true })
-  token: string;
+  token: string
+
   @prop({ type: Number, required: true })
-  expire: number;
+  expire: number
 }
 @modelOptions({
-  schemaOptions: { collection: "session" },
+  schemaOptions: { collection: 'session' },
   options: {
-    customName: "session",
+    customName: 'session',
     allowMixed: Severity.ALLOW,
   },
 })
 export class Session {
   @prop({ type: String, required: true })
-  uuid: string;
+  uuid: string
+
   @prop({ type: () => SessionIds, default: {}, required: true, _id: false })
-  ids: SessionIds;
+  ids: SessionIds
+
   @prop({ type: () => SessionRefreshToken, default: {}, required: true, _id: false })
-  refreshToken: SessionRefreshToken;
+  refreshToken: SessionRefreshToken
+
   @prop({ type: () => SessionAccessToken, default: {}, required: true, _id: false })
-  accessToken: SessionAccessToken;
+  accessToken: SessionAccessToken
+
   @prop({ type: () => BaseDates, default: {}, required: true, _id: false })
   dates: BaseDates
 }
 
 export const sessionModel = getModelForClass(Session, {
   options: { allowMixed: Severity.ALLOW },
-});
+})

@@ -1,8 +1,9 @@
-import { ObjectId } from 'mongoose';
-import { RoleEntity } from './role.entity'
+import { ObjectId } from 'mongoose'
+import { type RoleEntity } from './role.entity'
 
 export class UserEntity {
   constructor(
+    readonly id: string,
     readonly uuid: string,
     readonly name: string,
     readonly surname: string,
@@ -18,6 +19,7 @@ export class UserEntity {
 export class UserForListEntity {
   constructor(
     readonly _id: string,
+    readonly uuid: string,
     readonly name: string,
     readonly surname: string,
     readonly rating: number,

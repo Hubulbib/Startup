@@ -1,4 +1,4 @@
-import { UserEntity } from '../../../entites/user.entity'
+import { type UserEntity } from '../../../entites/user.entity'
 
 export class AuthBackDto {
   constructor(

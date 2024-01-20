@@ -5,10 +5,11 @@ export class MentorReqBodyDto {
   public tags: string[]
   public mentors: string[]
   public status: ArticleStatusEnum
-  constructor(body: object) {
-    this.content = body['content']
-    this.tags = body['tags']
-    this.mentors = body['mentors']
-    if (body['status'] === ArticleStatusEnum.verification) this.status = body['status']
+  // TODO: fix any
+  constructor(body: Record<string, any>) {
+    this.content = body.content
+    this.tags = body.tags
+    this.mentors = body.mentors
+    if (body.status === ArticleStatusEnum.verification) this.status = body.status
   }
 }

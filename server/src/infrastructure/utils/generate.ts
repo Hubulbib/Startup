@@ -1,3 +1,3 @@
-import { randomUUID } from "crypto";
+import { randomUUID } from 'crypto'
 
-export const genUuid = (): string => randomUUID();
+export const genUuid = (): string => randomUUID()

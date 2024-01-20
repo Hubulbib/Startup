@@ -1,7 +1,7 @@
 import { model } from 'mongoose'
-import { SubscribeEntity } from '../../../core/entites/subscribe.entity'
-import { SubscribeRepository } from '../../../core/repositories/SubscribeRepository/subscribe.repository'
-import { SubscribeBodyDto } from '../../../core/repositories/SubscribeRepository/dtos/subscribe-body.dto'
+import { type SubscribeEntity } from '../../../core/entites/subscribe.entity'
+import { type SubscribeRepository } from '../../../core/repositories/SubscribeRepository/subscribe.repository'
+import { type SubscribeBodyDto } from '../../../core/repositories/SubscribeRepository/dtos/subscribe-body.dto'
 import { SubscribeMapper } from '../mappers/subscribe.mapper'
 
 export class SubscribeRepositoryImpl implements SubscribeRepository {

@@ -1,4 +1,4 @@
-import { ISubscribeDoc, Subscribe } from '../entities/subscribe.entity'
+import { type ISubscribeDoc, Subscribe } from '../entities/subscribe.entity'
 import { SubscribeEntity } from '../../../core/entites/subscribe.entity'
 
 export class SubscribeMapper {

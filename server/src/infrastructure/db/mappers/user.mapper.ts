@@ -1,10 +1,13 @@
-import { User, userModel } from '../entities/user.entity.js'
+import { type User, userModel } from '../entities/user.entity.js'
 import { UserEntity, UserForListEntity } from '../../../core/entites/user.entity.js'
-import { IUserToDomain } from './interfaces/user-to-domain.interface'
+import { type IUserToDomain } from './interfaces/user-to-domain.interface'
 
 export class UserMapper {
   public static toDomain(entity: IUserToDomain): UserEntity {
     return new UserEntity(
+      // TODO: remove id
+      // @ts-expect-error
+      entity._id,
       entity.uuid,
       entity.name,
       entity.surname,
@@ -19,6 +22,9 @@ export class UserMapper {
 
   public static toDomainForList(entity: IUserToDomain): UserForListEntity {
     return new UserForListEntity(
+      // TODO: remove id
+      // @ts-expect-error
+      entity._id,
       entity.uuid,
       entity.name,
       entity.surname,

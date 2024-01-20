@@ -1,4 +1,4 @@
-import { tsUnix } from '../../utils/date.js';
+import { tsUnix } from '../../utils/date.js'
 import { EUserRole } from './enums/user-role.enum.js'
 import { PropType, Severity, getModelForClass, modelOptions, prop } from '@typegoose/typegoose'
 
@@ -53,50 +53,62 @@ import { PropType, Severity, getModelForClass, modelOptions, prop } from '@typeg
 
 // export const User = model('User', schema)
 export class BaseDates {
-	@prop({ type: Number, default: () => tsUnix() })
-	created: number;
-	@prop({ type: Number, default: () => tsUnix() })
-	updated: number;
+  @prop({ type: Number, default: () => tsUnix() })
+  created: number
+
+  @prop({ type: Number, default: () => tsUnix() })
+  updated: number
 }
 
 class UserDevice {
   @prop({ type: String, required: true })
-  uuid: string;
+  uuid: string
+
   @prop({ type: String, required: true })
-  ua: string;
+  ua: string
+
   @prop({ type: String, required: true })
-  ip: string;
+  ip: string
 }
 @modelOptions({
-  schemaOptions: { collection: "user" },
+  schemaOptions: { collection: 'user' },
   options: {
-    customName: "user",
+    customName: 'user',
     allowMixed: Severity.ALLOW,
   },
 })
 export class User {
   @prop({ type: String, required: true })
-  uuid: string;
+  uuid: string
+
   @prop({ type: String, required: true })
-  name: string;
+  name: string
+
   @prop({ type: String, required: true })
-  surname: string;
-  @prop({ type: String, required: true, unique: true})
-  email: string;
+  surname: string
+
+  @prop({ type: String, required: true, unique: true })
+  email: string
+
   @prop({ type: String, required: true })
-  password: string;
-  @prop({ enum: EUserRole, type: String, default: () =>  EUserRole.user})
-  role?: EUserRole;
-	@prop({ type: Number, default: [] }, PropType.ARRAY)
-  rating?: number[];
+  password: string
+
+  @prop({ enum: EUserRole, type: String, default: () => EUserRole.user })
+  role?: EUserRole
+
+  @prop({ type: Number, default: [] }, PropType.ARRAY)
+  rating?: number[]
+
   @prop({ type: String })
-  avatar?: string;
+  avatar?: string
+
   @prop({ type: () => UserDevice, default: [] }, PropType.ARRAY)
-  devices: UserDevice[];
+  devices: UserDevice[]
+
   @prop({ type: () => BaseDates, default: {}, required: true, _id: false })
   dates: BaseDates
 }
 
 export const userModel = getModelForClass(User, {
   options: { allowMixed: Severity.ALLOW },
-});
+})

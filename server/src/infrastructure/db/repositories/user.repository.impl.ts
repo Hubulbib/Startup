@@ -3,10 +3,10 @@ import { Role } from '../entities/role.entity'
 import { Article } from '../entities/article.entity'
 import { Subscribe } from '../entities/subscribe.entity'
 import { UserMapper } from '../mappers/user.mapper'
-import { UserEntity, UserForListEntity } from '../../../core/entites/user.entity'
-import { UserRepository } from '../../../core/repositories/UserRepository/user.repository'
-import { EditBodyDto } from '../../../core/repositories/UserRepository/dtos/edit-body.dto'
-import { GetAllBodyDto } from '../../../core/repositories/UserRepository/dtos/get-all-body.dto'
+import { type UserEntity, type UserForListEntity } from '../../../core/entites/user.entity'
+import { type UserRepository } from '../../../core/repositories/UserRepository/user.repository'
+import { type EditBodyDto } from '../../../core/repositories/UserRepository/dtos/edit-body.dto'
+import { type GetAllBodyDto } from '../../../core/repositories/UserRepository/dtos/get-all-body.dto'
 import { RoleMapper } from '../mappers/role.mapper'
 import { userModel } from '../entities/user.entity'
 
@@ -17,7 +17,7 @@ export class UserRepositoryImpl implements UserRepository {
   private readonly userRepository = userModel
 
   async getOneById(userId: string): Promise<UserEntity> {
-    let user = await this.userRepository.findById(userId)
+    const user = await this.userRepository.findById(userId)
     if (!user) {
       throw Error('Такого пользователя не существует')
     }
@@ -36,7 +36,7 @@ export class UserRepositoryImpl implements UserRepository {
   }
 
   async getAll(getAllBody: GetAllBodyDto): Promise<any[]> {
-    //Promise<Promise<UserEntity>[]>
+    // Promise<Promise<UserEntity>[]>
     return await Promise.all(
       (await this.userRepository.find({}, null, { limit: getAllBody.options.interval * getAllBody.options.pages })).map(
         async (el: any) =>
@@ -68,7 +68,8 @@ export class UserRepositoryImpl implements UserRepository {
     const user = await this.userRepository.findById(userId)
     if (!user) {
       throw Error('Такого пользователя не существует')
-    }await this.userRepository.deleteOne({_id: userId})
+    }
+    await this.userRepository.deleteOne({ _id: userId })
     return UserMapper.toDomain(user)
   }
 

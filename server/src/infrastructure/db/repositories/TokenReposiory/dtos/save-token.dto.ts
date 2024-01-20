@@ -1,4 +1,4 @@
-import { GenerateTokensResult } from "./generate-tokens-result.dto";
+import { type GenerateTokensResult } from './generate-tokens-result.dto'
 
 export class SaveTokenDto {
   constructor(
