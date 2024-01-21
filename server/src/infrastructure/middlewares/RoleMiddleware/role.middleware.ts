@@ -20,6 +20,8 @@ export class RoleMiddleware {
     try {
       // TODO: fix _doc
       // @ts-expect-error
+      if (req.user['_doc'] && req.user['_doc'].role !== UserRoleEnum.mentor || req.user.role !== UserRoleEnum.mentor) {
+
       if (req.user._doc.role !== EUserRole.mentor) {
         return res.status(403).end()
       }

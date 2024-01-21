@@ -2,7 +2,7 @@ export class ArticleEntity {
   constructor(
     readonly _id: string,
     readonly author: string,
-    readonly content: IContent,
+    readonly content: Content,
     readonly createdAt: Date,
     readonly updatedAt: Date,
     readonly status: string,
@@ -13,10 +13,24 @@ export class ArticleEntity {
   ) {}
 }
 
-class IContent {
+class Content {
   constructor(
-    readonly recommended: string[],
+    readonly recommended: Recommended,
     readonly title: string,
     readonly description: string,
   ) {}
+}
+
+class Recommended {
+  constructor(
+      readonly level: ELevelRecommended,
+      readonly description: string
+  ) {
+  }
+}
+
+export enum ELevelRecommended {
+  easy = 'easy',
+  medium = 'medium',
+  hard = 'hard'
 }
