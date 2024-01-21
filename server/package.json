@@ -9,7 +9,7 @@
     "dev:server": "npx nodemon",
     "build": "rimraf ./build && npx tsc",
     "lint": "npx eslint ./src",
-    "format": "npx eslint ./src --fix"
+    "format": "npx eslint 'src/**/*.ts' --fix"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +24,8 @@
     "@typescript-eslint/parser": "^6.2.1",
     "dotenv": "^16.3.1",
     "eslint": "^8.46.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard-with-typescript": "^43.0.1",
     "eslint-plugin-prettier": "^5.0.0",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.0",
@@ -32,6 +34,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@typegoose/typegoose": "^12.1.0",
     "@types/cors": "^2.8.17",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",

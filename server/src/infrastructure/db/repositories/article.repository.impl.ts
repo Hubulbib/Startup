@@ -1,11 +1,11 @@
 import { model } from 'mongoose'
-import { ArticleEntity } from '../../../core/entites/article.entity.js'
+import { type ArticleEntity } from '../../../core/entites/article.entity.js'
 import { ArticleMapper } from '../mappers/article.mapper.js'
-import { ArticleRepository } from '../../../core/repositories/ArticleRepository/article.repository.js'
-import { CreateBodyDto } from '../../../core/repositories/ArticleRepository/dtos/create-body.dto.js'
-import { EditBodyDto } from '../../../core/repositories/ArticleRepository/dtos/edit-body.dto.js'
-import { GetAllBodyDto } from '../../../core/repositories/ArticleRepository/dtos/get-all-body.dto'
-import { ArticleDetailEntity } from '../../../core/entites/article-detail.entity'
+import { type ArticleRepository } from '../../../core/repositories/ArticleRepository/article.repository.js'
+import { type CreateBodyDto } from '../../../core/repositories/ArticleRepository/dtos/create-body.dto.js'
+import { type EditBodyDto } from '../../../core/repositories/ArticleRepository/dtos/edit-body.dto.js'
+import { type GetAllBodyDto } from '../../../core/repositories/ArticleRepository/dtos/get-all-body.dto'
+import { type ArticleDetailEntity } from '../../../core/entites/article-detail.entity'
 import { ArticleDetailMapper } from '../mappers/article-detail.mapper'
 
 export class ArticleRepositoryImpl implements ArticleRepository {

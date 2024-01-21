@@ -1,7 +1,7 @@
-import { ArticleRepository } from '../../repositories/ArticleRepository/article.repository.js'
-import { EditBodyDto } from '../../repositories/ArticleRepository/dtos/edit-body.dto.js'
-import { CreateBodyDto } from '../../repositories/ArticleRepository/dtos/create-body.dto.js'
-import { GetAllBodyDto } from '../../repositories/ArticleRepository/dtos/get-all-body.dto'
+import { type ArticleRepository } from '../../repositories/ArticleRepository/article.repository.js'
+import { type EditBodyDto } from '../../repositories/ArticleRepository/dtos/edit-body.dto.js'
+import { type CreateBodyDto } from '../../repositories/ArticleRepository/dtos/create-body.dto.js'
+import { type GetAllBodyDto } from '../../repositories/ArticleRepository/dtos/get-all-body.dto'
 
 export class ArticleService {
   constructor(private readonly articleRepository: ArticleRepository) {}

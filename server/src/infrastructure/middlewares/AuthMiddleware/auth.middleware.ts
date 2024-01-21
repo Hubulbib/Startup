@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express'
+import { type NextFunction, type Request, type Response } from 'express'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config.js'
 
@@ -19,7 +19,9 @@ export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) 
       return res.status(400).end()
     }
 
-    req['user'] = {
+    // TODO: fix it
+    // @ts-expect-error
+    req.user = {
       ...userData,
       details: {
         ua: req.get('User-Agent'),

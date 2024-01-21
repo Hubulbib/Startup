@@ -1,5 +1,5 @@
-import { Document, model, Schema } from 'mongoose'
-import { IArticle } from './interfaces/article.interface.js'
+import { type Document, model, Schema } from 'mongoose'
+import { type IArticle } from './interfaces/article.interface.js'
 import { ArticleStatusEnum } from './enums/article-status.enum.js'
 import {ELevelRecommended} from "../../../core/entites/article.entity";
 

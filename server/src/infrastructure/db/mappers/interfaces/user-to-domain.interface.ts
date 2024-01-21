@@ -1,7 +1,7 @@
-import { IUserDoc } from '../../entities/user.entity'
-import { RoleEntity } from '../../../../core/entites/role.entity'
+import { type User } from '../../entities/user.entity'
+import { type RoleEntity } from '../../../../core/entites/role.entity'
 
-export interface IUserToDomain extends IUserDoc {
+export interface IUserToDomain extends User {
   roleDoc?: RoleEntity
   userSubscribes?: string[]
   articles?: string[]

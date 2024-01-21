@@ -1,11 +1,13 @@
-import { IAuthRequest } from '../../interfaces/auth-request.interface'
-import { NextFunction, Response } from 'express'
-import { UserRoleEnum } from '../../db/entities/enums/user-role.enum'
+import { type IAuthRequest } from '../../interfaces/auth-request.interface'
+import { type NextFunction, type Response } from 'express'
+import { EUserRole } from '../../db/entities/enums/user-role.enum'
 
 export class RoleMiddleware {
   public static UserRole = (req: IAuthRequest, res: Response, next: NextFunction) => {
     try {
-      if (req.user['_doc'].role !== UserRoleEnum.user) {
+      // TODO: fix _doc
+      // @ts-expect-error
+      if (req.user._doc.role !== EUserRole.user) {
         return res.status(403).end()
       }
       next()
@@ -16,7 +18,11 @@ export class RoleMiddleware {
 
   public static MentorRole = (req: IAuthRequest, res: Response, next: NextFunction) => {
     try {
+      // TODO: fix _doc
+      // @ts-expect-error
       if (req.user['_doc'] && req.user['_doc'].role !== UserRoleEnum.mentor || req.user.role !== UserRoleEnum.mentor) {
+
+      if (req.user._doc.role !== EUserRole.mentor) {
         return res.status(403).end()
       }
       next()
@@ -27,7 +33,9 @@ export class RoleMiddleware {
 
   public static AdminRole = (req: IAuthRequest, res: Response, next: NextFunction) => {
     try {
-      if (req.user['_doc'].role !== UserRoleEnum.admin) {
+      // TODO: fix _doc
+      // @ts-expect-error
+      if (req.user._doc.role !== EUserRole.admin) {
         return res.status(403).end()
       }
       next()
@@ -38,7 +46,9 @@ export class RoleMiddleware {
 
   public static HeadRole = (req: IAuthRequest, res: Response, next: NextFunction) => {
     try {
-      if (req.user['_doc'].role !== UserRoleEnum.head) {
+      // TODO: fix _doc
+      // @ts-expect-error
+      if (req.user._doc.role !== EUserRole.head) {
         return res.status(403).end()
       }
       next()

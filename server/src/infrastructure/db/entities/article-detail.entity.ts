@@ -1,5 +1,5 @@
-import { Document, model, Schema } from 'mongoose'
-import { IArticleDetail } from './interfaces/article-detail.interface'
+import { type Document, model, Schema } from 'mongoose'
+import { type IArticleDetail } from './interfaces/article-detail.interface'
 
 export type IArticleDetailDoc = Document<any, any, IArticleDetail> & IArticleDetail
 

@@ -1,5 +1,5 @@
-import { Response } from 'express'
-import { IAuthRequest } from '../../interfaces/auth-request.interface'
+import { type Response } from 'express'
+import { type IAuthRequest } from '../../interfaces/auth-request.interface'
 import { RoleService } from '../../../core/services/RoleService/role.service'
 import { RoleRepositoryImpl } from '../../db/repositories/role.repository.impl'
 
@@ -40,7 +40,6 @@ class RoleController {
       const { name } = req.params
       const roleBody = req.body
       await this.roleService.editOne(name, roleBody)
-      return
     } catch (err) {
       console.log(err)
       res.status(500).json(err)
@@ -51,7 +50,6 @@ class RoleController {
     try {
       const { name } = req.params
       await this.roleService.removeOne(name)
-      return
     } catch (err) {
       res.status(500).json(err)
     }
