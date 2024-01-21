@@ -13,6 +13,18 @@
 <script setup>
 import Header from "@/components/Header.vue";
 import MyNav from "@/components/MyNav.vue"
+import ls from "@/helpers/localStorageHelpers.js"
+
+import { useAuthStore } from '@/stores/AuthStore';
+import { onMounted } from "vue";
+
+const authStore = useAuthStore();
+
+onMounted(() => {
+  if (!ls.getToken()) return 
+
+  authStore.onLoadAuthCheck();
+})
 </script>
 
 <style lang="scss">

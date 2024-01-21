@@ -39,13 +39,13 @@ export class UserRepositoryImpl implements UserRepository {
     // Promise<Promise<UserEntity>[]>
     return await Promise.all(
       (await this.userRepository.find({}, null, { limit: getAllBody.options.interval * getAllBody.options.pages })).map(
-        async (el: any) =>
+       async (el: any) =>
           UserMapper.toDomain({
             ...el._doc,
             roleDoc: RoleMapper.toDomain(await this.roleRepository.findOne({ name: el.role })),
             userSubscribes: await this.getAllSubscribe(el._id),
             articles: await this.getAllArticle(el._id),
-          }),
+          })}
       ),
     )
   }

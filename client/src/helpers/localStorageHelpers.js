@@ -1,18 +1,17 @@
 export default {
-    saveUser(user) {
-        localStorage.setItem('user', JSON.stringify(user))
-    },
     saveToken(accessToken) {
         localStorage.setItem('token', JSON.stringify(accessToken))
     },
-    getUser() {
-        return JSON.parse(localStorage.getItem('user'))
+    saveUser(user) {
+        localStorage.setItem('token', JSON.stringify(user))
     },
     getToken() {
         return JSON.parse(localStorage.getItem('token'))
     },
-    logout() {
+    getUser() {
+        return JSON.parse(localStorage.getItem('user'))
+    },
+    removeToken() {
         localStorage.removeItem('token')
-        localStorage.removeItem('user')
     }
 }

@@ -1,6 +1,8 @@
 <template>
   <div class="view-container">
     <h1 class="h-1">Солянка компонентов</h1>
+    <h2>Проверка редиректа после логина</h2>
+    <my-button @click="redirectToLogin">Редирект на логин</my-button>
     <h2>AppLink - проверка: внешняя или внутренняя ссылка</h2>
     <p>Три ссылки в тексте подряд:
       <AppLink to="https://www.google.com">Google.com</AppLink>,
@@ -54,8 +56,15 @@
 import { onMounted, ref } from "vue";
 import MySelectMockup from "@/mockups/MySelectMockup.js";
 import MentorsList from '@/components/MentorsList.vue';
-import axios from "axios";
 import AppLink from "@/components/UI/AppLink.vue";
+import { useRoute, useRouter } from 'vue-router'
+
+const router = useRouter();
+const route = useRoute();
+
+const redirectToLogin = () => {
+  router.push({name: 'login', query: { redirect: route.path}})
+}
 
 const deafaultValue = ref("Выберите...");
 const optionsData = ref(MySelectMockup);

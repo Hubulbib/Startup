@@ -14,13 +14,16 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/AuthStore";
+
 import ls from "@/helpers/localStorageHelpers.js";
 
+const authStore = useAuthStore()
 const router = useRouter()
 const isMentorAccess = ref(false)
 
 watch(router.currentRoute, () => {
-  const user = ls.getUser()
+  const user = authStore.user.value
 
   if (!user) return isMentorAccess.value = false
 
