@@ -2,7 +2,7 @@
   <nav class="nav">
     <!-- <Icon style="cursor: pointer;" @click="$router.back()" icon="ion:arrow-back-circle-outline" width="75" height="75" /> -->
     <!-- <router-link :to="{name: 'home'}" class="nav__item">Homepage</router-link> -->
-    <router-link v-if="isMentorAccess" :to="{name: 'cms'}" class="nav__item">Создание статьи</router-link>
+    <router-link v-if="permissions.includes('article.create')" :to="{name: 'cms'}" class="nav__item">Создание статьи</router-link>
     <router-link :to="{name: 'allcomponents'}" class="nav__item">Солянка</router-link>
     <!-- <router-link :to="{name: 'account'}" class="nav__item">Личный кабинет</router-link> -->
     <router-link :to="{name: 'profile'}" class="nav__item">Профайл</router-link>
@@ -12,22 +12,16 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
-import { useRouter } from "vue-router";
+import { ref, watchEffect } from "vue";
 import { useAuthStore } from "@/stores/AuthStore";
 
-import ls from "@/helpers/localStorageHelpers.js";
-
 const authStore = useAuthStore()
-const router = useRouter()
-const isMentorAccess = ref(false)
+const permissions = ref([])
 
-watch(router.currentRoute, () => {
-  const user = authStore.user.value
-
-  if (!user) return isMentorAccess.value = false
-
-  if (user.role.permissions.includes('article.create')) return isMentorAccess.value = true
+watchEffect(() => {
+  authStore.isAuth 
+    ? permissions.value = [...authStore.user.role.permissions] 
+    : permissions.value = []
 })
 </script>
 

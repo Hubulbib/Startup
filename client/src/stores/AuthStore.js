@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref, reactive } from 'vue';
+import { ref } from 'vue';
 import { API_URL } from "@/http/api";
 import AuthService from '@/services/AuthService';
 import ls from '@/helpers/localStorageHelpers.js'
@@ -15,7 +15,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
 
   const onLoadAuthCheck = async function() {
     try {
-      const res = await axios.get(`${API_URL}/auth/refresh`, { withCredentials: true });
+      const res = await axios.post(`${API_URL}/auth/refresh`, {}, { withCredentials: true });
       ls.saveToken(res.data.accessToken);
       isAuth.value = true;
       user.value = res.data.user;
@@ -65,10 +65,10 @@ export const useAuthStore = defineStore('AuthStore', () => {
       await AuthService.logout();
       ls.removeToken();
       isAuth.value = false;
-      user.value = null;
+      user.value = {};
       router.push({ name: 'home' })
     } catch (e) {
-      console.log(e?.response?.data);
+      console.log(e);
     }
   };
 

@@ -50,7 +50,7 @@ class AuthController {
 
   logout = async (req: IAuthRequest, res: Response) => {
     try {
-      const { refreshToken } = req.body
+      const { refreshToken } = req.cookies
       const authData = await this.authService.logout(refreshToken)
       res.clearCookie('refreshToken')
       return res.json(authData)

@@ -52,6 +52,8 @@ export class AuthRepositoryImpl implements AuthRepository {
     }
     const device = user.devices.find((e) => e.ua === detail.ua && e.ip === detail.ip)
 
+    console.log('device >', device)
+
     if (!device) {
       // create device for user
       const uuidDevice = genUuid()
@@ -72,8 +74,13 @@ export class AuthRepositoryImpl implements AuthRepository {
       return await this.responseData(user, uuidDevice)
     }
 
+    console.log('user.uuid >', user.uuid)
+
     const session = await this.sessionRepository.findSessionByIds({ uuidDevice: device.uuid, uuidUser: user.uuid })
     const userWithRole = { ...user, roleDoc: await this.roleRepository.findOne({ name: user.role }) }
+
+    console.log('session >', session) //после /logout -> null
+
     return {
       refreshToken: session.refreshToken.token,
       accessToken: session.accessToken.token,

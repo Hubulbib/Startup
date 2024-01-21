@@ -3,8 +3,11 @@ import EditorBlock from "@/components/EditorBlock.vue";
 import { nanoid } from "nanoid";
 import { ref } from "vue";
 import TagsMockup from "@/mockups/TagsMockup.js";
-import axios from "axios";
 import { $api } from "@/http/api.js";
+import { useAuthStore } from "@/stores/AuthStore";
+import LevelMockup from "@/mockups/LevelMockup.js"
+
+const authStore = useAuthStore()
 
 const description = ref("");
 
@@ -22,11 +25,14 @@ const add = (name) => {
 
 const createArticle = (data) => {
   const article = {
-    author: JSON.parse(localStorage.getItem("user"))._id,
+    author: authStore.user.id,
     content: {
       title: data.title,
       description: data.description,
-      recommended: data.recommended,
+      recommended: {
+        level: data.level,
+        description: data.recommended
+      },
     },
     tags: data.tags,
   };
@@ -63,8 +69,7 @@ const createArticle = (data) => {
 };
 
 const postArticle = (data) => {
-  // добавить хедер authorization
-  // createArticle(data)
+  // console.log(createArticle(data))
   $api
     .post("/article", createArticle(data))
     .then((r) => console.log(r.data));
@@ -109,6 +114,10 @@ const postArticle = (data) => {
         placeholder="Выберите язык программирования"
         open-on-focus
         open-on-remove
+        validation-visibility="blur"
+        :validation-messages="{
+          required: 'Поле должно быть заполнено',
+        }"
         :options="TagsMockup"
         :filter="
           (option, search) =>
@@ -117,6 +126,7 @@ const postArticle = (data) => {
         :tag-class="{
           'custom-tag': true,
         }"
+        max="3"
       />
     </div>
 
@@ -131,6 +141,19 @@ const postArticle = (data) => {
           required: 'Поле должно быть заполнено',
         }"
         placeholder="Для кого рекомендована статья?"
+      />
+      <FormKit
+        type="dropdown"
+        name="level"
+        open-on-focus
+        open-on-remove
+        validation="required"
+        validation-visibility="blur"
+        :options="LevelMockup"
+        :validation-messages="{
+          required: 'Поле должно быть заполнено',
+        }"
+        placeholder="Выберите уровень сложности"
       />
       <div class="wrapper">
         <ul class="list">

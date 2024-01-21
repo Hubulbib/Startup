@@ -30,7 +30,7 @@ class Recommended {
 }
 
 export enum ELevelRecommended {
-  easy = 'easy',
-  medium = 'medium',
-  hard = 'hard'
+  easy = 'Easy',
+  medium = 'Medium',
+  hard = 'Hard'
 }

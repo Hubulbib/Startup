@@ -3,15 +3,16 @@
     <div class="header">
       <div class="header__wrapper">
         <router-link class="header__logo" :to="{ name: 'home' }">Logo</router-link>
-        <h2 class="header__desc">Привет, {{ authStore.user.value ? `${authStore.user.value.name}
-                  ${authStore.user.value.surname}` : 'анонимус' }}</h2>
+        <h2 class="header__desc">Привет, {{ authStore.user ? `${authStore.user.name}
+                  ${authStore.user.surname}` : 'анонимус' }}</h2>
       </div>
       <div class="header__account">
         <my-button class="header__account--switch">THEME</my-button>
         <router-link
           :to="{ name: 'account' }"
           v-if="authStore.isAuth"
-          class="header__account--user">
+          class="header__account--user"
+        >
           <img src="@/assets/empty-avatar.svg" alt="Аватарка пользователя" />
           <span>{{ authStore.user.name }} {{ authStore.user.surname }}</span>
         </router-link>
@@ -21,8 +22,6 @@
           class="header__account--login">Войти</router-link>
       </div>
       <my-button v-if="authStore.isAuth" @click="authStore.logout" class="">Выйти</my-button>
-      <my-button @click="authStore.onLoadAuthCheck()" class="">Обновить</my-button>
-      <my-button @click="test" class="">Get Mentor req</my-button>
     </div>
   </div>
 </template>
@@ -40,7 +39,7 @@ const authStore = useAuthStore();
 
 const test = () => {
   try {
-    const res = $api.get('/role/mentor').then(r => console.log(r.data)).catch(e => console.log(e.message))
+    $api.get('/role/mentor').then(r => console.log(r.data)).catch(e => console.log(e.message))
   } catch (e) {
     console.log(e)
   }
