@@ -1,6 +1,6 @@
-import { Article, IArticleDoc } from '../entities/article.entity.js'
+import { Article, type IArticleDoc } from '../entities/article.entity.js'
 import { ArticleEntity } from '../../../core/entites/article.entity.js'
-import { IArticleToDomain } from './interfaces/article-to-domain.interface'
+import { type IArticleToDomain } from './interfaces/article-to-domain.interface'
 
 export class ArticleMapper {
   public static toDomain(entity: IArticleToDomain): ArticleEntity {

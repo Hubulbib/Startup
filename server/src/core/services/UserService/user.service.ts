@@ -1,6 +1,6 @@
-import { UserRepository } from '../../repositories/UserRepository/user.repository'
-import { EditBodyDto } from '../../repositories/UserRepository/dtos/edit-body.dto'
-import { GetAllBodyDto } from '../../repositories/UserRepository/dtos/get-all-body.dto'
+import { type UserRepository } from '../../repositories/UserRepository/user.repository'
+import { type EditBodyDto } from '../../repositories/UserRepository/dtos/edit-body.dto'
+import { type GetAllBodyDto } from '../../repositories/UserRepository/dtos/get-all-body.dto'
 
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}

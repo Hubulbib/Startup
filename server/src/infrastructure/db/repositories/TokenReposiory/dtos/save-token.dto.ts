@@ -1,8 +1,9 @@
+import { type GenerateTokensResult } from './generate-tokens-result.dto'
+
 export class SaveTokenDto {
   constructor(
-    readonly userId: string,
-    readonly refreshToken: string,
-    readonly ua: string,
-    readonly ip: string,
+    readonly uuidUser: string,
+    readonly uuidDevice: string,
+    readonly tokens: GenerateTokensResult,
   ) {}
 }

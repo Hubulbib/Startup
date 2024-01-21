@@ -1,5 +1,3 @@
 export class RefreshDto {
-  constructor(
-    readonly refreshToken: string,
-  ) {}
+  constructor(readonly refreshToken: string) {}
 }

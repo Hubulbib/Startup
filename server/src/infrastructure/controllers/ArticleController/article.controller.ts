@@ -1,5 +1,5 @@
-import { Request, Response } from 'express'
-import { IAuthRequest } from '../../interfaces/auth-request.interface'
+import { type Request, type Response } from 'express'
+import { type IAuthRequest } from '../../interfaces/auth-request.interface'
 import { ArticleService } from '../../../core/services/ArticleService/article.service.js'
 import { ArticleRepositoryImpl } from '../../db/repositories/article.repository.impl.js'
 

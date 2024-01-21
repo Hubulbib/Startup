@@ -14,7 +14,7 @@ const app = express()
 const PORT = process.env.PORT
 
 // dbs
-dbConnect();
+dbConnect()
 
 app.use(express.json())
 app.use(cookieParser())
@@ -34,8 +34,6 @@ app.use('/api/subscribe', subscribeRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/role', roleRouter)
 
-
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
+  console.log(`Server is running on port ${PORT}`)
+})

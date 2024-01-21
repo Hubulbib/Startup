@@ -1,5 +1,5 @@
-import { Schema, model, Document } from 'mongoose'
-import { IRole } from './interfaces/role.interface'
+import { Schema, model, type Document } from 'mongoose'
+import { type IRole } from './interfaces/role.interface'
 
 export type IRoleDoc = Document<any, any, IRole> & IRole
 

@@ -1,4 +1,4 @@
-import { ArticleStatusEnum } from '../enums/article-status.enum.js'
+import { type ArticleStatusEnum } from '../enums/article-status.enum.js'
 
 export interface IArticle {
   _id: string

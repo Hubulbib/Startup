@@ -1,4 +1,4 @@
-import { IRoleDoc } from '../entities/role.entity'
+import { type IRoleDoc } from '../entities/role.entity'
 import { RoleEntity } from '../../../core/entites/role.entity'
 
 export class RoleMapper {

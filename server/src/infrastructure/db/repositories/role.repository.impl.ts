@@ -1,10 +1,10 @@
 import { Role } from '../entities/role.entity'
 import { RoleMapper } from '../mappers/role.mapper'
-import { RoleEntity } from '../../../core/entites/role.entity'
-import { RoleRepository } from '../../../core/repositories/RoleRepository/role.repository'
-import { CreateBodyDto } from '../../../core/repositories/RoleRepository/dtos/create-body.dto'
-import { EditBodyDto } from '../../../core/repositories/RoleRepository/dtos/edit-body.dto'
-import { UserRoleEnum } from '../entities/enums/user-role.enum'
+import { type RoleEntity } from '../../../core/entites/role.entity'
+import { type RoleRepository } from '../../../core/repositories/RoleRepository/role.repository'
+import { type CreateBodyDto } from '../../../core/repositories/RoleRepository/dtos/create-body.dto'
+import { type EditBodyDto } from '../../../core/repositories/RoleRepository/dtos/edit-body.dto'
+import { EUserRole } from '../entities/enums/user-role.enum'
 
 export class RoleRepositoryImpl implements RoleRepository {
   private readonly roleRepository = Role
@@ -34,7 +34,7 @@ export class RoleRepositoryImpl implements RoleRepository {
       throw Error('Такой роли не существует')
     }
     role.name = editBody.name
-    role.permissions = editBody.permissions.map((el) => UserRoleEnum[el]).filter((el) => el !== undefined)
+    role.permissions = editBody.permissions.map((el) => EUserRole[el]).filter((el) => el !== undefined)
     await role.save()
   }
 

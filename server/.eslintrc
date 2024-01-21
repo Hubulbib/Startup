@@ -1,8 +1,28 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "extends": ["plugin:@typescript-eslint/recommended"],
+  "env": {
+      "browser": true,
+      "es2021": true
+  },
+  "extends": ["standard-with-typescript", "prettier"],
+  "plugins": ["prettier"],
   "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module"
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+  },
+  "rules": {
+      "max-len": ["error", { "code": 120 }],
+      "@typescript-eslint/strict-boolean-expressions": "off",
+      "@typescript-eslint/prefer-nullish-coalescing": "off",
+      "@typescript-eslint/no-floating-promises": "off",
+      "require-jsdoc": ["error", {
+          "require": {
+              "FunctionDeclaration": false,
+              "MethodDefinition": false,
+              "ClassDeclaration": false,
+              "ArrowFunctionExpression": false,
+              "FunctionExpression": false
+          }
+      }],
+      "prettier/prettier": "error"
   }
 }
