@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useArticleStore } from '@/stores/ArticleStore';
 
 const routes = [
   {
@@ -52,5 +53,18 @@ const router = createRouter({
     });
   }
 });
+
+router.beforeResolve(async to => {
+  const articleStore = useArticleStore()
+
+  if (to.name !== 'home') return
+
+  try {
+    await articleStore.fetchArticles()
+  } catch (error) {
+    console.log(error);
+  }
+
+})
 
 export default router;

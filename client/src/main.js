@@ -24,7 +24,7 @@ components.forEach(component => {
 app
     .component('Icon', Icon)
     .component('QuillEditor', QuillEditor)
+    .use(pinia)
     .use(router)
     .use(plugin, formKitConfig)
-    .use(pinia)
     .mount('#app');

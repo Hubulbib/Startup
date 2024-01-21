@@ -1,23 +1,27 @@
+import { ref } from "vue";
 import { $api } from "@/http/api";
 import { defineStore } from "pinia";
 
-const useArticleStore = defineStore('ArticleStore', () => {
+export const useArticleStore = defineStore('ArticleStore', () => {
     const articles = ref([])
 
     const fetchArticles = async () => {
-        await $api
-                .get('/article')
-                .then(r => articles.value = r.data)
-                .catch(error => console.log(error))
+        try {
+            const response = await $api.get('/article')
+
+            articles.value = [...response.data]
+
+            console.log(articles.value)
+        } catch (error) {
+            console.lolg(error)
+        }
     }
 
     const getArticleDetail = async (article) => {
         try {
             const detail = await $api.get(`article/${article.id}/detail`)
 
-            article.content = {
-                ...detail
-            }
+            article.content.detail = { ...detail }
             
             return {
                 article
@@ -25,5 +29,11 @@ const useArticleStore = defineStore('ArticleStore', () => {
         } catch (error) {
             console.log(error)            
         }
+    }
+
+    return {
+        articles,
+        fetchArticles,
+        getArticleDetail
     }
 })

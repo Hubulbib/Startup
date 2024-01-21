@@ -101,7 +101,7 @@ export class User {
 
   @prop({ type: String })
   avatar?: string
-
+  
   @prop({ type: () => UserDevice, default: [] }, PropType.ARRAY)
   devices: UserDevice[]
 

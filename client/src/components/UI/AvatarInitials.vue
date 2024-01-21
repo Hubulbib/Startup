@@ -2,12 +2,13 @@
   <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
     <circle cx="50" cy="50" :r="45" fill="#6495ee" />
     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" :font-size="36">
-      {{ initials }}
+      <!-- {{ initials }} -->
     </text>
   </svg>
 </template>
 
 <script>
+import { computed } from 'vue';
 export default {
   name: 'avatar-initials',
   props: {
@@ -17,15 +18,15 @@ export default {
     },
   },
   setup(props) {
-    const getInitials = function(user) {
-      return (user.name[0] + user.surname[0]).toUpperCase();
-    };
+    // CHILD COMPONENTS RENDER FIRST -> NEED TO UPDATE BD SCHEMA
 
-    const initials = getInitials(props.user);
+    // const initials = computed(() => {
+    //   return (props.user.name[0] + props.user.surname[0]).toUpperCase();
+    // });
 
-    return {
-      initials
-    }
+    // return {
+    //   initials
+    // }
   }
 }
 </script>

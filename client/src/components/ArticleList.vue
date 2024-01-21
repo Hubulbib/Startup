@@ -2,10 +2,11 @@
 import ArticlesMockup from "@/mockups/ArticlesMockup.js"; // mockup of articles
 import { ref, onMounted, watch } from "vue";
 import ArticleListItem from "@/components/ArticleListItem.vue";
+import { useArticleStore } from "@/stores/ArticleStore";
 
-// const firstLoad = ref(true)
+const articleStore = useArticleStore()
 const loaderInc = ref(3);
-const articles = ref([]);
+const articles = articleStore.articles;
 const isFull = ref(false)
 
 const hide = (id) => {
@@ -13,19 +14,19 @@ const hide = (id) => {
   articles.value = articles.value.filter(item => item._id !== id)
 }
 
-const fetchArticles = () => {
-  // fetching articles from the server
-  setTimeout(() => {
-    // try catch
-    // костыль
-    const length = articles.value.length;
+// const fetchArticles = () => {
+//   // fetching articles from the server
+//   setTimeout(() => {
+//     // try catch
+//     // костыль
+//     const length = articles.value.length;
 
-    articles.value = [
-      ...articles.value,
-      ...ArticlesMockup.slice(length, length + loaderInc.value),
-    ];
-  }, 250);
-};
+//     articles.value = [
+//       ...articles.value,
+//       ...ArticlesMockup.slice(length, length + loaderInc.value),
+//     ];
+//   }, 250);
+// };
 
 watch(articles, () => {
   if (articles.value.length === ArticlesMockup.length) {
@@ -47,22 +48,24 @@ onMounted(() => {
 </script>
 
 <template>
-  <transition-group name="article-list" class="article-list" tag="ul">
-    <li class="article-list__item" v-for="article in articles" :key="article._id">
-      <ArticleListItem :item="article" @onHide="hide" />
-      <!-- потом убрать -->
-      <router-link style="margin-bottom: 10px; color: red" :to="{name: 'cms.edit', params: {id: article._id}}">Редактировать статью (для теста роутера, потом уберу)</router-link>
-      <!-- потом убрать -->
-    </li>
-  </transition-group>
-  <my-button
-    @click="fetchArticles"
-    v-if="!isFull"
-    v-intersection="fetchArticles"
-    class="loadmore-btn"
-  >
-    Загрузить ещё
-  </my-button>
+  <div>
+    <transition-group name="article-list" class="article-list" tag="ul">
+      <li class="article-list__item" v-for="article in articles" :key="article._id">
+        <ArticleListItem :item="article" @onHide="hide" />
+        <!-- потом убрать -->
+        <router-link style="margin-bottom: 10px; color: red" :to="{name: 'cms.edit', params: {id: article._id}}">Редактировать статью (для теста роутера, потом уберу)</router-link>
+        <!-- потом убрать -->
+      </li>
+    </transition-group>
+    <!-- v-intersection="fetchArticles" -->
+    <!-- @click="fetchArticles" -->
+    <my-button
+      v-if="!isFull"
+      class="loadmore-btn"
+    >
+      Загрузить ещё
+    </my-button>
+  </div>
 </template>
 
 <style scoped lang="scss">

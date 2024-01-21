@@ -1,8 +1,6 @@
 <script setup>
 import pwVisibile from "@/helpers/pwVisibile.js";
 import { useRouter } from "vue-router";
-// import ls from "@/helpers/localStorageHelpers.js";
-// import { $api } from "@/http/api.js";
 import { useAuthStore } from "@/stores/AuthStore";
 
 const authStore = useAuthStore();

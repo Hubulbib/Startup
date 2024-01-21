@@ -1,7 +1,9 @@
 <script setup>
 import UsersMockup from "@/mockups/UsersMockup.js";
 import { publishedString } from "@/helpers/publishedStringValidator.js";
-import { ref, computed, onMounted, nextTick } from "vue";
+import { ref, computed, onMounted, nextTick, onBeforeMount } from "vue";
+import { $api, API_URL } from "@/http/api";
+import axios from "axios";
 
 const props = defineProps({
   item: {
@@ -23,38 +25,25 @@ const onHide = () => {
 };
 
 const articleCard = ref(null);
-const description = ref(props.item.description);
+const user = ref(null)
 
-const cropDescription = async () => {
-  let text = props.item.description;
-  articleCard.value.style.maxHeight = `${props.blockHeight}px`;
+onBeforeMount(async () => {
+  try {
+    const response = await axios.get(`${API_URL}/user/${props.item.author}`)
 
-  while (articleCard.value.scrollHeight > articleCard.value.clientHeight) {
-    text = text.substring(0, text.lastIndexOf(" ")) + "...";
-    description.value = text;
-    await nextTick();
+    user.value = response.data
+  } catch (error) {
+    console.log(error)
   }
-};
+})
 
-onMounted(() => {
-  cropDescription();
-});
-
-const user = computed(() => {
-  // here will be a funciton that fetches user name, surname and avatar src
-  // requesting data by this.item.author_id
-  return UsersMockup.find((obj) => obj._id === props.item.author_id);
-  // the author_id is a unique value, so it shouldn't cause incorrect behaviour
-  // also Array.find will be replaced by fetch function, this one is only for demo
-});
-
-const published = publishedString(props.item.published);
+const published = publishedString(props.item.createdAt);
 </script>
 
 <template>
   <div class="article-item">
     <div class="article-item__img" :style="blockHeightStyle">
-      <img class="img" :src="item.img" :alt="item.title" />
+      <img class="img" src="@/assets/logo.png" :alt="item.content.title" />
     </div>
     <div class="article-item__card article-card" ref="articleCard">
       <h2 class="article-card__title">
@@ -63,15 +52,15 @@ const published = publishedString(props.item.published);
             name: 'article.show',
             params: {
               id: item._id,
-              title: item.title.replace(/\s/g, '_'),
+              title: item.content.title.replace(/\s/g, '_'),
             },
           }"
         >
-          {{ item.title }}
+          {{ item.content.title }}
         </router-link>
       </h2>
       <div class="article-card__meta">
-        <article-author :user="user" />
+        <article-author :id="item.author" />
         <div class="article-card__published">
           {{ published }}
         </div>
@@ -79,7 +68,7 @@ const published = publishedString(props.item.published);
           <article-counter :article="item" :isAuthorized="true" />
         </div>
       </div>
-      <div class="article-card__description">{{ description }}</div>
+      <div class="article-card__description">{{ item.content.recommended.description }}</div>
     </div>
     <div class="article-item__social">
       <my-button>Поделиться</my-button>
@@ -130,6 +119,7 @@ p {
   }
 
   &__social {
+    margin-left: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
