@@ -64,9 +64,9 @@ export class ArticleRepositoryImpl implements ArticleRepository {
     const articleDetail = await this.articleDetailRepository.findOne({ articleId })
     if (!articleDetail) throw Error('Такой записи не существует')
     await this.articleDetailRepository.findByIdAndUpdate(
-        articleDetail._id,
-        {...editBody.content?.detail},
-        {new: true}
+      articleDetail._id,
+      { ...editBody.content?.detail },
+      { new: true },
     )
     console.log(editBody)
     return ArticleMapper.toDomain(

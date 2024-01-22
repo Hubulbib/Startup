@@ -1,9 +1,9 @@
 import { tagModel } from '../entities/tag.entity'
 import { TagMapper } from '../mappers/tag.mapper'
-import { TagEntity } from '../../../core/entites/tag.entity'
-import { TagRepository } from '../../../core/repositories/TagRepository/tag.repository'
-import { EditBodyDto } from '../../../core/repositories/TagRepository/dtos/edit-body.dto'
-import { CreateBodyDto } from '../../../core/repositories/TagRepository/dtos/create-body.dto'
+import { type TagEntity } from '../../../core/entites/tag.entity'
+import { type TagRepository } from '../../../core/repositories/TagRepository/tag.repository'
+import { type EditBodyDto } from '../../../core/repositories/TagRepository/dtos/edit-body.dto'
+import { type CreateBodyDto } from '../../../core/repositories/TagRepository/dtos/create-body.dto'
 
 export class TagRepositoryImpl implements TagRepository {
   private readonly tagRepository = tagModel

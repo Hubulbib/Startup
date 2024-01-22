@@ -101,12 +101,18 @@ export class User {
 
   @prop({ type: String })
   avatar?: string
-  
+
   @prop({ type: () => UserDevice, default: [] }, PropType.ARRAY)
   devices: UserDevice[]
 
   @prop({ type: () => BaseDates, default: {}, required: true, _id: false })
   dates: BaseDates
+
+  @prop({ type: String, default: [] }, PropType.ARRAY)
+  likes?: string[]
+
+  @prop({ type: String, default: [] }, PropType.ARRAY)
+  hides?: string[]
 }
 
 export const userModel = getModelForClass(User, {

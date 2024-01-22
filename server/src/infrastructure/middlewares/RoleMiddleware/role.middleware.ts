@@ -20,15 +20,14 @@ export class RoleMiddleware {
     try {
       // TODO: fix _doc
       // @ts-expect-error
-        if (req.user._doc.role !== EUserRole.mentor) {
-          return res.status(403).end()
-        }
-        next()
+      if (req.user._doc.role !== EUserRole.mentor) {
+        return res.status(403).end()
       }
-      catch (err) {
-        return res.status(500).json(err)
-      }
+      next()
+    } catch (err) {
+      return res.status(500).json(err)
     }
+  }
 
   public static AdminRole = (req: IAuthRequest, res: Response, next: NextFunction) => {
     try {

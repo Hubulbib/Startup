@@ -79,7 +79,7 @@ export class AuthRepositoryImpl implements AuthRepository {
     const session = await this.sessionRepository.findSessionByIds({ uuidDevice: device.uuid, uuidUser: user.uuid })
     const userWithRole = { ...user, roleDoc: await this.roleRepository.findOne({ name: user.role }) }
 
-    console.log('session >', session) //после /logout -> null
+    console.log('session >', session) // после /logout -> null
 
     return {
       refreshToken: session.refreshToken.token,
@@ -91,6 +91,22 @@ export class AuthRepositoryImpl implements AuthRepository {
   }
 
   public logout = async (refreshToken: string): Promise<void> => {
+    const session = await this.sessionRepository.findSessionByRefresh(refreshToken)
+    if (!session) {
+      throw new Error('logout.session.notFound')
+    }
+    const user = await this.userRepository.findOne({ uuid: session.ids.uuidUser })
+    if (!user) {
+      throw new Error('logout.user.notFound')
+    }
+    await this.userRepository.updateOne(
+      {
+        uuid: user.uuid,
+      },
+      {
+        $set: { devices: user.devices.filter((e) => e.uuid !== session.ids.uuidDevice) },
+      },
+    )
     await this.sessionRepository.removeSessionByRefresh(refreshToken)
   }
 

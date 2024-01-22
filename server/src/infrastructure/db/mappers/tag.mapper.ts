@@ -1,4 +1,4 @@
-import { Tag } from '../entities/tag.entity'
+import { type Tag } from '../entities/tag.entity'
 import { TagEntity } from '../../../core/entites/tag.entity'
 
 export class TagMapper {

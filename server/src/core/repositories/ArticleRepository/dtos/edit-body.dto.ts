@@ -1,4 +1,4 @@
-import {ELevelRecommended} from "../../../entites/article.entity";
+import { type ELevelRecommended } from '../../../entites/article.entity'
 
 export class EditBodyDto {
   constructor(
@@ -23,10 +23,9 @@ class Content {
 
 class Recommended {
   constructor(
-      readonly level?: ELevelRecommended,
-      readonly description?: string
-  ) {
-  }
+    readonly level?: ELevelRecommended,
+    readonly description?: string,
+  ) {}
 }
 
 class ArticleDetail {
