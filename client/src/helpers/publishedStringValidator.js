@@ -1,30 +1,21 @@
-export function publishedString(date) {
-    const publishedDate = new Date(date),
-        currentDate = new Date();
+const dayjs = require('dayjs')
+const relativeTime = require('dayjs/plugin/relativeTime')
+require('dayjs/locale/ru') 
+var utc = require('dayjs/plugin/utc')
+var timezone = require('dayjs/plugin/timezone') // dependent on utc plugin
+dayjs.locale('ru')
+dayjs.extend(relativeTime)
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
-    if (publishedDate > currentDate) {
-        return "только что";
-    } else if (currentDate - publishedDate < 24 * 60 * 60 * 1000) {
-        const hoursAgoNumber = Math.floor(
-            (currentDate - publishedDate) / (60 * 60 * 1000)
-        );
-        switch (hoursAgoNumber) {
-            case 0:
-                return `недавно`;
-            case 1:
-            case 21:
-                return `${hoursAgoNumber} час назад`;
-            case 2:
-            case 3:
-            case 4:
-            case 22:
-            case 23:
-            case 24:
-                return `${hoursAgoNumber} часа назад`;
-            default:
-                return `${hoursAgoNumber} часов назад`;
-        }
-    } else {
-        return publishedDate.toLocaleDateString("en-GB");
-    }
+const tz = dayjs.tz.guess()
+
+export function publishedString(date) {
+    const serverDate = date 
+    const formattedDate = dayjs.utc(date).tz(tz).format();
+    console.log('serverDate >', '\n', serverDate)
+    console.log('utc +3 >', '\n', formattedDate)
+    return dayjs(formattedDate).fromNow()
 }
+
+// console.log(Intl.DateTimeFormat().resolvedOptions())

@@ -72,7 +72,8 @@ const postArticle = (data) => {
   // console.log(createArticle(data))
   $api
     .post("/article", createArticle(data))
-    .then((r) => console.log(r.data));
+    .then((r) => console.log(r.data))
+    .catch(err => console.log(err))
 };
 </script>
 

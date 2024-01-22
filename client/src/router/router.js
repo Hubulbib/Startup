@@ -1,35 +1,35 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useArticleStore } from '@/stores/ArticleStore';
+import { useAuthStore } from '@/stores/AuthStore';
 
 const routes = [
+  // webpackChunkName - позволяет задать красивые имена отдельным js файлам на этапе сборки проекта (npm run build)
   {
     path: '/',
     name: 'home',
     component: () => import(/* webpackChunkName: "Home" */'@/views/Home.vue'),
     alias: ['/home', '/index.html', '/index']
   },
-  { path: '/allcomponents', name: 'allcomponents', component: () => import(/* webpackChunkName: "AllComponents" */ '@/views/AllComponents.vue') },
-  // webpackChunkName - позволяет задать красивые имена отдельным js файлам на этапе сборки проекта (npm run build)
   {
-    path: '/article/:id(\\d+)/:title*',
+    path: '/article/:title/:id',
     name: 'article.show',
     component: () => import(/* webpackChunkName: "article" */ '@/views/Article.vue'),
-    props: route => ({ id: parseInt(route.params.id) })
+    props: route => ({ id: route.params.id }),
   },
   { path: '/cms', name: 'cms', component: () => import(/* webpackChunkName: "cms" */'@/views/CreateArticle.vue') },
   {
-    path: '/cms/:id(\\d+)',
+    path: '/cms/:id',
     name: 'cms.edit',
     component: () => import(/* webpackChunkName: "cmsedit" */'@/views/EditArticle.vue'),
-    props: route => ({ id: parseInt(route.params.id) })
+    props: route => ({ id: route.params.id })
   },
   { path: '/account', name: 'account', component: () => import(/* webpackChunkName: "account"*/'@/views/PersonalAccount.vue') },
   { path: '/profile', name: 'profile', component: () => import(/* webpackChunkName: "" */'@/views/AccountProfile.vue') },
   {
-    path: '/profile/:id(\\d+)',
+    path: '/profile/:id',
     name: 'profile.show',
     component: () => import(/* webpackChunkName: "user" */'@/views/UserProfile.vue'),
-    props: route => ({ id: parseInt(route.params.id) })
+    props: route => ({ id: route.params.id })
   },
   { path: '/login', name: 'login', component: () => import(/* webpackChunkName: "login" */'@/views/Login.vue') },
   { path: '/signup', name: 'signup', component: () => import(/* webpackChunkName: "signup" */'@/views/Signup.vue') },
@@ -54,17 +54,21 @@ const router = createRouter({
   }
 });
 
-router.beforeResolve(async to => {
+router.beforeEach(async (to, from) => {
   const articleStore = useArticleStore()
+  const authStore = useAuthStore()
 
-  if (to.name !== 'home') return
-
-  try {
-    await articleStore.fetchArticles()
-  } catch (error) {
-    console.log(error);
+  if (to.name === 'home') {
+    try {
+      await articleStore.fetchArticles()
+    } catch (error) {
+      console.log(error);
+    }
   }
 
+  if (['cms', 'cms.edit'].includes(to.name)) {
+    console.log(to.name)
+  }
 })
 
 export default router;

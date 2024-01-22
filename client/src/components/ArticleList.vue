@@ -1,6 +1,5 @@
 <script setup>
-import ArticlesMockup from "@/mockups/ArticlesMockup.js"; // mockup of articles
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted } from "vue";
 import ArticleListItem from "@/components/ArticleListItem.vue";
 import { useArticleStore } from "@/stores/ArticleStore";
 
@@ -9,41 +8,8 @@ const loaderInc = ref(3);
 const articles = articleStore.articles;
 const isFull = ref(false)
 
-const hide = (id) => {
-  ArticlesMockup = ArticlesMockup.filter(item => item._id !== id)
-  articles.value = articles.value.filter(item => item._id !== id)
-}
-
-// const fetchArticles = () => {
-//   // fetching articles from the server
-//   setTimeout(() => {
-//     // try catch
-//     // костыль
-//     const length = articles.value.length;
-
-//     articles.value = [
-//       ...articles.value,
-//       ...ArticlesMockup.slice(length, length + loaderInc.value),
-//     ];
-//   }, 250);
-// };
-
-watch(articles, () => {
-  if (articles.value.length === ArticlesMockup.length) {
-    isFull.value = true
-  }
-}, { deep: true })
-
 onMounted(() => {
-  // try {
-  //   fetchArticles();
-  // } catch (error) {
-  //   console.log(error)
-  // } finally {
-  //   firstLoad.value = false
-  // }
-
-  // v-intersection triggers callback whenever its element is mounted therefore the first fetch will happen automatically => onMounted method doesnt needed
+  
 });
 </script>
 
@@ -51,7 +17,7 @@ onMounted(() => {
   <div>
     <transition-group name="article-list" class="article-list" tag="ul">
       <li class="article-list__item" v-for="article in articles" :key="article._id">
-        <ArticleListItem :item="article" @onHide="hide" />
+        <ArticleListItem :item="article"/>
         <!-- потом убрать -->
         <router-link style="margin-bottom: 10px; color: red" :to="{name: 'cms.edit', params: {id: article._id}}">Редактировать статью (для теста роутера, потом уберу)</router-link>
         <!-- потом убрать -->

@@ -80,7 +80,7 @@ import UsersMockup from '@/mockups/UsersMockup'; // for development purposes onl
 
 const props = defineProps({
   articleId: {
-    type: Number,
+    type: String,
     required: true
   }
 });

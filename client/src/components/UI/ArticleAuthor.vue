@@ -1,7 +1,7 @@
 <template>
   <div class="author">
     <router-link
-      :to="{ name: 'profile.show', params: { id: id } }"
+      :to="{ name: 'profile.show', params: { id: user.id } }"
       class="author__image"
     >
       <img
@@ -10,10 +10,10 @@
         :alt="user.name"
         class="author__img"
       />
-      <avatar-initials :user="user" class="author__svg" />
+      <avatar-initials :fullname="{ name: user.name, surname: user.surname }" class="author__svg" />
     </router-link>
     <router-link
-      :to="{ name: 'profile.show', params: { id: id } }"
+      :to="{ name: 'profile.show', params: { id: user.id } }"
       class="author__name"
     >
       {{ user.name }} {{ user.surname }}
@@ -28,28 +28,12 @@ export default {
 </script>
 
 <script setup>
-import { onBeforeMount, ref } from 'vue';
-import axios from 'axios';
-import { API_URL } from '@/http/api';
-
 const props = defineProps({
-  id: {
-    type: String,
+  user: {
+    type: Object,
     required: true,
   }
 });
-
-const user = ref({})
-
-onBeforeMount(async () => {
-  try {
-    const response = await axios.get(`${API_URL}/user/${props.id}`)
-
-    user.value = response.data
-  } catch (error) {
-    console.log(error);
-  }
-})
 </script>
 
 <style scoped lang="scss">

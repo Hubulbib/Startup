@@ -1,26 +1,22 @@
 <template>
   <nav class="nav">
-    <!-- <Icon style="cursor: pointer;" @click="$router.back()" icon="ion:arrow-back-circle-outline" width="75" height="75" /> -->
-    <!-- <router-link :to="{name: 'home'}" class="nav__item">Homepage</router-link> -->
     <router-link v-if="permissions.includes('article.create')" :to="{name: 'cms'}" class="nav__item">Создание статьи</router-link>
-    <router-link :to="{name: 'allcomponents'}" class="nav__item">Солянка</router-link>
-    <!-- <router-link :to="{name: 'account'}" class="nav__item">Личный кабинет</router-link> -->
     <router-link :to="{name: 'profile'}" class="nav__item">Профайл</router-link>
-    <!-- <router-link :to="{name: 'login'}" class="nav__item">Логин</router-link> -->
-    <!-- <router-link :to="{name: 'signup'}" class="nav__item">Регистрация</router-link> -->
   </nav>
 </template>
 
 <script setup>
 import { ref, watchEffect } from "vue";
 import { useAuthStore } from "@/stores/AuthStore";
+import { useUserStore } from "@/stores/userStore";
 
 const authStore = useAuthStore()
+const userStore = useUserStore()
 const permissions = ref([])
 
 watchEffect(() => {
   authStore.isAuth 
-    ? permissions.value = [...authStore.user.role.permissions] 
+    ? permissions.value = [...userStore.user.role.permissions] 
     : permissions.value = []
 })
 </script>

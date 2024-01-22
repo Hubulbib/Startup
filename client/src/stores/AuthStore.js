@@ -5,12 +5,14 @@ import AuthService from '@/services/AuthService';
 import ls from '@/helpers/localStorageHelpers.js'
 import { useRouter, useRoute } from "vue-router";
 import axios from "axios";
+import { useUserStore } from "./userStore";
 
 export const useAuthStore = defineStore('AuthStore', () => {
+  const userStore = useUserStore()
+
   const router = useRouter();
   const route = useRoute();
 
-  const user = ref({});
   const isAuth = ref(false);
 
   const onLoadAuthCheck = async function() {
@@ -18,7 +20,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
       const res = await axios.post(`${API_URL}/auth/refresh`, {}, { withCredentials: true });
       ls.saveToken(res.data.accessToken);
       isAuth.value = true;
-      user.value = res.data.user;
+      userStore.user = res.data.user;
     }
     catch (e) {
       console.log(e?.message);
@@ -31,7 +33,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
       const res = await AuthService.signup(data);
       ls.saveToken(res.data.accessToken);
       isAuth.value = true;
-      user.value = res.data.user;
+      userStore.user = res.data.user;
       router.push({ name: 'home' });
     } catch (e) {
       console.log(e?.response?.data);
@@ -43,7 +45,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
       const res = await AuthService.login(email, password);
       ls.saveToken(res.data.accessToken);
       isAuth.value = true;
-      user.value = res.data.user;
+      userStore.user = res.data.user;
 
       if (route.query.redirect) {          // если пользователя перекинуло на страницу логина после действия, требующего авторизации
         router.push(route.query.redirect)  // после логина он будет возвращён на ту же страницу
@@ -65,7 +67,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
       await AuthService.logout();
       ls.removeToken();
       isAuth.value = false;
-      user.value = {};
+      userStore.user = {};
       router.push({ name: 'home' })
     } catch (e) {
       console.log(e);
@@ -73,6 +75,6 @@ export const useAuthStore = defineStore('AuthStore', () => {
   };
 
   return {
-    user, isAuth, onLoadAuthCheck, signup, login, logout
+    isAuth, onLoadAuthCheck, signup, login, logout
   }
 });

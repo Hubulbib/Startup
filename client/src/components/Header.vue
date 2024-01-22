@@ -3,8 +3,8 @@
     <div class="header">
       <div class="header__wrapper">
         <router-link class="header__logo" :to="{ name: 'home' }">Logo</router-link>
-        <h2 class="header__desc">Привет, {{ authStore.user ? `${authStore.user.name}
-                  ${authStore.user.surname}` : 'анонимус' }}</h2>
+        <h2 class="header__desc">Привет, {{ userStore.user ? `${userStore.user.name}
+                  ${userStore.user.surname}` : 'анонимус' }}</h2>
       </div>
       <div class="header__account">
         <my-button class="header__account--switch">THEME</my-button>
@@ -14,7 +14,7 @@
           class="header__account--user"
         >
           <img src="@/assets/empty-avatar.svg" alt="Аватарка пользователя" />
-          <span>{{ authStore.user.name }} {{ authStore.user.surname }}</span>
+          <span>{{ userStore.user.name }} {{ userStore.user.surname }}</span>
         </router-link>
         <router-link
           v-else
@@ -33,17 +33,10 @@
 
 <script setup>
 import { useAuthStore } from '@/stores/AuthStore';
-import { $api } from "@/http/api.js";
+import { useUserStore } from '@/stores/userStore';
 
 const authStore = useAuthStore();
-
-const test = () => {
-  try {
-    $api.get('/role/mentor').then(r => console.log(r.data)).catch(e => console.log(e.message))
-  } catch (e) {
-    console.log(e)
-  }
-}
+const userStore = useUserStore();
 </script>
 
 <style lang="scss" scoped>

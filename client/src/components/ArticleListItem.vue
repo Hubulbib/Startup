@@ -1,9 +1,5 @@
 <script setup>
-import UsersMockup from "@/mockups/UsersMockup.js";
 import { publishedString } from "@/helpers/publishedStringValidator.js";
-import { ref, computed, onMounted, nextTick, onBeforeMount } from "vue";
-import { $api, API_URL } from "@/http/api";
-import axios from "axios";
 
 const props = defineProps({
   item: {
@@ -18,32 +14,30 @@ const props = defineProps({
 
 const blockHeightStyle = `max-height: ${props.blockHeight}px`;
 
-const emit = defineEmits(["onHide"]);
-
 const onHide = () => {
   emit("onHide", props.item._id);
 };
-
-const articleCard = ref(null);
-const user = ref(null)
-
-onBeforeMount(async () => {
-  try {
-    const response = await axios.get(`${API_URL}/user/${props.item.author}`)
-
-    user.value = response.data
-  } catch (error) {
-    console.log(error)
-  }
-})
 
 const published = publishedString(props.item.createdAt);
 </script>
 
 <template>
+  <!-- сделать псведоссылку на обертку через :after -->
   <div class="article-item">
     <div class="article-item__img" :style="blockHeightStyle">
-      <img class="img" src="@/assets/logo.png" :alt="item.content.title" />
+      <img
+        v-if="item.img"
+        class="img"
+        :src="item.img"
+        :alt="item.content.title"
+      />
+      <img
+        v-else
+        class="img-placeholder"
+        src="@/assets/logo.png"
+        alt="placeholder"
+        width="150"
+      />
     </div>
     <div class="article-item__card article-card" ref="articleCard">
       <h2 class="article-card__title">
@@ -55,12 +49,13 @@ const published = publishedString(props.item.createdAt);
               title: item.content.title.replace(/\s/g, '_'),
             },
           }"
+          class="title-link"
         >
           {{ item.content.title }}
         </router-link>
       </h2>
       <div class="article-card__meta">
-        <article-author :id="item.author" />
+        <article-author :user="item.author" />
         <div class="article-card__published">
           {{ published }}
         </div>
@@ -68,7 +63,9 @@ const published = publishedString(props.item.createdAt);
           <article-counter :article="item" :isAuthorized="true" />
         </div>
       </div>
-      <div class="article-card__description">{{ item.content.recommended.description }}</div>
+      <div class="article-card__description">
+        {{ item.content.recommended.description }}
+      </div>
     </div>
     <div class="article-item__social">
       <my-button>Поделиться</my-button>
@@ -93,10 +90,23 @@ p {
   padding: 0;
 }
 
+.title-link::after {
+  position: absolute;
+  content: "";
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
 .article-item {
   padding: 30px 0;
   display: flex;
   gap: 10px;
+
+  position: relative;
 
   &__img {
     flex-shrink: 0;
@@ -104,6 +114,10 @@ p {
     border: 1px solid #ddd;
     border-radius: 15px;
     overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     & .img {
       width: 100%;
@@ -119,6 +133,8 @@ p {
   }
 
   &__social {
+    position: relative;
+    z-index: 10;
     margin-left: auto;
     display: flex;
     flex-direction: column;
@@ -135,6 +151,8 @@ p {
     }
 
     &__meta {
+      position: relative;
+      z-index: 10;
       display: flex;
       justify-content: space-between;
       align-items: center;

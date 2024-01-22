@@ -1,6 +1,7 @@
 import { ref } from "vue";
-import { $api } from "@/http/api";
+import { $api, API_URL } from "@/http/api";
 import { defineStore } from "pinia";
+import axios from "axios";
 
 export const useArticleStore = defineStore('ArticleStore', () => {
     const articles = ref([])
@@ -11,9 +12,18 @@ export const useArticleStore = defineStore('ArticleStore', () => {
 
             articles.value = [...response.data]
 
+            for (const article of articles.value) {
+                try {
+                    const response = await $api.get(`/user/${article.author}`)
+                    article.author = response.data
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
             console.log(articles.value)
         } catch (error) {
-            console.lolg(error)
+            console.log(error)
         }
     }
 
@@ -22,12 +32,12 @@ export const useArticleStore = defineStore('ArticleStore', () => {
             const detail = await $api.get(`article/${article.id}/detail`)
 
             article.content.detail = { ...detail }
-            
+
             return {
                 article
             }
         } catch (error) {
-            console.log(error)            
+            console.log(error)
         }
     }
 

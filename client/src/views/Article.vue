@@ -10,6 +10,19 @@
 
 <script setup>
 import ArticleFulltext from '@/components/ArticleFulltext.vue';
+import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
+
+const route = useRoute()
+const router = useRouter()
+
+onMounted(() => {
+  console.log(route.params)
+  const params = Object.assign({}, route.params)
+  delete params.id
+  router.replace({ params })
+})
 
 // сделать логику:
 // fetch статьи по id,
