@@ -45,7 +45,7 @@ export class UserRepositoryImpl implements UserRepository {
             roleDoc: RoleMapper.toDomain(await this.roleRepository.findOne({ name: el.role })),
             userSubscribes: await this.getAllSubscribe(el._id),
             articles: await this.getAllArticle(el._id),
-          })
+          }),
       ),
     )
   }

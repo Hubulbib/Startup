@@ -1,5 +1,5 @@
-import { ArticleStatusEnum } from '../enums/article-status.enum.js'
-import {ELevelRecommended} from "../../../../core/entites/article.entity";
+import { type ArticleStatusEnum } from '../enums/article-status.enum.js'
+import { type ELevelRecommended } from '../../../../core/entites/article.entity'
 
 export interface IArticle {
   _id: string

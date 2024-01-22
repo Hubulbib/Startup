@@ -7,5 +7,7 @@ export class EditBodyDto {
     readonly rating?: number[],
     readonly avatar?: string,
     readonly userSubscribes?: string[],
+    readonly likes?: string[],
+    readonly hides?: string[],
   ) {}
 }

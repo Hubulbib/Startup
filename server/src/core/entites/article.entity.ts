@@ -23,14 +23,13 @@ class Content {
 
 class Recommended {
   constructor(
-      readonly level: ELevelRecommended,
-      readonly description: string
-  ) {
-  }
+    readonly level: ELevelRecommended,
+    readonly description: string,
+  ) {}
 }
 
 export enum ELevelRecommended {
   easy = 'Easy',
   medium = 'Medium',
-  hard = 'Hard'
+  hard = 'Hard',
 }

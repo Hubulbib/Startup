@@ -1,7 +1,7 @@
 import { type Document, model, Schema } from 'mongoose'
 import { type IArticle } from './interfaces/article.interface.js'
 import { ArticleStatusEnum } from './enums/article-status.enum.js'
-import {ELevelRecommended} from "../../../core/entites/article.entity";
+import { ELevelRecommended } from '../../../core/entites/article.entity'
 
 export type IArticleDoc = Document<any, any, IArticle> & IArticle
 
@@ -9,8 +9,8 @@ const schema = new Schema<IArticle>({
   author: { type: String, required: true },
   content: {
     recommended: {
-      level: {type: String, required: true, enum: Object.values(ELevelRecommended)},
-      description: {type: String, required: true}
+      level: { type: String, required: true, enum: Object.values(ELevelRecommended) },
+      description: { type: String, required: true },
     },
     title: { type: String, required: true },
     description: { type: String, required: true },
