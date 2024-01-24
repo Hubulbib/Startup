@@ -19,7 +19,9 @@ router.put('/:id', [EditOneMiddleware], articleController.editOne)
 
 router.patch('/:id/view', [], articleController.incView)
 
-router.patch('/:id/like', [AuthMiddleware], articleController.incLike)
+router.patch('/:id/inc-like', [AuthMiddleware], articleController.incLike)
+
+router.patch('/:id/dec-like', [AuthMiddleware], articleController.decLike)
 
 router.delete('/:id', [AuthMiddleware, RoleMiddleware.MentorRole], articleController.removeOne)
 

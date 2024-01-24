@@ -34,6 +34,10 @@ export class ArticleService {
     return await this.articleRepository.incLike(articleId)
   }
 
+  decLike = async (articleId: string) => {
+    return await this.articleRepository.decLike(articleId)
+  }
+
   removeOne = async (articleId: string) => {
     return await this.articleRepository.removeOne(articleId)
   }

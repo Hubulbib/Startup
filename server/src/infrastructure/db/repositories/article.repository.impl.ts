@@ -68,7 +68,6 @@ export class ArticleRepositoryImpl implements ArticleRepository {
       { ...editBody.content?.detail },
       { new: true },
     )
-    console.log(editBody)
     return ArticleMapper.toDomain(
       await this.articleRepository.findByIdAndUpdate(
         article._id,
@@ -95,6 +94,18 @@ export class ArticleRepositoryImpl implements ArticleRepository {
     }
     article.likes++
     await article.save()
+    return article.likes
+  }
+
+  async decLike(articleId: string): Promise<number> {
+    const article = await this.articleRepository.findById(articleId)
+    if (!article) {
+      throw Error('Такой записи не существует')
+    }
+    if (article.likes > 0) {
+      article.likes--
+      await article.save()
+    }
     return article.likes
   }
 
