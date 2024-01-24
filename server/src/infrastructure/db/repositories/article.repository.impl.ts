@@ -56,7 +56,9 @@ export class ArticleRepositoryImpl implements ArticleRepository {
   async getAll(getAllBody: GetAllBodyDto): Promise<ArticleEntity[]> {
     return await Promise.all(
       (
-        await this.articleRepository.find({}, null, { limit: getAllBody.options.interval * getAllBody.options.pages })
+        await this.articleRepository.find({ _id: { $not: { $in: getAllBody.options.hides } } }, null, {
+          limit: getAllBody.options.interval * getAllBody.options.pages,
+        })
       ).map(async (el) => ArticleMapper.toDomain({ ...el._doc, mentors: await this.getAllMentor(el._id) })),
     )
   }

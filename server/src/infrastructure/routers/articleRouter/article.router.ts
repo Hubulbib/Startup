@@ -3,12 +3,13 @@ import { AuthMiddleware } from '../../middlewares/AuthMiddleware/auth.middleware
 import { RoleMiddleware } from '../../middlewares/RoleMiddleware/role.middleware'
 import articleController from '../../controllers/ArticleController/article.controller.js'
 import { EditOneMiddleware } from './middlewares/edit-one.middleware'
+import { AuthEitherMiddleware } from '../../middlewares/AuthMiddleware/auth-either.middleware'
 
 const router = Router()
 
 router.post('', [AuthMiddleware, RoleMiddleware.MentorRole], articleController.createOne)
 
-router.get('', [], articleController.getAll)
+router.get('', [AuthEitherMiddleware], articleController.getAll)
 
 router.get('/:id/detail', [], articleController.getDetail)
 

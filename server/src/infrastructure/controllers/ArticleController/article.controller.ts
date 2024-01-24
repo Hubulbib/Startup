@@ -1,7 +1,9 @@
 import { type Request, type Response } from 'express'
-import { type IAuthRequest } from '../../interfaces/auth-request.interface'
+import { type IAuthRequest } from '../../interfaces/auth.request.interface'
 import { ArticleService } from '../../../core/services/ArticleService/article.service.js'
 import { ArticleRepositoryImpl } from '../../db/repositories/article.repository.impl.js'
+import { IAuthEitherRequest } from '../../interfaces/auth-either.request.interface'
+import { GetAllBodyDto } from '../../../core/repositories/ArticleRepository/dtos/get-all-body.dto'
 
 class ArticleController {
   constructor(readonly articleService: ArticleService) {}
@@ -27,11 +29,16 @@ class ArticleController {
     }
   }
 
-  getAll = async (req: Request, res: Response) => {
+  getAll = async (req: IAuthEitherRequest, res: Response) => {
     try {
+      let articleHideList: string[] = []
+      if ('user' in req) {
+        articleHideList = req.user['hides']
+      }
+
       const { interval, pages } = req.query
-      const options = { interval: +interval, pages: +pages }
-      const articleData = await this.articleService.getAll({ options })
+      const options = new GetAllBodyDto({ interval: +interval, pages: +pages, hides: articleHideList })
+      const articleData = await this.articleService.getAll(options)
       res.json(articleData)
     } catch (err) {
       res.status(500).json(err)
