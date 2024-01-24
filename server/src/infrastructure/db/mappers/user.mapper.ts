@@ -17,6 +17,8 @@ export class UserMapper {
       entity.avatar,
       entity.userSubscribes,
       entity.articles,
+      entity.likes,
+      entity.hides,
     )
   }
 
