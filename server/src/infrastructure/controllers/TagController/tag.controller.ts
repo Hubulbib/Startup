@@ -1,5 +1,5 @@
 import { type Response } from 'express'
-import { type IAuthRequest } from '../../interfaces/auth-request.interface'
+import { type IAuthRequest } from '../../interfaces/auth.request.interface'
 import { TagService } from '../../../core/services/TagService/tag.service'
 import { TagRepositoryImpl } from '../../db/repositories/tag.repository.impl'
 

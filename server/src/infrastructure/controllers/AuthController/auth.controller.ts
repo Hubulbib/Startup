@@ -3,7 +3,7 @@ import { AuthService } from '../../../core/services/AuthService/auth.service.js'
 import { AuthRepositoryImpl } from '../../db/repositories/auth.repository.impl.js'
 import 'dotenv/config'
 import { ResponseTokenDto } from './dtos/response-token.dto'
-import { type IAuthRequest } from '../../interfaces/auth-request.interface'
+import { type IAuthRequest } from '../../interfaces/auth.request.interface'
 
 class AuthController {
   constructor(readonly authService: AuthService) {}

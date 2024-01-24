@@ -11,6 +11,7 @@ export interface ArticleRepository {
   editOne: (articleId: string, editBody: EditBodyDto) => Promise<ArticleEntity>
   incView: (articleId: string) => Promise<number>
   incLike: (articleId: string) => Promise<number>
+  decLike: (articleId: string) => Promise<number>
   removeOne: (articleId: string) => Promise<ArticleEntity>
   getDetail: (articleId: string) => Promise<ArticleDetailEntity>
 }

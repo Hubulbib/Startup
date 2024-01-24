@@ -1,5 +1,5 @@
 import { type Response } from 'express'
-import { type IAuthRequest } from '../../interfaces/auth-request.interface'
+import { type IAuthRequest } from '../../interfaces/auth.request.interface'
 import { SubscribeRepositoryImpl } from '../../db/repositories/subscribe.repository.impl'
 import { SubscribeService } from '../../../core/services/SubscribeService/subscribe.service'
 

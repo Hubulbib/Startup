@@ -22,7 +22,7 @@ export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) 
     // TODO: fix it
     // @ts-expect-error
     req.user = {
-      ...userData,
+      ...userData._doc,
       details: {
         ua: req.get('User-Agent'),
         ip: req.ip,

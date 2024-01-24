@@ -13,6 +13,8 @@ export class UserEntity {
     readonly avatar: string,
     readonly userSubscribes?: string[],
     readonly articles?: string[],
+    readonly likes?: string[],
+    readonly hides?: string[],
   ) {}
 }
 
