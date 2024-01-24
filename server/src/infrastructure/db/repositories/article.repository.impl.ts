@@ -15,15 +15,20 @@ export class ArticleRepositoryImpl implements ArticleRepository {
 
   async createOne(createBody: CreateBodyDto): Promise<ArticleEntity> {
     const articleTags = [...new Set(createBody.tags)]
-    const article = await this.articleRepository.create({ ...createBody, tags: articleTags })
+    const article = await this.articleRepository.create({
+      ...createBody,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      tags: articleTags,
+    })
 
     const articleDetail = await this.articleDetailRepository.findOne({ articleId: article._id })
     if (articleDetail) throw Error('Такая запись уже существует')
 
     await this.articleDetailRepository.create({
       articleId: article._id,
-      body: createBody.content.detail.body,
-      tasks: createBody.content.detail.tasks,
+      body: createBody.content.detail?.body,
+      tasks: createBody.content.detail?.tasks,
     })
     return ArticleMapper.toDomain(article)
   }

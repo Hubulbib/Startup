@@ -19,8 +19,11 @@ export class RoleMiddleware {
   public static MentorRole = (req: IAuthRequest, res: Response, next: NextFunction) => {
     try {
       // TODO: fix _doc
-      // @ts-expect-error
-      if (req.user._doc.role !== EUserRole.mentor) {
+      if (
+        // @ts-expect-error
+        (req.user._doc && req.user._doc.role !== EUserRole.mentor) ||
+        (req.user.role && req.user.role !== EUserRole.mentor)
+      ) {
         return res.status(403).end()
       }
       next()
