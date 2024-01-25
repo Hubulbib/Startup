@@ -1,5 +1,5 @@
 import { type Response } from 'express'
-import { type IAuthRequest } from '../../interfaces/auth-request.interface'
+import { type IAuthRequest } from '../../interfaces/auth.request.interface'
 import { RoleService } from '../../../core/services/RoleService/role.service'
 import { RoleRepositoryImpl } from '../../db/repositories/role.repository.impl'
 

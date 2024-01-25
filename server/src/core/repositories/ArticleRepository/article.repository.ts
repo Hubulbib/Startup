@@ -7,10 +7,12 @@ import { type ArticleDetailEntity } from '../../entites/article-detail.entity'
 export interface ArticleRepository {
   createOne: (createBody: CreateBodyDto) => Promise<ArticleEntity>
   getAll: (getAllBody: GetAllBodyDto) => Promise<ArticleEntity[]>
+  getAllByMentor: (mentorId: string) => Promise<ArticleEntity[]>
   getOneById: (articleId: string) => Promise<ArticleEntity>
   editOne: (articleId: string, editBody: EditBodyDto) => Promise<ArticleEntity>
   incView: (articleId: string) => Promise<number>
   incLike: (articleId: string) => Promise<number>
+  decLike: (articleId: string) => Promise<number>
   removeOne: (articleId: string) => Promise<ArticleEntity>
   getDetail: (articleId: string) => Promise<ArticleDetailEntity>
 }

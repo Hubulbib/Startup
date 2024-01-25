@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express'
 import { UserService } from '../../../core/services/UserService/user.service.js'
 import { UserRepositoryImpl } from '../../db/repositories/user.repository.impl.js'
-import { type IAuthRequest } from '../../interfaces/auth-request.interface'
+import { type IAuthRequest } from '../../interfaces/auth.request.interface'
 
 class UserController {
   constructor(readonly userService: UserService) {}
