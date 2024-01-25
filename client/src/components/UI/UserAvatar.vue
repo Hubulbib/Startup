@@ -1,9 +1,9 @@
 <template>
-  <div class="avatar" @click="openProfile">
+  <div class="avatar" :style="size">
     <img v-if="user && user.avatar" :src="user.avatar" alt="Личный кабинет" />
-    <avatar-initials v-else-if="user && user.name" :user="user" />
+    <avatar-initials v-else-if="user && user.name" :fullname="{ name: user.name, surname: user.surname }" />
     <Icon v-else icon="carbon:user-avatar-filled-alt" color="#6495ee" width="100" height="100" />
-
+    <slot></slot>
   </div>
 </template>
 
@@ -14,19 +14,17 @@ export default {
     user: {
       type: Object,
       default: null
+    },
+    size: {
+      type: Number,
+      default: 100
     }
   },
   setup(props) {
-    const openProfile = function() {
-      if (props.user) {
-        console.log("Personal account page"); // route to personal account
-      } else {
-        console.log("Modal for registration / authorisation"); // open modal for register/auth
-      }
-    };
+    const size = `width: ${props.size}px; heigth: ${props.size}px`;
 
     return {
-      openProfile
+      size
     }
   }
 };
@@ -38,8 +36,6 @@ img {
 }
 
 .avatar {
-  width: 100px;
-  height: 100px;
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;

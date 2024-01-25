@@ -8,20 +8,9 @@
       </div>
       <div class="header__account">
         <my-button class="header__account--switch">THEME</my-button>
-        <router-link
-          :to="{ name: 'account' }"
-          v-if="authStore.isAuth"
-          class="header__account--user"
-        >
-          <img src="@/assets/empty-avatar.svg" alt="Аватарка пользователя" />
-          <span>{{ userStore.user.name }} {{ userStore.user.surname }}</span>
-        </router-link>
-        <router-link
-          v-else
-          :to="{ name: 'login' }"
-          class="header__account--login">Войти</router-link>
+        <user-avatar :size="100" :user="userStore.user" @click="redirectUser"></user-avatar>
+        <my-button v-if="authStore.isAuth" @click="authStore.logout" class="">Выйти</my-button>
       </div>
-      <my-button v-if="authStore.isAuth" @click="authStore.logout" class="">Выйти</my-button>
     </div>
   </div>
 </template>
@@ -34,9 +23,19 @@
 <script setup>
 import { useAuthStore } from '@/stores/AuthStore';
 import { useUserStore } from '@/stores/userStore';
+import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
+const router = useRouter();
+
+const redirectUser = function() {
+  if (authStore.isAuth) {
+    router.push({ name: 'account' });
+  } else {
+    router.push({ name: 'login' });
+  }
+}
 </script>
 
 <style lang="scss" scoped>

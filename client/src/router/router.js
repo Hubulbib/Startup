@@ -23,8 +23,44 @@ const routes = [
     component: () => import(/* webpackChunkName: "cmsedit" */'@/views/EditArticle.vue'),
     props: route => ({ id: route.params.id })
   },
-  { path: '/account', name: 'account', component: () => import(/* webpackChunkName: "account"*/'@/views/PersonalAccount.vue') },
-  { path: '/profile', name: 'profile', component: () => import(/* webpackChunkName: "" */'@/views/AccountProfile.vue') },
+  {
+    path: '/account/info',
+    name: 'account',
+    component: () => import(/* webpackChunkName: "account"*/'@/views/PersonalAccount.vue'),
+    beforeEnter: async (to, from, next) => { // prevent loading account component before UserStore is initialized
+      const authStore = useAuthStore()
+      if (!authStore.isAuth) {
+        await authStore.onLoadAuthCheck();
+      }
+      next();
+    }
+  },
+  {
+    path: '/account/my-articles',
+    name: 'my-articles',
+    component: () => import(/* webpackChunkName: "myarticles"*/'@/views/MyArticles.vue')
+  },
+  {
+    path: '/account/my-subscriptions',
+    name: 'my-subscriptions',
+    component: () => import(/* webpackChunkName: "mysubscriptions"*/'@/views/MySubscriptions.vue')
+  },
+  {
+    path: '/account/quarantine',
+    name: 'quarantine',
+    component: () => import(/* webpackChunkName: "quarantine"*/'@/views/Quarantine.vue')
+  },
+  {
+    path: '/account/articles-to-verify',
+    name: 'articles-to-verify',
+    component: () => import(/* webpackChunkName: "articlestoverify"*/'@/views/ArticlesToVerify.vue')
+  },
+  {
+    path: '/account/search-users',
+    name: 'search-users',
+    component: () => import(/* webpackChunkName: "searchusers"*/'@/views/SearchUsers.vue')
+  },
+  { path: '/account/profile', name: 'profile', component: () => import(/* webpackChunkName: "" */'@/views/AccountProfile.vue') },
   {
     path: '/profile/:id',
     name: 'profile.show',
