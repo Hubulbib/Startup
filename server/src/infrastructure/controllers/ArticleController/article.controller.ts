@@ -45,6 +45,16 @@ class ArticleController {
     }
   }
 
+  getAllByMentor = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params
+      const articleData = await this.articleService.getAllByMentor(id)
+      res.json(articleData)
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  }
+
   getOneById = async (req: Request, res: Response) => {
     try {
       const { id } = req.params
