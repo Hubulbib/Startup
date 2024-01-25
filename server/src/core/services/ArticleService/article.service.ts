@@ -18,6 +18,10 @@ export class ArticleService {
     return await this.articleRepository.getAll(getAllBody)
   }
 
+  getAllByMentor = async (mentorId: string) => {
+    return await this.articleRepository.getAllByMentor(mentorId)
+  }
+
   getOneById = async (articleId: string) => {
     return await this.articleRepository.getOneById(articleId)
   }

@@ -63,6 +63,10 @@ export class ArticleRepositoryImpl implements ArticleRepository {
     )
   }
 
+  async getAllByMentor(mentorId: string): Promise<ArticleEntity[]> {
+    return this.articleRepository.find({ author: mentorId })
+  }
+
   async editOne(articleId: string, editBody: EditBodyDto): Promise<ArticleEntity> {
     const article = await this.articleRepository.findById(articleId)
     if (!article) {
