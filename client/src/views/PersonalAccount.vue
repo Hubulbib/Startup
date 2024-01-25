@@ -161,32 +161,32 @@ const submitChanges = async (data) => {
             <Icon icon="carbon:next-outline" />
           </div>
         </router-link>
-        <router-link style="width: 100%" :to="{ name: 'my-subscriptions'}">
+        <router-link style="width: 100%" :to="{ name: 'my-subscriptions' }">
           <div class="user-info__block user-info__block user-info__block--link">Подписки
             <Icon icon="carbon:next-outline" />
           </div>
         </router-link>
       </div>
-      <router-link :to="{name: 'quarantine'}">
-        <div v-if=" user.role.name === 'admin' " class="user-info__block user-info__block--link">Карантин
+      <router-link v-if="user.role.name === 'admin'" :to="{ name: 'quarantine' }">
+        <div class="user-info__block user-info__block--link">Карантин
           <Icon icon="carbon:next-outline" />
         </div>
       </router-link>
-      <router-link :to="{name: 'articles-to-verify'}">
-        <div v-if=" user.role.name === 'admin' " class="user-info__block user-info__block--link">Статьи на верификацию
+      <router-link v-if="user.role.name === 'admin'" :to="{ name: 'articles-to-verify' }">
+        <div class="user-info__block user-info__block--link">Статьи на верификацию
           <Icon icon="carbon:next-outline" />
         </div>
       </router-link>
-      <router-link :to="{name: 'search-users'}">
-        <div v-if=" user.role.name === 'admin' " class="user-info__block user-info__block--link">Список пользователей
+      <router-link v-if="user.role.name === 'admin'" :to="{ name: 'search-users' }">
+        <div class="user-info__block user-info__block--link">Список пользователей
           <Icon icon="carbon:next-outline" />
         </div>
       </router-link>
 
       <div class="user-info__block user-info__block--logout">
 
-        <div v-if=" authStore.isAuth ">
-          <my-button @click=" logout ">Выйти</my-button>
+        <div v-if="authStore.isAuth">
+          <my-button @click="logout">Выйти</my-button>
         </div>
       </div>
     </div>
@@ -304,4 +304,5 @@ const submitChanges = async (data) => {
       border: none;
     }
   }
-}</style>
+}
+</style>
