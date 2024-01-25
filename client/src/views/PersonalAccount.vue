@@ -5,7 +5,7 @@ import { useUserStore } from '@/stores/userStore';
 import pwVisibile from "@/helpers/pwVisibile.js";
 import AuthService from '@/services/AuthService';
 import ls from '@/helpers/localStorageHelpers.js'
-
+import getRole from '@/helpers/getRole.js';
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
@@ -42,6 +42,9 @@ const editFields = () => {
 const cancelEditing = () => {
   showInput.value = !showInput.value;
 }
+
+const userRole = getRole(user);
+// здесь Watch специально не прописываю, поскольку значение меняться никогда не будет
 
 const submitChanges = async (data) => {
   console.log(data);
@@ -151,7 +154,7 @@ const submitChanges = async (data) => {
           </div>
         </FormKit>
       </div>
-      <div class="user-info__block user-info__block--role">Роль: {{ user.role.name }} </div>
+      <div class="user-info__block user-info__block--role">Роль: {{ userRole }} </div>
       <div v-if="user.role.name === 'mentor'" class="user-info__block user-info__block--container">
         <router-link style="width: 100%" :to="{ name: 'my-articles' }">
           <div class="user-info__block user-info__block user-info__block--link">Мои статьи
