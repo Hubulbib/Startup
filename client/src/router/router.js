@@ -54,7 +54,7 @@ const router = createRouter({
   }
 });
 
-router.beforeEach(async (to, from) => {
+router.beforeResolve(async (to) => {
   const articleStore = useArticleStore()
   const authStore = useAuthStore()
 

@@ -4,10 +4,10 @@ import { nanoid } from "nanoid";
 import { ref } from "vue";
 import TagsMockup from "@/mockups/TagsMockup.js";
 import { $api } from "@/http/api.js";
-import { useAuthStore } from "@/stores/AuthStore";
 import LevelMockup from "@/mockups/LevelMockup.js"
+import { useUserStore } from "@/stores/userStore";
 
-const authStore = useAuthStore()
+const userStore = useUserStore()
 
 const description = ref("");
 
@@ -25,7 +25,8 @@ const add = (name) => {
 
 const createArticle = (data) => {
   const article = {
-    author: authStore.user.id,
+    // TODO: userStore.user ПОСЛЕ СМЕНЫ СХЕМЫ В ДБ
+    author: userStore.user.id,
     content: {
       title: data.title,
       description: data.description,
