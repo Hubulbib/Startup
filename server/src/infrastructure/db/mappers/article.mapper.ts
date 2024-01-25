@@ -6,7 +6,7 @@ export class ArticleMapper {
   public static toDomain(entity: IArticleToDomain): ArticleEntity {
     return new ArticleEntity(
       entity._id,
-      entity.author,
+      entity.authorData,
       entity.content,
       entity.createdAt,
       entity.updatedAt,

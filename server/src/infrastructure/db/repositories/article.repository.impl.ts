@@ -7,6 +7,7 @@ import { type EditBodyDto } from '../../../core/repositories/ArticleRepository/d
 import { type GetAllBodyDto } from '../../../core/repositories/ArticleRepository/dtos/get-all-body.dto'
 import { type ArticleDetailEntity } from '../../../core/entites/article-detail.entity'
 import { ArticleDetailMapper } from '../mappers/article-detail.mapper'
+import { UserRepositoryImpl } from './user.repository.impl'
 
 export class ArticleRepositoryImpl implements ArticleRepository {
   private readonly articleRepository = model('Article')
@@ -42,15 +43,13 @@ export class ArticleRepositoryImpl implements ArticleRepository {
   }
 
   async getOneById(articleId: string): Promise<ArticleEntity> {
-    const article = {
-      ...(await this.articleRepository.findById(articleId)),
-      mentors: await this.getAllMentor(articleId),
-    }
+    const article = await this.articleRepository.findById(articleId)
     if (!article) {
       throw Error('Такой записи не существует')
     }
-
-    return ArticleMapper.toDomain({ ...article._doc, mentors: article.mentors })
+    const mentors = await this.getAllMentor(articleId)
+    const author = await new UserRepositoryImpl().getOneById(article.author)
+    return ArticleMapper.toDomain({ ...article._doc, mentors, authorData: author })
   }
 
   async getAll(getAllBody: GetAllBodyDto): Promise<ArticleEntity[]> {
@@ -59,8 +58,18 @@ export class ArticleRepositoryImpl implements ArticleRepository {
         await this.articleRepository.find({ _id: { $not: { $in: getAllBody.options.hides } } }, null, {
           limit: getAllBody.options.interval * getAllBody.options.pages,
         })
-      ).map(async (el) => ArticleMapper.toDomain({ ...el._doc, mentors: await this.getAllMentor(el._id) })),
+      ).map(async (el) =>
+        ArticleMapper.toDomain({
+          ...el._doc,
+          authorData: await new UserRepositoryImpl().getOneById(el._id),
+          mentors: await this.getAllMentor(el._id),
+        }),
+      ),
     )
+  }
+
+  async getAllByMentor(mentorId: string): Promise<ArticleEntity[]> {
+    return this.articleRepository.find({ author: mentorId })
   }
 
   async editOne(articleId: string, editBody: EditBodyDto): Promise<ArticleEntity> {

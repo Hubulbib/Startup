@@ -1,7 +1,9 @@
+import { UserEntity } from './user.entity'
+
 export class ArticleEntity {
   constructor(
     readonly _id: string,
-    readonly author: string,
+    readonly author: UserEntity,
     readonly content: Content,
     readonly createdAt: Date,
     readonly updatedAt: Date,
