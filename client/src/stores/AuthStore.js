@@ -18,6 +18,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
   const onLoadAuthCheck = async function() {
     try {
       const res = await axios.post(`${API_URL}/auth/refresh`, {}, { withCredentials: true });
+      console.log(res.data)
       ls.saveToken(res.data.accessToken);
       isAuth.value = true;
       userStore.user = res.data.user;

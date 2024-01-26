@@ -52,19 +52,28 @@ export class ArticleRepositoryImpl implements ArticleRepository {
     return ArticleMapper.toDomain({ ...article._doc, mentors, authorData: author })
   }
 
-  async getAll(getAllBody: GetAllBodyDto): Promise<ArticleEntity[]> {
+  // async getAll(getAllBody: GetAllBodyDto): Promise<ArticleEntity[]> {
+  async getAll(getAllBody: any): Promise<ArticleEntity[]> {
     return await Promise.all(
-      (
-        await this.articleRepository.find({ _id: { $not: { $in: getAllBody.options.hides } } }, null, {
-          limit: getAllBody.options.interval * getAllBody.options.pages,
-        })
-      ).map(async (el) =>
+      (await this.articleRepository.find()).map(async (el) =>
         ArticleMapper.toDomain({
           ...el._doc,
-          authorData: await new UserRepositoryImpl().getOneById(el._id),
+          // authorData: await new UserRepositoryImpl().getOneById(el._id),
+          authorData: await new UserRepositoryImpl().getOneById(el.author),
           mentors: await this.getAllMentor(el._id),
-        }),
+        })
       ),
+      // (
+      //   await this.articleRepository.find({ _id: { $not: { $in: getAllBody.options.hides } } }, null, {
+      //     limit: getAllBody.options.interval * getAllBody.options.pages,
+      //   })
+      // ).map(async (el) =>
+      //   ArticleMapper.toDomain({
+      //     ...el._doc,
+      //     authorData: await new UserRepositoryImpl().getOneById(el._id),
+      //     mentors: await this.getAllMentor(el._id),
+      //   }),
+      // ),
     )
   }
 

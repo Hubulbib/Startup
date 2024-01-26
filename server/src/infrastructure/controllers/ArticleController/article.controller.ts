@@ -41,6 +41,8 @@ class ArticleController {
       const articleData = await this.articleService.getAll(options)
       res.json(articleData)
     } catch (err) {
+      console.log(err);
+      
       res.status(500).json(err)
     }
   }

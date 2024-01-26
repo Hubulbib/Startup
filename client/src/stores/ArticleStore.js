@@ -12,14 +12,14 @@ export const useArticleStore = defineStore('ArticleStore', () => {
 
             articles.value = [...response.data]
 
-            for (const article of articles.value) {
-                try {
-                    const response = await $api.get(`/user/${article.author}`)
-                    article.author = response.data
-                } catch (error) {
-                    console.log(error);
-                }
-            }
+            // for (const article of articles.value) {
+            //     try {
+            //         const response = await $api.get(`/user/${article.author}`)
+            //         article.author = response.data
+            //     } catch (error) {
+            //         console.log(error);
+            //     }
+            // }
 
             console.log(articles.value)
         } catch (error) {
