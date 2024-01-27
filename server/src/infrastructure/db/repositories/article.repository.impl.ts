@@ -10,12 +10,12 @@ import { ArticleDetailMapper } from '../mappers/article-detail.mapper'
 import { UserRepositoryImpl } from './user.repository.impl'
 import { userModel } from '../entities/user.entity'
 import { UserMapper } from '../mappers/user.mapper'
+import { articleGetAllQuery } from '../queries/article.get-all.query'
 
 export class ArticleRepositoryImpl implements ArticleRepository {
   private readonly articleRepository = model('Article')
   private readonly articleDetailRepository = model('ArticleDetail')
   private readonly subscribeRepository = model('Subscribe')
-  private readonly userRepository = userModel
 
   async createOne(createBody: CreateBodyDto): Promise<ArticleEntity> {
     const articleTags = [...new Set(createBody.tags)]
@@ -56,19 +56,15 @@ export class ArticleRepositoryImpl implements ArticleRepository {
   }
 
   async getAll(getAllBody: GetAllBodyDto): Promise<ArticleEntity[]> {
-    const articles = await this.articleRepository.find({ _id: { $not: { $in: getAllBody.options.hides } } }, null, {
-      limit: getAllBody.options.interval * getAllBody.options.pages,
-    })
-    const authorMap = new Map<string, object>()
-    articles.forEach((el) => authorMap.set(el.author, null))
-    const authors = await this.userRepository.find({ _id: { $in: [...authorMap.keys()] } })
-    authorMap.clear()
-    authors.forEach((el) => authorMap.set(el._id.toString(), UserMapper.toDomain(el)))
     return await Promise.all(
-      articles.map(async (el) =>
+      (
+        await this.articleRepository.aggregate(
+          articleGetAllQuery(getAllBody.options.hides, getAllBody.options.interval * getAllBody.options.pages),
+        )
+      ).map(async (el) =>
         ArticleMapper.toDomain({
-          ...el._doc,
-          authorData: authorMap.get(el.author),
+          ...el,
+          authorData: UserMapper.toDomain(el.author[0]),
           mentors: await this.getAllMentor(el._id),
         }),
       ),
