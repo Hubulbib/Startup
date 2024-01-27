@@ -64,7 +64,6 @@ export class UserRepositoryImpl implements UserRepository {
     let hashedPassword = editBody.password
     if ('password' in editBody) {
       hashedPassword = await hash(editBody.password, 4)
-      console.log(hashedPassword)
     }
     return UserMapper.toDomain(
       await this.userRepository.findByIdAndUpdate(user._id, { ...editBody, password: hashedPassword }, { new: true }),

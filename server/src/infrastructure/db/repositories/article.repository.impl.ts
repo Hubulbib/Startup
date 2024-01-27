@@ -8,11 +8,14 @@ import { type GetAllBodyDto } from '../../../core/repositories/ArticleRepository
 import { type ArticleDetailEntity } from '../../../core/entites/article-detail.entity'
 import { ArticleDetailMapper } from '../mappers/article-detail.mapper'
 import { UserRepositoryImpl } from './user.repository.impl'
+import { userModel } from '../entities/user.entity'
+import { UserMapper } from '../mappers/user.mapper'
 
 export class ArticleRepositoryImpl implements ArticleRepository {
   private readonly articleRepository = model('Article')
   private readonly articleDetailRepository = model('ArticleDetail')
   private readonly subscribeRepository = model('Subscribe')
+  private readonly userRepository = userModel
 
   async createOne(createBody: CreateBodyDto): Promise<ArticleEntity> {
     const articleTags = [...new Set(createBody.tags)]
@@ -52,28 +55,23 @@ export class ArticleRepositoryImpl implements ArticleRepository {
     return ArticleMapper.toDomain({ ...article._doc, mentors, authorData: author })
   }
 
-  // async getAll(getAllBody: GetAllBodyDto): Promise<ArticleEntity[]> {
-  async getAll(getAllBody: any): Promise<ArticleEntity[]> {
+  async getAll(getAllBody: GetAllBodyDto): Promise<ArticleEntity[]> {
+    const articles = await this.articleRepository.find({ _id: { $not: { $in: getAllBody.options.hides } } }, null, {
+      limit: getAllBody.options.interval * getAllBody.options.pages,
+    })
+    const authorMap = new Map<string, object>()
+    articles.forEach((el) => authorMap.set(el.author, null))
+    const authors = await this.userRepository.find({ _id: { $in: [...authorMap.keys()] } })
+    authorMap.clear()
+    authors.forEach((el) => authorMap.set(el._id.toString(), UserMapper.toDomain(el)))
     return await Promise.all(
-      (await this.articleRepository.find()).map(async (el) =>
+      articles.map(async (el) =>
         ArticleMapper.toDomain({
           ...el._doc,
-          // authorData: await new UserRepositoryImpl().getOneById(el._id),
-          authorData: await new UserRepositoryImpl().getOneById(el.author),
+          authorData: authorMap.get(el.author),
           mentors: await this.getAllMentor(el._id),
-        })
+        }),
       ),
-      // (
-      //   await this.articleRepository.find({ _id: { $not: { $in: getAllBody.options.hides } } }, null, {
-      //     limit: getAllBody.options.interval * getAllBody.options.pages,
-      //   })
-      // ).map(async (el) =>
-      //   ArticleMapper.toDomain({
-      //     ...el._doc,
-      //     authorData: await new UserRepositoryImpl().getOneById(el._id),
-      //     mentors: await this.getAllMentor(el._id),
-      //   }),
-      // ),
     )
   }
 
