@@ -8,9 +8,9 @@ const articleStore = useArticleStore()
 const { articles } = storeToRefs(articleStore)
 
 onMounted(async () => {
-  for (let index = 1; index <= 5; index++) {
+  for (let page = 1; page <= 5; page++) {
     try {
-      await articleStore.fetchArticles(10, index)
+      await articleStore.fetchArticles(10, page)
     } catch (error) {
       console.log(error);
     }
