@@ -6,22 +6,16 @@ import axios from "axios";
 export const useArticleStore = defineStore('ArticleStore', () => {
     const articles = ref([])
 
-    const fetchArticles = async () => {
+    const fetchArticles = async (interval = 10, pages = 1) => {
         try {
-            const response = await $api.get('/article')
+            const response = await $api.get('/article', {
+                params: {
+                    interval: interval,
+                    pages: pages
+                }
+            })
 
             articles.value = [...response.data]
-
-            for (const article of articles.value) {
-                try {
-                    const response = await $api.get(`/user/${article.author}`)
-                    article.author = response.data
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-
-            console.log(articles.value)
         } catch (error) {
             console.log(error)
         }

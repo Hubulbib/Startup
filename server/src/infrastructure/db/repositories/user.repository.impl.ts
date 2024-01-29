@@ -1,4 +1,3 @@
-import { model } from 'mongoose'
 import { Role } from '../entities/role.entity'
 import { Article } from '../entities/article.entity'
 import { Subscribe } from '../entities/subscribe.entity'
@@ -9,6 +8,7 @@ import { type EditBodyDto } from '../../../core/repositories/UserRepository/dtos
 import { type GetAllBodyDto } from '../../../core/repositories/UserRepository/dtos/get-all-body.dto'
 import { RoleMapper } from '../mappers/role.mapper'
 import { userModel } from '../entities/user.entity'
+import { hash } from 'bcrypt'
 
 export class UserRepositoryImpl implements UserRepository {
   private readonly articleRepository = Article
@@ -61,7 +61,13 @@ export class UserRepositoryImpl implements UserRepository {
     if (!user) {
       throw Error('Такого пользователя не существует')
     }
-    return UserMapper.toDomain(await this.userRepository.findByIdAndUpdate(user._id, editBody, { new: true }))
+    let hashedPassword = editBody.password
+    if ('password' in editBody) {
+      hashedPassword = await hash(editBody.password, 4)
+    }
+    return UserMapper.toDomain(
+      await this.userRepository.findByIdAndUpdate(user._id, { ...editBody, password: hashedPassword }, { new: true }),
+    )
   }
 
   async removeOne(userId: string): Promise<UserEntity> {

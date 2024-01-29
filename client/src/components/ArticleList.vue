@@ -1,36 +1,35 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 import ArticleListItem from "@/components/ArticleListItem.vue";
 import { useArticleStore } from "@/stores/ArticleStore";
+import { storeToRefs } from "pinia";
 
 const articleStore = useArticleStore()
-const loaderInc = ref(3);
-const articles = articleStore.articles;
-const isFull = ref(false)
+const { articles } = storeToRefs(articleStore)
 
-onMounted(() => {
-  
-});
+onMounted(async () => {
+  for (let index = 1; index <= 5; index++) {
+    try {
+      await articleStore.fetchArticles(10, index)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+})
 </script>
 
 <template>
   <div>
     <transition-group name="article-list" class="article-list" tag="ul">
       <li class="article-list__item" v-for="article in articles" :key="article._id">
-        <ArticleListItem :item="article"/>
+        <ArticleListItem :item="article" />
         <!-- потом убрать -->
-        <router-link style="margin-bottom: 10px; color: red" :to="{name: 'cms.edit', params: {id: article._id}}">Редактировать статью (для теста роутера, потом уберу)</router-link>
+        <router-link style="margin-bottom: 10px; color: red"
+          :to="{ name: 'cms.edit', params: { id: article._id } }">Редактировать статью (для теста роутера, потом
+          уберу)</router-link>
         <!-- потом убрать -->
       </li>
     </transition-group>
-    <!-- v-intersection="fetchArticles" -->
-    <!-- @click="fetchArticles" -->
-    <my-button
-      v-if="!isFull"
-      class="loadmore-btn"
-    >
-      Загрузить ещё
-    </my-button>
   </div>
 </template>
 
@@ -69,6 +68,4 @@ onMounted(() => {
   transition: all 0.3s ease-in-out;
   position: absolute;
 }
-
-
 </style>
