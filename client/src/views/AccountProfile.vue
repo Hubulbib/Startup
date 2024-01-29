@@ -1,13 +1,8 @@
 <script setup>
-  import { ref} from 'vue';
-  // import { $api, API_URL } from '@/http/api';
-
+  import { onMounted, ref} from 'vue';
   import { useArticleStore } from '@/stores/ArticleStore.js';
 
   import ArticleProfileList from '@/components/ArticleProfileList.vue';
-
-  // const article = useArticleStore();
-  // import { useArticleStore } from "@/stores/ArticleStore";
 
   const articleStore = useArticleStore();
   const articles = ref([]);
@@ -15,23 +10,19 @@
   const getData = async () => {
     try {
       await articleStore.fetchArticles();
-
       articles.value = [...articleStore.articles]
     } catch (e) {
       console.log(e);
     }
 }
 
-getData();
+onMounted(() => {
+  getData();
+});
 
 </script>
 
 <template>
-  <!-- <div class="view-container">
-    <h1 class="h-1">Профайл пользователя</h1>
-    <p style="font-size: 22px;">Надо сделать компонент</p>
-    <p>Если на главной странице нажать на аватарку автора - откроется профайл пользователя с id</p>
-  </div> -->
   <div class="view-container profile">
     <div class="profile__info">
       <div class="profile__avatar avatar">

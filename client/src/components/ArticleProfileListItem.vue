@@ -13,16 +13,14 @@ const props = defineProps({
 });
 
 const blockHeightStyle = `max-height: ${props.blockHeight}px`;
+const item = props.item;
 
+const emit = defineEmits(['onHide']);
 const onHide = () => {
   emit("onHide", props.item._id);
 };
 
-const item = props.item;
-
 const published = publishedString(props.item.createdAt);
-
-console.log('item', item);
 </script>
 
 <template>
@@ -59,7 +57,7 @@ console.log('item', item);
         </router-link>
       </h2>
       <div class="article-card__meta">
-        <!-- <article-author :user="item" /> -->
+        <article-author :user="item.author" />
         <div class="article-card__published">
           {{ published }}
         </div>
