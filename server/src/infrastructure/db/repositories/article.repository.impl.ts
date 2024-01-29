@@ -8,7 +8,6 @@ import { type GetAllBodyDto } from '../../../core/repositories/ArticleRepository
 import { type ArticleDetailEntity } from '../../../core/entites/article-detail.entity'
 import { ArticleDetailMapper } from '../mappers/article-detail.mapper'
 import { UserRepositoryImpl } from './user.repository.impl'
-import { userModel } from '../entities/user.entity'
 import { UserMapper } from '../mappers/user.mapper'
 import { articleGetAllQuery } from '../queries/article.get-all.query'
 
@@ -59,7 +58,7 @@ export class ArticleRepositoryImpl implements ArticleRepository {
     return await Promise.all(
       (
         await this.articleRepository.aggregate(
-          articleGetAllQuery(getAllBody.options.hides, getAllBody.options.interval * getAllBody.options.pages),
+          articleGetAllQuery(getAllBody.options.hides, getAllBody.options.interval, getAllBody.options.pages),
         )
       ).map(async (el) =>
         ArticleMapper.toDomain({

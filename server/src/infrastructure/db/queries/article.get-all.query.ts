@@ -1,4 +1,4 @@
-export const articleGetAllQuery = (hides: string[] = [], limit: number = 10 ** 10) => [
+export const articleGetAllQuery = (hides: string[], interval: number, pages: number) => [
   {
     $match: {
       _id: {
@@ -9,7 +9,10 @@ export const articleGetAllQuery = (hides: string[] = [], limit: number = 10 ** 1
     },
   },
   {
-    $limit: limit || 10 ** 10,
+    $skip: interval * (pages - 1) || 0,
+  },
+  {
+    $limit: interval || 10 ** 10,
   },
   {
     $set: {
