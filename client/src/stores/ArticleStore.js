@@ -15,7 +15,7 @@ export const useArticleStore = defineStore('ArticleStore', () => {
                 }
             })
 
-            articles.value = [...response.data]
+            articles.value.push(...response.data)
         } catch (error) {
             console.log(error)
         }
