@@ -74,7 +74,7 @@ export class ArticleRepositoryImpl implements ArticleRepository {
     return this.articleRepository.find({ author: mentorId })
   }
 
-  async editOne(articleId: string, editBody: EditBodyDto): Promise<ArticleEntity> {
+  async editOne(articleId: string, editBody: EditBodyDto): Promise<void> {
     const article = await this.articleRepository.findById(articleId)
     if (!article) {
       throw Error('Такой записи не существует')
@@ -86,12 +86,11 @@ export class ArticleRepositoryImpl implements ArticleRepository {
       { ...editBody.content?.detail },
       { new: true },
     )
-    return ArticleMapper.toDomain(
-      await this.articleRepository.findByIdAndUpdate(
-        article._id,
-        { ...editBody, content: { ...article.content, ...editBody.content }, updatedAt: new Date() },
-        { new: true },
-      ),
+
+    await this.articleRepository.findByIdAndUpdate(
+      article._id,
+      { ...editBody, content: { ...article.content, ...editBody.content }, updatedAt: new Date() },
+      { new: true },
     )
   }
 

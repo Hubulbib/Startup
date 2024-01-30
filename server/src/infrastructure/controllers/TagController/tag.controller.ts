@@ -31,8 +31,8 @@ class TagController {
     try {
       const { name } = req.params
       const tagBody = req.body
-      const tagData = await this.tagService.editOne(name, tagBody)
-      res.json(tagData)
+      await this.tagService.editOne(name, tagBody)
+      res.end()
     } catch (err) {
       console.log(err)
       res.status(500).json(err)
