@@ -3,6 +3,7 @@ import { onMounted } from "vue";
 import ArticleListItem from "@/components/ArticleListItem.vue";
 import { useArticleStore } from "@/stores/ArticleStore";
 import { storeToRefs } from "pinia";
+import { useVirtualList } from '@vueuse/core'
 
 const articleStore = useArticleStore()
 const { articles } = storeToRefs(articleStore)
@@ -16,16 +17,29 @@ onMounted(async () => {
     }
   }
 })
+
+const { list, containerProps, wrapperProps } = useVirtualList(articles, {
+  itemHeight: 210,
+  overscan: 3
+})
 </script>
 
 <template>
-  <div>
-    <transition-group name="article-list" class="article-list" tag="ul">
-      <li class="article-list__item" v-for="article in articles" :key="article._id">
-        <ArticleListItem :item="article" />
+  <div v-bind="containerProps"
+  style="height: 100vh;">
+    <transition-group
+      v-bind="wrapperProps"
+      name="article-list"
+      class="article-list"
+      tag="ul">
+      <li
+        class="article-list__item"
+        v-for="item in list"
+        :key="item.index">
+        <ArticleListItem :item="item.data" />
         <!-- потом убрать -->
         <router-link style="margin-bottom: 10px; color: red"
-          :to="{ name: 'cms.edit', params: { id: article._id } }">Редактировать статью (для теста роутера, потом
+          :to="{ name: 'cms.edit', params: { id: item.data._id } }">Редактировать статью (для теста роутера, потом
           уберу)</router-link>
         <!-- потом убрать -->
       </li>
