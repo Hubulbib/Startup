@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { $api } from '@/http/api';
+import getRole from "@/helpers/getRole";
 
 export const useUserStore = defineStore('user', () => {
   const user = ref({})
@@ -22,13 +23,14 @@ export const useUserStore = defineStore('user', () => {
         console.log(res.data);
         user.value.email = res.data.email;
       }
-    } catch(e) {
+    } catch (e) {
       console.log(e?.message);
     }
+  }
 
-    }
+  const userRole = computed(() => getRole(user.value));
 
   return {
-    user, updateUserInfo
+    user, updateUserInfo, userRole
   }
 })

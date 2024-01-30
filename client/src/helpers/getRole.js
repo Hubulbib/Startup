@@ -1,5 +1,5 @@
 export default function getRole(user) {
-  if (!user) {
+  if (!user || !user.role) {
     return 'Пользователь не найден'
   }
 

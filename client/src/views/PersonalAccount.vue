@@ -5,16 +5,33 @@ import { useUserStore } from '@/stores/userStore';
 import pwVisibile from "@/helpers/pwVisibile.js";
 import AuthService from '@/services/AuthService';
 import ls from '@/helpers/localStorageHelpers.js'
-import getRole from '@/helpers/getRole.js';
+import { storeToRefs } from 'pinia';
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
-const user = userStore.user;
+const { user, userRole } = storeToRefs(userStore);
 const showInput = ref(false);
 
 // для тестов
 const chRole = (role) => {
   userStore.user.role.name = role;
+  switch (role) {
+    case 'user':
+      userStore.user.role.permissions = [];
+      break;
+    case 'mentor':
+      userStore.user.role.permissions = ['article.create', 'article.edit', 'article.delete'];
+      break;
+    case 'admin':
+      userStore.user.role.permissions = ['article.verficitaion', 'user.penalty', 'user.ban'];
+      break;
+    case 'head':
+      userStore.user.role.permissions = ['role.create', 'role.edit', 'role.delete', 'user.mentor.request'];
+      break;
+    default:
+      userStore.user.role.permissions = [];
+      break;
+  }
 }
 //
 
@@ -43,9 +60,6 @@ const cancelEditing = () => {
   showInput.value = !showInput.value;
 }
 
-const userRole = getRole(user);
-// здесь Watch специально не прописываю, поскольку значение меняться никогда не будет
-
 const submitChanges = async (data) => {
   console.log(data);
   const oldemail = user.email;
@@ -72,129 +86,142 @@ const submitChanges = async (data) => {
 
 <template>
   <div class="view-container">
-    <!-- Для тестов, убрать из прода -->
-    <div v-if="user" style="margin-bottom: 20px; padding: 20px; border: 1px dashed #999">
-      <p>Для тестирования</p>
-      <div style="margin: 10px 0; display: flex; gap: 10px">
-        <my-button style="background-color: rgb(85, 194, 1); border: none; color: black" @click="chRole('user')">Стать
-          юзером</my-button>
-        <my-button style="background-color: rgb(85, 194, 1); border: none; color: black" @click="chRole('mentor')">Стать
-          ментором</my-button>
-        <my-button style="background-color: rgb(85, 194, 1); border: none; color: black" @click="chRole('admin')">Стать
-          админом</my-button>
-        <my-button style="background-color: rgb(85, 194, 1); border: none; color: black" @click="chRole('head')">Стать
-          хедом</my-button>
+    <div v-if="authStore.isAuth">
+      <!-- Для тестов, убрать из прода -->
+      <div v-if="user" style="margin-bottom: 20px; padding: 20px; border: 1px dashed #999">
+        <p>Для тестирования</p>
+        <div style="margin: 10px 0; display: flex; gap: 10px">
+          <my-button style="background-color: rgb(85, 194, 1); border: none; color: black" @click="chRole('user')">Стать
+            юзером</my-button>
+          <my-button style="background-color: rgb(85, 194, 1); border: none; color: black" @click="chRole('mentor')">Стать
+            ментором</my-button>
+          <my-button style="background-color: rgb(85, 194, 1); border: none; color: black" @click="chRole('admin')">Стать
+            админом</my-button>
+          <my-button style="background-color: rgb(85, 194, 1); border: none; color: black" @click="chRole('head')">Стать
+            хедом</my-button>
+        </div>
+        <p>Привет, {{ user.role.name }} {{ user.name + ' ' + user.surname }}</p>
+        <p style="margin: 10px 0">Кнопки ментора:</p>
+        <router-link
+          style="display: inline-block; padding: 10px; background-color: aquamarine; border-radius: 10px; margin-right: 10px;"
+          :to="{ name: 'my-articles' }">Мои статьи</router-link>
+        <router-link
+          style="display: inline-block; padding: 10px; background-color: aquamarine; border-radius: 10px; margin-right: 10px;"
+          :to="{ name: 'my-subscriptions' }">Мои подписки</router-link>
+        <p style="margin: 10px 0">Кнопки админа:</p>
+        <router-link
+          style="display: inline-block; padding: 10px; background-color: aquamarine; border-radius: 10px; margin-right: 10px;"
+          :to="{ name: 'quarantine' }">Карантин</router-link>
+        <router-link
+          style="display: inline-block; padding: 10px; background-color: aquamarine; border-radius: 10px; margin-right: 10px;"
+          :to="{ name: 'articles-to-verify' }">Статьи на верификацию</router-link>
+        <router-link
+          style="display: inline-block; padding: 10px; background-color: aquamarine; border-radius: 10px; margin-right: 10px;"
+          :to="{ name: 'search-users' }">Список пользователей</router-link>
       </div>
-      <p>Привет, {{ user.role.name }} {{ user.name + ' ' + user.surname }}</p>
-    </div>
-    <!--  -->
-    <div class="user-info">
-      <div class="user-info__block user-info__block--container">
-        <user-avatar class="user-info__block-1-2 avatar-container" :user="user" :size="150" @click="openAvatarUpload">
-          <div class="avatar-overlay">
-            <span class="avatar-overlay__text">Загрузить</span>
+      <!--  -->
+      <div class="user-info">
+        <div class="user-info__block user-info__block--container">
+          <user-avatar class="user-info__block-1-2 avatar-container" :user="user" :size="150" @click="openAvatarUpload">
+            <div class="avatar-overlay">
+              <span class="avatar-overlay__text">Загрузить</span>
+            </div>
+            <input type="file" id="avatar-upload" style="display: none;" @change="uploadAvatar" />
+          </user-avatar>
+          <div class="user-info__block-1-2">
+            <div class="user-info__block user-info__block--name">
+              {{ user.name }} {{ user.surname }}
+            </div>
+            <router-link :to="{ name: 'profile' }">
+              <div class="user-info__block user-info__block--link user-info__block--profile">
+                Профайл
+                <Icon icon="carbon:next-outline" />
+              </div>
+            </router-link>
           </div>
-          <input type="file" id="avatar-upload" style="display: none;" @change="uploadAvatar" />
-        </user-avatar>
-        <div class="user-info__block-1-2">
-          <div class="user-info__block user-info__block--name">
-            {{ user.name }} {{ user.surname }}
-          </div>
-          <router-link :to="{ name: 'profile' }">
-            <div class="user-info__block user-info__block--link user-info__block--profile">
-              Профайл
+        </div>
+        <div v-if="!showInput" class="user-info__block user-info__block--modifiable user-info__block--email">{{ user.email
+        }}
+          <span class="edit" @click="editFields">Изменить</span>
+        </div>
+        <div v-if="!showInput" class="user-info__block user-info__block--modifiable user-info__block--password">**********
+          <span class="edit" @click="editFields">Изменить</span>
+        </div>
+        <div v-if="showInput" class="my-form">
+          <FormKit type="form" :actions="false" @submit="submitChanges">
+            <FormKit
+              type="email"
+              label="Почта"
+              name="email"
+              :placeholder="user.email"
+              validation="length:5|*email" />
+            <FormKit
+              type="password"
+              label="Старый пароль"
+              name="oldpassword"
+              validation="required"
+              prefix-icon="password"
+              suffix-icon="eyeClosed"
+              @suffix-icon-click="pwVisibile" />
+            <FormKit
+              type="password"
+              label="Новый пароль"
+              name="password"
+              validation=""
+              prefix-icon="password"
+              suffix-icon="eyeClosed"
+              @suffix-icon-click="pwVisibile" />
+            <FormKit
+              type="password"
+              name="password_confirm"
+              label="Подтвердите пароль"
+              validation="confirm"
+              prefix-icon="password"
+              suffix-icon="eyeClosed"
+              @suffix-icon-click="pwVisibile" />
+            <div style="display: flex; gap: 10px; align-items: flex-start;">
+              <FormKit type="submit" label="Сохранить изменения"
+                style="background-color: green; border: green; font-size: inherit;" />
+              <my-button @click="cancelEditing">Отмена</my-button>
+            </div>
+          </FormKit>
+        </div>
+        <div class="user-info__block user-info__block--role">Роль: {{ userRole }} </div>
+        <div v-if="user.role.name === 'mentor'" class="user-info__block user-info__block--container">
+          <router-link style="width: 100%" :to="{ name: 'my-articles' }">
+            <div class="user-info__block user-info__block user-info__block--link">Мои статьи
+              <Icon icon="carbon:next-outline" />
+            </div>
+          </router-link>
+          <router-link style="width: 100%" :to="{ name: 'my-subscriptions' }">
+            <div class="user-info__block user-info__block user-info__block--link">Подписки
               <Icon icon="carbon:next-outline" />
             </div>
           </router-link>
         </div>
-      </div>
-      <div v-if="!showInput" class="user-info__block user-info__block--modifiable user-info__block--email">{{ user.email
-      }}
-        <span class="edit" @click="editFields">Изменить</span>
-      </div>
-      <div v-if="!showInput" class="user-info__block user-info__block--modifiable user-info__block--password">**********
-        <span class="edit" @click="editFields">Изменить</span>
-      </div>
-      <div v-if="showInput" class="my-form">
-        <FormKit type="form" :actions="false" @submit="submitChanges">
-          <FormKit
-            type="email"
-            label="Почта"
-            name="email"
-            :placeholder="user.email"
-            validation="length:5|*email" />
-          <FormKit
-            type="password"
-            label="Старый пароль"
-            name="oldpassword"
-            validation="required"
-            prefix-icon="password"
-            suffix-icon="eyeClosed"
-            @suffix-icon-click="pwVisibile" />
-          <FormKit
-            type="password"
-            label="Новый пароль"
-            name="password"
-            validation=""
-            prefix-icon="password"
-            suffix-icon="eyeClosed"
-            @suffix-icon-click="pwVisibile" />
-          <FormKit
-            type="password"
-            name="password_confirm"
-            label="Подтвердите пароль"
-            validation="confirm"
-            prefix-icon="password"
-            suffix-icon="eyeClosed"
-            @suffix-icon-click="pwVisibile" />
-          <div style="display: flex; gap: 10px; align-items: flex-start;">
-            <FormKit type="submit" label="Сохранить изменения"
-              style="background-color: green; border: green; font-size: inherit;" />
-            <my-button @click="cancelEditing">Отмена</my-button>
-          </div>
-        </FormKit>
-      </div>
-      <div class="user-info__block user-info__block--role">Роль: {{ userRole }} </div>
-      <div v-if="user.role.name === 'mentor'" class="user-info__block user-info__block--container">
-        <router-link style="width: 100%" :to="{ name: 'my-articles' }">
-          <div class="user-info__block user-info__block user-info__block--link">Мои статьи
+        <router-link v-if="user.role.name === 'admin'" :to="{ name: 'quarantine' }">
+          <div class="user-info__block user-info__block--link">Карантин
             <Icon icon="carbon:next-outline" />
           </div>
         </router-link>
-        <router-link style="width: 100%" :to="{ name: 'my-subscriptions' }">
-          <div class="user-info__block user-info__block user-info__block--link">Подписки
+        <router-link v-if="user.role.name === 'admin'" :to="{ name: 'articles-to-verify' }">
+          <div class="user-info__block user-info__block--link">Статьи на верификацию
             <Icon icon="carbon:next-outline" />
           </div>
         </router-link>
-      </div>
-      <router-link v-if="user.role.name === 'admin'" :to="{ name: 'quarantine' }">
-        <div class="user-info__block user-info__block--link">Карантин
-          <Icon icon="carbon:next-outline" />
-        </div>
-      </router-link>
-      <router-link v-if="user.role.name === 'admin'" :to="{ name: 'articles-to-verify' }">
-        <div class="user-info__block user-info__block--link">Статьи на верификацию
-          <Icon icon="carbon:next-outline" />
-        </div>
-      </router-link>
-      <router-link v-if="user.role.name === 'admin'" :to="{ name: 'search-users' }">
-        <div class="user-info__block user-info__block--link">Список пользователей
-          <Icon icon="carbon:next-outline" />
-        </div>
-      </router-link>
-
-      <div class="user-info__block user-info__block--logout">
-
-        <div v-if="authStore.isAuth">
-          <my-button @click="logout">Выйти</my-button>
+        <router-link v-if="user.role.name === 'admin'" :to="{ name: 'search-users' }">
+          <div class="user-info__block user-info__block--link">Список пользователей
+            <Icon icon="carbon:next-outline" />
+          </div>
+        </router-link>
+        <div class="user-info__block user-info__block--logout">
+          <div v-if="authStore.isAuth">
+            <my-button @click="logout">Выйти</my-button>
+          </div>
         </div>
       </div>
     </div>
-
-
-
-
-
+    <div v-else>Загрузка...</div>
   </div>
 </template>
 
