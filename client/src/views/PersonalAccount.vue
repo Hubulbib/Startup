@@ -15,6 +15,23 @@ const showInput = ref(false);
 // для тестов
 const chRole = (role) => {
   userStore.user.role.name = role;
+  switch (role) {
+    case 'user':
+      userStore.user.role.permissions = [];
+      break;
+    case 'mentor':
+      userStore.user.role.permissions = ['article.create', 'article.edit', 'article.delete'];
+      break;
+    case 'admin':
+      userStore.user.role.permissions = ['article.verficitaion', 'user.penalty', 'user.ban'];
+      break;
+    case 'head':
+      userStore.user.role.permissions = ['role.create', 'role.edit', 'role.delete', 'user.mentor.request'];
+      break;
+    default:
+      userStore.user.role.permissions = [];
+      break;
+  }
 }
 //
 
@@ -84,6 +101,23 @@ const submitChanges = async (data) => {
             хедом</my-button>
         </div>
         <p>Привет, {{ user.role.name }} {{ user.name + ' ' + user.surname }}</p>
+        <p style="margin: 10px 0">Кнопки ментора:</p>
+        <router-link
+          style="display: inline-block; padding: 10px; background-color: aquamarine; border-radius: 10px; margin-right: 10px;"
+          :to="{ name: 'my-articles' }">Мои статьи</router-link>
+        <router-link
+          style="display: inline-block; padding: 10px; background-color: aquamarine; border-radius: 10px; margin-right: 10px;"
+          :to="{ name: 'my-subscriptions' }">Мои подписки</router-link>
+        <p style="margin: 10px 0">Кнопки админа:</p>
+        <router-link
+          style="display: inline-block; padding: 10px; background-color: aquamarine; border-radius: 10px; margin-right: 10px;"
+          :to="{ name: 'quarantine' }">Карантин</router-link>
+        <router-link
+          style="display: inline-block; padding: 10px; background-color: aquamarine; border-radius: 10px; margin-right: 10px;"
+          :to="{ name: 'articles-to-verify' }">Статьи на верификацию</router-link>
+        <router-link
+          style="display: inline-block; padding: 10px; background-color: aquamarine; border-radius: 10px; margin-right: 10px;"
+          :to="{ name: 'search-users' }">Список пользователей</router-link>
       </div>
       <!--  -->
       <div class="user-info">
