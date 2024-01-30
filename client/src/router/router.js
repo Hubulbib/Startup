@@ -9,28 +9,12 @@ const routes = [
     name: 'home',
     component: () => import(/* webpackChunkName: "Home" */'@/views/Home.vue'),
     alias: ['/home', '/index.html', '/index'],
-    // beforeEnter: async (to, from, next) => { // prevent loading account component before UserStore is initialized
-    //   const articleStore = useArticleStore()
-    //   try {
-    //     await articleStore.fetchArticles()
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    //   next();
-    // }
   },
   {
     path: '/article/:title/:id',
     name: 'article.show',
     component: () => import(/* webpackChunkName: "article" */ '@/views/Article.vue'),
     props: route => ({ id: route.params.id }),
-    // beforeEnter: async (to, from, next) => { // prevent loading account component before UserStore is initialized
-    //   const authStore = useAuthStore()
-    //   if (!authStore.isAuth) {
-    //     await authStore.onLoadAuthCheck();
-    //   }
-    //   next();
-    // }
   },
   { path: '/cms', name: 'cms', component: () => import(/* webpackChunkName: "cms" */'@/views/CreateArticle.vue') },
   {
@@ -43,11 +27,6 @@ const routes = [
     path: '/account/info',
     name: 'account',
     component: () => import(/* webpackChunkName: "account"*/'@/views/PersonalAccount.vue'),
-    // beforeEnter: async (to, from, next) => { // prevent loading account component before UserStore is initialized
-    //   const authStore = useAuthStore()
-    //   if (!authStore.isAuth) return false
-    //   next();
-    // }
   },
   {
     path: '/account/my-articles',
@@ -106,19 +85,10 @@ const router = createRouter({
 
 router.beforeResolve(async (to) => {
   const articleStore = useArticleStore()
-  const authStore = useAuthStore()
 
   if (to.name === 'home') {
     try {
       await articleStore.fetchArticles()
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  if (to.name === 'account') {
-    try {
-      await authStore.onLoadAuthCheck()
     } catch (error) {
       console.log(error);
     }
