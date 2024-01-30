@@ -23,10 +23,10 @@ export class TagRepositoryImpl implements TagRepository {
     await this.tagRepository.deleteOne({ name: tagName })
   }
 
-  async editOne(tagName: string, editBody: EditBodyDto): Promise<TagEntity> {
+  async editOne(tagName: string, editBody: EditBodyDto): Promise<void> {
     if (!(await this.tagRepository.findOne({ name: tagName }))) {
       throw Error('Такого тега не существует')
     }
-    return TagMapper.toDomain(await this.tagRepository.findOneAndUpdate({ name: tagName }, editBody, { new: true }))
+    await this.tagRepository.findOneAndUpdate({ name: tagName }, editBody, { new: true })
   }
 }

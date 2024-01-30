@@ -56,7 +56,7 @@ export class UserRepositoryImpl implements UserRepository {
     ).map((el: any) => UserMapper.toDomainForList(el._doc))
   }
 
-  async editOne(userId: string, editBody: EditBodyDto): Promise<UserEntity> {
+  async editOne(userId: string, editBody: EditBodyDto): Promise<void> {
     const user = await this.userRepository.findById(userId)
     if (!user) {
       throw Error('Такого пользователя не существует')
@@ -65,9 +65,7 @@ export class UserRepositoryImpl implements UserRepository {
     if ('password' in editBody) {
       hashedPassword = await hash(editBody.password, 4)
     }
-    return UserMapper.toDomain(
-      await this.userRepository.findByIdAndUpdate(user._id, { ...editBody, password: hashedPassword }, { new: true }),
-    )
+    await this.userRepository.findByIdAndUpdate(user._id, { ...editBody, password: hashedPassword }, { new: true })
   }
 
   async removeOne(userId: string): Promise<UserEntity> {
