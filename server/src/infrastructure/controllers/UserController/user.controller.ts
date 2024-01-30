@@ -44,8 +44,8 @@ class UserController {
     try {
       const { id } = req.params
       const userBody = req.body
-      const userData = await this.userService.editOne(id, userBody)
-      return res.json(userData)
+      await this.userService.editOne(id, userBody)
+      res.end()
     } catch (err) {
       res.status(500).json(err.message)
     }

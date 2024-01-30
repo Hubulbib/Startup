@@ -9,7 +9,7 @@ export interface ArticleRepository {
   getAll: (getAllBody: GetAllBodyDto) => Promise<ArticleEntity[]>
   getAllByMentor: (mentorId: string) => Promise<ArticleEntity[]>
   getOneById: (articleId: string) => Promise<ArticleEntity>
-  editOne: (articleId: string, editBody: EditBodyDto) => Promise<ArticleEntity>
+  editOne: (articleId: string, editBody: EditBodyDto) => Promise<void>
   incView: (articleId: string) => Promise<number>
   incLike: (articleId: string) => Promise<number>
   decLike: (articleId: string) => Promise<number>
