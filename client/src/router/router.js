@@ -11,11 +11,6 @@ let isAppFirstLoad = true;
 // mentor: ['article.create', 'article.edit', 'article.delete']
 // user: []
 
-// необходимо сделать
-// 1) чтобы разрешения наследовались (но наоборот - от младшего к старшему)
-// 2) ментору и всем выше - article.subscribe
-
-
 const routes = [
   // webpackChunkName - позволяет задать красивые имена отдельным js файлам на этапе сборки проекта (npm run build)
   {
@@ -142,13 +137,18 @@ const router = createRouter({
   }
 });
 
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (to) => {
   const authStore = useAuthStore();
   const userStore = useUserStore();
 
   if (isAppFirstLoad) {
-    await authStore.onLoadAuthCheck()
-    isAppFirstLoad = false;
+    try {
+      await authStore.onLoadAuthCheck()
+    } catch (e) {
+      console.log(e?.message)
+    } finally {
+      isAppFirstLoad = false;
+    }
   }
 
   if (to.meta.requiresAuth) {
