@@ -15,7 +15,8 @@ const props = defineProps({
 const blockHeightStyle = `max-height: ${props.blockHeight}px`;
 
 const onHide = () => {
-  emit("onHide", props.item._id);
+  // emit("onHide", props.item._id);
+  // в таком виде не работает, надо отрефакторить
 };
 
 const published = publishedString(props.item.createdAt);

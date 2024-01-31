@@ -40,6 +40,7 @@ class RoleController {
       const { name } = req.params
       const roleBody = req.body
       await this.roleService.editOne(name, roleBody)
+      res.end()
     } catch (err) {
       console.log(err)
       res.status(500).json(err)

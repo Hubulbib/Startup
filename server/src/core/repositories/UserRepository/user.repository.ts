@@ -6,6 +6,6 @@ export interface UserRepository {
   getAll: (getAllBody: GetAllBodyDto) => Promise<UserEntity[]>
   getAllForList: (getAllBody: GetAllBodyDto) => Promise<UserForListEntity[]>
   getOneById: (userId: string) => Promise<UserEntity>
-  editOne: (userId: string, editBody: EditBodyDto) => Promise<UserEntity>
+  editOne: (userId: string, editBody: EditBodyDto) => Promise<void>
   removeOne: (userId: string) => Promise<UserEntity>
 }

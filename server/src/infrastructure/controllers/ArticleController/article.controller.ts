@@ -41,8 +41,8 @@ class ArticleController {
       const articleData = await this.articleService.getAll(options)
       res.json(articleData)
     } catch (err) {
-      console.log(err);
-      
+      console.log(err)
+
       res.status(500).json(err)
     }
   }
@@ -71,8 +71,8 @@ class ArticleController {
     try {
       const { id } = req.params
       const articleBody = req.body
-      const articleData = await this.articleService.editOne(id, articleBody)
-      return res.json(articleData)
+      await this.articleService.editOne(id, articleBody)
+      res.end()
     } catch (err) {
       console.log(err)
       res.status(500).json(err)
@@ -83,7 +83,7 @@ class ArticleController {
     try {
       const { id } = req.params
       const articleData = await this.articleService.incView(id)
-      return res.json(articleData)
+      res.json(articleData)
     } catch (err) {
       console.log(err)
       res.status(500).json(err)
@@ -94,7 +94,7 @@ class ArticleController {
     try {
       const { id } = req.params
       const articleData = await this.articleService.incLike(id)
-      return res.json(articleData)
+      res.json(articleData)
     } catch (err) {
       console.log(err)
       res.status(500).json(err)
@@ -105,7 +105,7 @@ class ArticleController {
     try {
       const { id } = req.params
       const articleData = await this.articleService.decLike(id)
-      return res.json(articleData)
+      res.json(articleData)
     } catch (err) {
       console.log(err)
       res.status(500).json(err)

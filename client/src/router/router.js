@@ -1,6 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useArticleStore } from '@/stores/ArticleStore';
 import { useAuthStore } from '@/stores/AuthStore';
+import { useUserStore } from '@/stores/userStore';
+
+let isAppFirstLoad = true;
+
+// текущие разрешения по ролям:
+// head: ['role.create', 'role.edit', 'role.delete', 'user.mentor.request']
+// admin: ['article.verficitaion', 'user.penalty', 'user.ban']
+// mentor: ['article.create', 'article.edit', 'article.delete']
+// user: []
 
 const routes = [
   // webpackChunkName - позволяет задать красивые имена отдельным js файлам на этапе сборки проекта (npm run build)
@@ -16,55 +25,100 @@ const routes = [
     component: () => import(/* webpackChunkName: "article" */ '@/views/Article.vue'),
     props: route => ({ id: route.params.id }),
   },
-  { path: '/cms', name: 'cms', component: () => import(/* webpackChunkName: "cms" */'@/views/CreateArticle.vue') },
+  {
+    path: '/cms',
+    name: 'cms',
+    component: () => import(/* webpackChunkName: "cms" */'@/views/CreateArticle.vue'),
+    meta: {
+      requiresAuth: true,
+      requiresPermission: 'article.create'
+    }
+  },
   {
     path: '/cms/:id',
     name: 'cms.edit',
     component: () => import(/* webpackChunkName: "cmsedit" */'@/views/EditArticle.vue'),
-    props: route => ({ id: route.params.id })
+    props: route => ({ id: route.params.id }),
+    meta: {
+      requiresAuth: true,
+      requiresPermission: 'article.edit'
+    }
   },
   {
     path: '/account/info',
     name: 'account',
     component: () => import(/* webpackChunkName: "account"*/'@/views/PersonalAccount.vue'),
+    meta: {
+      requiresAuth: true,
+    }
   },
   {
     path: '/account/my-articles',
     name: 'my-articles',
-    component: () => import(/* webpackChunkName: "myarticles"*/'@/views/MyArticles.vue')
+    component: () => import(/* webpackChunkName: "myarticles"*/'@/views/MyArticles.vue'),
+    meta: {
+      requiresAuth: true,
+      requiresPermission: 'article.create'
+    }
   },
   {
     path: '/account/my-subscriptions',
     name: 'my-subscriptions',
-    component: () => import(/* webpackChunkName: "mysubscriptions"*/'@/views/MySubscriptions.vue')
+    component: () => import(/* webpackChunkName: "mysubscriptions"*/'@/views/MySubscriptions.vue'),
+    meta: {
+      requiresAuth: true,
+      requiresRole: 'mentor' // заменить на requiresPermission: 'article.subscribe'
+    }
   },
   {
     path: '/account/quarantine',
     name: 'quarantine',
-    component: () => import(/* webpackChunkName: "quarantine"*/'@/views/Quarantine.vue')
+    component: () => import(/* webpackChunkName: "quarantine"*/'@/views/Quarantine.vue'),
+    meta: {
+      requiresAuth: true,
+      requiresPermission: 'article.verficitaion'
+    }
   },
   {
     path: '/account/articles-to-verify',
     name: 'articles-to-verify',
-    component: () => import(/* webpackChunkName: "articlestoverify"*/'@/views/ArticlesToVerify.vue')
+    component: () => import(/* webpackChunkName: "articlestoverify"*/'@/views/ArticlesToVerify.vue'),
+    meta: {
+      requiresAuth: true,
+      requiresPermission: 'article.verficitaion'
+    }
   },
   {
     path: '/account/search-users',
     name: 'search-users',
-    component: () => import(/* webpackChunkName: "searchusers"*/'@/views/SearchUsers.vue')
+    component: () => import(/* webpackChunkName: "searchusers"*/'@/views/SearchUsers.vue'),
+    meta: {
+      requiresAuth: true,
+      requiresPermission: 'user.ban'
+    }
   },
-  { path: '/account/profile', name: 'profile', component: () => import(/* webpackChunkName: "" */'@/views/AccountProfile.vue') },
+  {
+    path: '/account/profile',
+    name: 'profile',
+    component: () => import(/* webpackChunkName: "" */'@/views/AccountProfile.vue'),
+    meta: {
+      requiresAuth: true,
+    }
+  },
   {
     path: '/profile/:id',
     name: 'profile.show',
     component: () => import(/* webpackChunkName: "user" */'@/views/UserProfile.vue'),
-    props: route => ({ id: route.params.id })
+    props: route => ({ id: route.params.id }),
+    meta: {
+      requiresAuth: true,
+
+    }
   },
   { path: '/login', name: 'login', component: () => import(/* webpackChunkName: "login" */'@/views/Login.vue') },
   { path: '/signup', name: 'signup', component: () => import(/* webpackChunkName: "signup" */'@/views/Signup.vue') },
-  {
-    path: '/:pathMatch(.*)*', name: 'notfound', component: () => import(/* webpackChunkName: "notfound" */'@/views/404.vue')
-  }
+  { path: '/:pathMatch(.*)*', name: 'notfound', component: () => import(/* webpackChunkName: "notfound" */'@/views/404.vue') },
+  { path: '/access-denied', name: 'denied', component: () => import(/* webpackChunkName: "denied" */'@/views/403.vue') }
 
 ];
 
@@ -83,13 +137,41 @@ const router = createRouter({
   }
 });
 
+router.beforeEach(async (to) => {
+  const authStore = useAuthStore();
+  const userStore = useUserStore();
+
+  if (isAppFirstLoad) {
+    try {
+      await authStore.onLoadAuthCheck()
+    } catch (e) {
+      console.log(e?.message)
+    } finally {
+      isAppFirstLoad = false;
+    }
+  }
+
+  if (to.meta.requiresAuth) {
+    if (!authStore.isAuth)
+      return {
+        name: 'login',
+        query: { redirect: to.fullPath }
+      }
+    if (to.meta.requiresPermission && authStore.isAuth && !userStore.user.role.permissions.includes(to.meta.requiresPermission)) {
+      return {
+        name: 'denied'
+      }
+    } else if (to.meta.requiresRole && !(userStore.user.role.name === to.meta.requiresRole)) { // пока нет прописанных разрешений,
+      return {                                                                                 // можно указывать роли
+        name: 'denied'
+      }
+    }
+
+  }
+});
+
 router.beforeResolve(async (to) => {
   const articleStore = useArticleStore()
-  const authStore = useAuthStore()
-
-  // if (firstLoad) {
-  //   await authStore.onLoadAuthCheck()
-  // }
 
   if (to.name === 'home') {
     try {
@@ -97,19 +179,6 @@ router.beforeResolve(async (to) => {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  if (to.name === 'account') {
-    // if (!authStore.isAuth) return false
-    try {
-      await authStore.onLoadAuthCheck()
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  if (['cms', 'cms.edit'].includes(to.name)) {
-    console.log(to.name)
   }
 })
 
