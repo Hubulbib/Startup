@@ -4,11 +4,12 @@ import ArticleListItem from "@/components/ArticleListItem.vue";
 import { useArticleStore } from "@/stores/ArticleStore";
 import { storeToRefs } from "pinia";
 import { useVirtualList } from '@vueuse/core'
+import { onBeforeMount } from "vue";
 
 const articleStore = useArticleStore()
 const { articles } = storeToRefs(articleStore)
 
-onMounted(async () => {
+onBeforeMount(async () => {
   for (let page = 1; page <= 5; page++) {
     try {
       await articleStore.fetchArticles(10, page)
@@ -38,9 +39,9 @@ const { list, containerProps, wrapperProps } = useVirtualList(articles, {
         :key="item.index">
         <ArticleListItem :item="item.data" />
         <!-- потом убрать -->
-        <router-link style="margin-bottom: 10px; color: red"
+        <!-- <router-link style="margin-bottom: 10px; color: red"
           :to="{ name: 'cms.edit', params: { id: item.data._id } }">Редактировать статью (для теста роутера, потом
-          уберу)</router-link>
+          уберу)</router-link> -->
         <!-- потом убрать -->
       </li>
     </transition-group>

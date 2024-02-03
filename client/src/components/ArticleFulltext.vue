@@ -63,6 +63,7 @@
             <p class="article-task__description">{{ task.taskText }}</p>
           </li>
         </ol>
+        <MentorsList />
       </div>
     </TransitionGroup>
   </article>
@@ -70,6 +71,7 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
+import MentorsList from './MentorsList.vue';
 import axios from 'axios';
 import { publishedString } from "@/helpers/publishedStringValidator.js";
 

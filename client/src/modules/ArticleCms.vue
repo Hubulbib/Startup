@@ -6,6 +6,7 @@ import TagsMockup from "@/mockups/TagsMockup.js";
 import { $api } from "@/http/api.js";
 import LevelMockup from "@/mockups/LevelMockup.js"
 import { useUserStore } from "@/stores/userStore";
+import { reset } from "@formkit/vue";
 
 const userStore = useUserStore()
 
@@ -23,7 +24,8 @@ const add = (name) => {
   data.value[name].push(nanoid(5));
 };
 
-const createArticle = (data) => {
+const createArticle = (data, node) => {
+  console.log(node);
   const article = {
     // TODO: userStore.user ПОСЛЕ СМЕНЫ СХЕМЫ В ДБ
     author: userStore.user.id,
@@ -48,7 +50,7 @@ const createArticle = (data) => {
       ...detail.body,
       {
         subTitle: item.subTitle,
-        content: item.content,
+        subTitleText: item.content,
       },
     ];
   }
@@ -57,8 +59,8 @@ const createArticle = (data) => {
     detail.tasks = [
       ...detail.tasks,
       {
-        subTitle: item.subTitle,
-        content: item.content,
+        taskTitle: item.subTitle,
+        taskText: item.content,
       },
     ];
   }
@@ -75,6 +77,16 @@ const postArticle = (data) => {
     .post("/article", createArticle(data))
     .then((r) => console.log(r.data))
     .catch(err => console.log(err))
+    .finally(() => {
+      for (const item of body.value) {
+        item.resetContent()
+      }
+      for (const item of tasks.value) {
+        item.resetContent()
+      }
+
+      reset('form')
+    })
 };
 </script>
 
@@ -83,6 +95,7 @@ const postArticle = (data) => {
     type="form"
     :actions="false"
     @submit="postArticle"
+    id="form"
     class="article-form"
   >
     <div class="meta flex-c">
