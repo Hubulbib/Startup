@@ -15,6 +15,8 @@ export class UserMapper {
       entity.roleDoc,
       entity.rating.reduce((acc, el) => acc + el, 0) / entity.rating.length,
       entity.avatar,
+      entity.messages,
+      entity.defaultMessages,
       entity.userSubscribes,
       entity.articles,
       entity.likes,

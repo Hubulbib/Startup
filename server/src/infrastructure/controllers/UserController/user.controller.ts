@@ -2,6 +2,7 @@ import { type Request, type Response } from 'express'
 import { UserService } from '../../../core/services/UserService/user.service.js'
 import { UserRepositoryImpl } from '../../db/repositories/user.repository.impl.js'
 import { type IAuthRequest } from '../../interfaces/auth.request.interface'
+import { EUserRole } from '../../db/entities/enums/user-role.enum'
 
 class UserController {
   constructor(readonly userService: UserService) {}
@@ -44,9 +45,13 @@ class UserController {
     try {
       const { id } = req.params
       const userBody = req.body
+      if (req.user.role !== EUserRole.mentor && (userBody?.messages || userBody?.defaultMessages)) {
+        return res.status(401).end()
+      }
       await this.userService.editOne(id, userBody)
       res.end()
     } catch (err) {
+      console.log(err)
       res.status(500).json(err.message)
     }
   }

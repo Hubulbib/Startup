@@ -113,6 +113,12 @@ export class User {
 
   @prop({ type: String, default: [] }, PropType.ARRAY)
   hides?: string[]
+
+  @prop({ type: Object, default: [] }, PropType.ARRAY)
+  messages?: { [key: string]: string }[]
+
+  @prop({ type: Object, default: [] }, PropType.ARRAY)
+  defaultMessages?: { [key: string]: string }[]
 }
 
 export const userModel = getModelForClass(User, {

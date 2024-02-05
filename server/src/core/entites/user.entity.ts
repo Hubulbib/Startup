@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongoose'
 import { type RoleEntity } from './role.entity'
 
 export class UserEntity {
@@ -11,6 +10,8 @@ export class UserEntity {
     readonly role: RoleEntity,
     readonly rating: number,
     readonly avatar: string,
+    readonly messages?: { [key: string]: string }[],
+    readonly defaultMessages?: { [key: string]: string }[],
     readonly userSubscribes?: string[],
     readonly articles?: string[],
     readonly likes?: string[],
