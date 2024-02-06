@@ -18,6 +18,7 @@ export class ArticleRepositoryImpl implements ArticleRepository {
   private readonly articleDetailRepository = model('ArticleDetail')
   private readonly subscribeRepository = model('Subscribe')
 
+  
   async createOne(createBody: CreateBodyDto): Promise<ArticleEntity> {
     const articleTags = [...new Set(createBody.tags)]
     const article = await this.articleRepository.create({
@@ -26,10 +27,10 @@ export class ArticleRepositoryImpl implements ArticleRepository {
       updatedAt: new Date(),
       tags: articleTags,
     })
-
+    
     const articleDetail = await this.articleDetailRepository.findOne({ articleId: article._id })
     if (articleDetail) throw Error('Такая запись уже существует')
-
+    
     await this.articleDetailRepository.create({
       articleId: article._id,
       body: createBody.content.detail?.body,

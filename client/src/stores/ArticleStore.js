@@ -1,7 +1,6 @@
 import { ref } from "vue";
-import { $api, API_URL } from "@/http/api";
+import { $api } from "@/http/api";
 import { defineStore } from "pinia";
-import axios from "axios";
 
 export const useArticleStore = defineStore('ArticleStore', () => {
     const articles = ref([])
