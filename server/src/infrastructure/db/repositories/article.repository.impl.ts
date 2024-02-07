@@ -10,6 +10,8 @@ import { ArticleDetailMapper } from '../mappers/article-detail.mapper'
 import { UserRepositoryImpl } from './user.repository.impl'
 import { UserMapper } from '../mappers/user.mapper'
 import { articleGetAllQuery } from '../queries/article.get-all.query'
+import { ArticleStatusEnum } from '../entities/enums/article-status.enum'
+import { articleGetByStatusQuery } from '../queries/article.get-by-status.query'
 
 export class ArticleRepositoryImpl implements ArticleRepository {
   private readonly articleRepository = model('Article')
@@ -72,7 +74,22 @@ export class ArticleRepositoryImpl implements ArticleRepository {
   }
 
   async getAllByMentor(mentorId: string): Promise<ArticleEntity[]> {
-    return this.articleRepository.find({ author: mentorId })
+    return (await this.articleRepository.find({ author: mentorId })).map((el) => ArticleMapper.toDomain(el))
+  }
+
+  async getAllByStatus(status: ArticleStatusEnum): Promise<ArticleEntity[]> {
+    if (!(status in ArticleStatusEnum)) {
+      throw Error('Такого статуса не существует')
+    }
+    return Promise.all(
+      (await this.articleRepository.aggregate(articleGetByStatusQuery(status))).map(async (el) =>
+        ArticleMapper.toDomain({
+          ...el,
+          authorData: UserMapper.toDomain(el.author[0]),
+          mentors: await this.getAllMentor(el._id),
+        }),
+      ),
+    )
   }
 
   async editOne(articleId: string, editBody: EditBodyDto): Promise<void> {

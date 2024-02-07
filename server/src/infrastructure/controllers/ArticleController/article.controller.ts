@@ -57,6 +57,16 @@ class ArticleController {
     }
   }
 
+  getAllByStatus = async (req: Request, res: Response) => {
+    try {
+      const { status } = req.params
+      const articleData = await this.articleService.getAllByStatus(status)
+      res.json(articleData)
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  }
+
   getOneById = async (req: Request, res: Response) => {
     try {
       const { id } = req.params

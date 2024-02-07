@@ -13,6 +13,8 @@ router.get('', [AuthEitherMiddleware], articleController.getAll)
 
 router.get('/by-mentor/:id', [], articleController.getAllByMentor)
 
+router.get('/by-status/:status', [AuthMiddleware, RoleMiddleware.AdminRole], articleController.getAllByStatus)
+
 router.get('/:id/detail', [], articleController.getDetail)
 
 // а зачем он нужен?

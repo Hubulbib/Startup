@@ -22,6 +22,10 @@ export class ArticleService {
     return await this.articleRepository.getAllByMentor(mentorId)
   }
 
+  getAllByStatus = async (status: string) => {
+    return await this.articleRepository.getAllByStatus(status)
+  }
+
   getOneById = async (articleId: string) => {
     return await this.articleRepository.getOneById(articleId)
   }
