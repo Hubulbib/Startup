@@ -3,12 +3,16 @@
     <div class="header">
       <div class="header__wrapper">
         <router-link class="header__logo" :to="{ name: 'home' }">Logo</router-link>
-        <h2 class="header__desc">Привет, {{ userStore.user ? `${userStore.user.name}
+        <h2 v-if="authStore.isLoading">
+          <span class="skeleton skeleton--rectangle"></span>
+        </h2>
+        <h2 v-else class="header__desc">Привет, {{ userStore.user ? `${userStore.user.name}
                   ${userStore.user.surname}` : 'анонимус' }}</h2>
       </div>
       <div class="header__account">
         <my-button class="header__account--switch">THEME</my-button>
-        <user-avatar :size="100" :user="userStore.user" @click="redirectUser"></user-avatar>
+        <span v-if="authStore.isLoading" class="skeleton skeleton--circle"></span>
+        <user-avatar v-else :size="100" :user="userStore.user" @click="redirectUser"></user-avatar>
         <my-button v-if="authStore.isAuth" @click="authStore.logout" class="">Выйти</my-button>
       </div>
     </div>
@@ -133,6 +137,34 @@ const redirectUser = function() {
         transform: translateX(50%);
         pointer-events: none;
       }
+    }
+  }
+
+  .skeleton {
+    background-color: #ccc;
+    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%);
+    background-size: 400px 400px;
+    animation: shine 2s linear infinite;
+
+    &--circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+
+    &--rectangle {
+      width: 400px;
+      height: 60px;
+    }
+  }
+
+  @keyframes shine {
+    0% {
+      background-position: top -200px left -200px;
+    }
+
+    100% {
+      background-position: top 200px left 200px;
     }
   }
 }
