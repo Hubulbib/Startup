@@ -13,6 +13,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
   const router = useRouter();
   const route = useRoute();
 
+  const isLoading = ref(true);
   const isAuth = ref(false);
 
   const onLoadAuthCheck = async function() {
@@ -75,6 +76,6 @@ export const useAuthStore = defineStore('AuthStore', () => {
   };
 
   return {
-    isAuth, onLoadAuthCheck, signup, login, logout
+    isAuth, isLoading, onLoadAuthCheck, signup, login, logout
   }
 });

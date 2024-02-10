@@ -147,7 +147,8 @@ router.beforeEach(async (to) => {
     } catch (e) {
       console.log(e?.message)
     } finally {
-      isAppFirstLoad = false;
+      isAppFirstLoad = false
+      authStore.isLoading = false;
     }
   }
 
