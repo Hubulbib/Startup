@@ -48,7 +48,7 @@ onBeforeMount(async () => {
           <span class="profile__name-text">{{ fullName }}</span>
         </li>
         <li class="profile__item profile__item--personal-acc personal-account">
-          <router-link to="/account">
+          <router-link :to="{ name: 'account' }">
             <span class="personal-account__text">Личный кабинет</span>
             <my-svg name="arrow-left"></my-svg>
           </router-link>
