@@ -2,11 +2,10 @@
 import { onBeforeMount, computed, ref } from 'vue';
 import { useArticleStore } from '@/stores/ArticleStore.js';
 import { useUserStore } from '@/stores/userStore.js';
-import { storeToRefs } from 'pinia'
 
 import ArticleProfileList from '@/components/ArticleProfileList.vue';
 
-const { name, surname, id } = useUserStore().user;
+const { name, surname, id, role } = useUserStore().user;
 
 const fullName = computed(() => {
   const capitalizedName = name[0].toUpperCase() + name.slice(1);
@@ -16,6 +15,10 @@ const fullName = computed(() => {
 
 const articleStore = useArticleStore()
 const articles = ref([]);
+
+const isMentor = computed(() => {
+  return role.name === 'mentor'
+})
 
 onBeforeMount(async () => {
   for (let page = 1; page <= 5; page++) {
@@ -66,20 +69,8 @@ onBeforeMount(async () => {
         :options="['deal 1', 'deals 2']">
       </FormKit>
     </div>
-    <div class="profile__articles">
-      <FormKit
-        type="dropdown"
-        name="framework"
-        placeholder="Статьи"
-        :options="[
-          '2',
-          '3',
-          '5'
-        ]"
-        outer-class="my-custom">
-      </FormKit>
-    </div>
     <ArticleProfileList
+      v-if="isMentor"
       :articles="articles" />
   </div>
 </template>
