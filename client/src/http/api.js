@@ -12,10 +12,11 @@ class apiService {
     });
 
     asyncRequest.interceptors.request.use((config) => {
-      config.headers.Authorization = `Bearer ${ls.getToken()}`
+      if (ls.getToken()) {
+        config.headers.Authorization = `Bearer ${ls.getToken()}`
+      }
       return config
     });
-
     asyncRequest.interceptors.response.use((response) => {
       return response
     }, async (error) => {
@@ -107,7 +108,7 @@ export const $asyncPOST = async function(url, data = {}, config = {}, silent = f
       showPopup('success')
     };
     return res;
-  } catch(e) {
+  } catch (e) {
     console.log(e?.message);
     showPopup();
   }
