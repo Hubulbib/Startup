@@ -35,7 +35,6 @@ class ArticleController {
       if ('user' in req) {
         articleHideList = req.user['hides']
       }
-
       const { interval, pages } = req.query
       const options = new GetAllBodyDto({ interval: +interval, pages: +pages, hides: articleHideList })
       const articleData = await this.articleService.getAll(options)

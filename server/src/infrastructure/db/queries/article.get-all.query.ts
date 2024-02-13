@@ -1,4 +1,6 @@
-export const articleGetAllQuery = (hides: string[], interval: number, pages: number) => [
+import { Types } from 'mongoose'
+
+export const articleGetAllQuery = (hides: Types.ObjectId[], interval: number, pages: number) => [
   {
     $match: {
       _id: {
