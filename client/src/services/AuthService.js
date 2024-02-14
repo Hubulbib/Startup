@@ -3,7 +3,7 @@ import { $api } from '@/http/api';
 export default class AuthService {
 
   static async login(email, password) {
-    return $api.post('/auth/sign-in', {email, password}, true);
+    return $api.post('/auth/sign-in', {email, password}, {}, true);
   }
 
   static async signup(data) {
@@ -15,6 +15,6 @@ export default class AuthService {
   }
 
   static async logout() {
-    return $api.post('/auth/logout', true);
+    return $api.post('/auth/logout', {}, {}, true);
   }
 }
