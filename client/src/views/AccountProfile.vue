@@ -1,25 +1,39 @@
 <script setup>
-  import { onMounted, ref} from 'vue';
-  import { useArticleStore } from '@/stores/ArticleStore.js';
+import { onBeforeMount, computed, ref } from 'vue';
+import { useArticleStore } from '@/stores/ArticleStore.js';
+import { useUserStore } from '@/stores/userStore.js';
 
-  import ArticleProfileList from '@/components/ArticleProfileList.vue';
+import ArticleProfileList from '@/components/ArticleProfileList.vue';
 
-  const articleStore = useArticleStore();
-  const articles = ref([]);
+const { name, surname, id, role } = useUserStore().user;
 
-  const getData = async () => {
+const fullName = computed(() => {
+  const capitalizedName = name[0].toUpperCase() + name.slice(1);
+  const capitalizedSurname = surname[0].toUpperCase() + surname.slice(1);
+  return `${capitalizedName} ${capitalizedSurname}`
+})
+
+const articleStore = useArticleStore()
+const articles = ref([]);
+
+const isMentor = computed(() => {
+  return role.name === 'mentor'
+})
+
+onBeforeMount(async () => {
+  for (let page = 1; page <= 5; page++) {
     try {
-      await articleStore.fetchArticles();
-      articles.value = [...articleStore.articles]
-    } catch (e) {
-      console.log(e);
+      await articleStore.fetchArticles(10, page)
+      const userArticles = articleStore.articles.filter(article => {
+        return article.author.id === id;
+      })
+
+      articles.value = [...userArticles]
+    } catch (error) {
+      console.log(error);
     }
-}
-
-onMounted(() => {
-  getData();
-});
-
+  }
+})
 </script>
 
 <template>
@@ -31,10 +45,10 @@ onMounted(() => {
       </div>
       <ul class="profile__info-list">
         <li class="profile__item profile__item--name">
-          <span class="profile__name-text">Имя Фамилия</span>
+          <span class="profile__name-text">{{ fullName }}</span>
         </li>
         <li class="profile__item profile__item--personal-acc personal-account">
-          <router-link to="/account">
+          <router-link :to="{ name: 'account' }">
             <span class="personal-account__text">Личный кабинет</span>
             <my-svg name="arrow-left"></my-svg>
           </router-link>
@@ -52,132 +66,119 @@ onMounted(() => {
         type="dropdown"
         name="deals"
         placeholder="Сделки"
-        :options="['deal 1', 'deals 2']"
-      >
-      </FormKit>
-    </div>
-    <div class="profile__articles">
-      <FormKit
-        type="dropdown"
-        name="framework"
-        placeholder="Статьи"
-        :options="[
-          '2',
-          '3',
-          '5'
-        ]"
-        outer-class="my-custom"
-      >
+        :options="['deal 1', 'deals 2']">
       </FormKit>
     </div>
     <ArticleProfileList
-    :articles="articles"
-    />
+      v-if="isMentor"
+      :articles="articles" />
   </div>
 </template>
 
 <style scoped>
-  img {
-    max-width: 100%;
-  }
-  .view-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+img {
+  max-width: 100%;
+}
 
-  .profile__info {
-    display: flex;
-    margin-bottom: 40px;
-  }
+.view-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  .profile__avatar {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-right: 20px;
-    padding: 10px;
-    width: 96px;
-    height: 96px;
-    border: 1px solid #666;
-    border-radius: 100%;
-  }
+.profile__info {
+  display: flex;
+  margin-bottom: 40px;
+}
 
-  .avatar__text {
-    font-size: 20px;
-  }
+.profile__avatar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  padding: 10px;
+  width: 96px;
+  height: 96px;
+  border: 1px solid #666;
+  border-radius: 100%;
+}
 
-  .avatar__change-btn {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-  }
-  .profile__info-list {
-    display: flex;
-    flex-direction: column;
-  }
+.avatar__text {
+  font-size: 20px;
+}
 
-  .profile__item {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    padding: 6px 50px;
-    border-radius: 10px;
-    border: 2px solid #666;
-  }
+.avatar__change-btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
 
-  .profile__name-text {
-    font-size: 20px;
-  }
+.profile__info-list {
+  display: flex;
+  flex-direction: column;
+}
 
-  .profile__item--personal-acc a {
-    display: flex;
-    align-items: center;
-  }
+.profile__item {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding: 6px 50px;
+  border-radius: 10px;
+  border: 2px solid #666;
+}
 
-  .personal-account__text {
-    margin-right: 10px;
-    font-size: 20px;
-  }
+.profile__name-text {
+  font-size: 20px;
+}
 
-  .profile__item--personal-acc svg {
-    padding: 2px;
-    border: 2px solid #666;
-    border-radius: 100%;
-  }
+.profile__item--personal-acc a {
+  display: flex;
+  align-items: center;
+}
 
-  .profile__graph {
-    width: 250px;
-    height: 250px;
-  }
+.personal-account__text {
+  margin-right: 10px;
+  font-size: 20px;
+}
 
-  .profile__img {
-    object-fit: cover;
-    height: 100%;
-  }
+.profile__item--personal-acc svg {
+  padding: 2px;
+  border: 2px solid #666;
+  border-radius: 100%;
+}
 
-  .profile__articles {
-    display: flex;
-    justify-content: center;
-    width: 400px;
-  }
+.profile__graph {
+  width: 250px;
+  height: 250px;
+}
 
-  .profile__dropdown {
-    width: 100%;
-  }
+.profile__img {
+  object-fit: cover;
+  height: 100%;
+}
 
-  .profile__deals-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.profile__articles {
+  display: flex;
+  justify-content: center;
+  width: 400px;
+}
 
-  .profile__rating {
-    margin-right: 20px;
-    padding: 5px 10px;
-    border: 2px solid #666;
-    border-radius: 5px;
-  }
+.profile__dropdown {
+  width: 100%;
+}
+
+.profile__deals-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile__rating {
+  margin-right: 20px;
+  padding: 5px 10px;
+  border: 2px solid #666;
+  border-radius: 5px;
+}
 </style>
