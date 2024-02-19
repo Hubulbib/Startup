@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useArticleStore } from '@/stores/ArticleStore';
 import { useAuthStore } from '@/stores/AuthStore';
 import { useUserStore } from '@/stores/userStore';
+import ls from '@/helpers/localStorageHelpers.js'
 
 let isAppFirstLoad = true;
 
@@ -143,7 +144,7 @@ router.beforeEach(async (to) => {
 
   if (isAppFirstLoad) {
     try {
-      await authStore.onLoadAuthCheck()
+      if (ls.getToken()) await authStore.onLoadAuthCheck()
     } catch (e) {
       console.log(e?.message)
     } finally {
