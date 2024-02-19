@@ -3,6 +3,7 @@ import { type ELevelRecommended } from '../../../entites/article.entity'
 export class EditBodyDto {
   constructor(
     readonly author?: string,
+    readonly preview?: string,
     readonly content?: Content,
     readonly createdAt?: Date,
     readonly updatedAt?: Date,
@@ -39,6 +40,7 @@ class Body {
   constructor(
     readonly subTitle?: string,
     readonly subTitleText?: string,
+    readonly image?: string,
   ) {}
 }
 
@@ -46,5 +48,6 @@ class Task {
   constructor(
     readonly taskTitle?: string,
     readonly taskText?: string,
+    readonly image?: string,
   ) {}
 }

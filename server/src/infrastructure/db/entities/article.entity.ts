@@ -7,6 +7,7 @@ export type IArticleDoc = Document<any, any, IArticle> & IArticle
 
 const schema = new Schema<IArticle>({
   author: { type: String, required: true },
+  preview: { type: String },
   content: {
     recommended: {
       level: { type: String, required: true, enum: Object.values(ELevelRecommended) },

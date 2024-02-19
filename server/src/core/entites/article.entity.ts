@@ -4,6 +4,7 @@ export class ArticleEntity {
   constructor(
     readonly _id: string,
     readonly author: UserEntity,
+    readonly preview: string,
     readonly content: Content,
     readonly createdAt: Date,
     readonly updatedAt: Date,
