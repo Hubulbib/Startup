@@ -7,6 +7,7 @@ export class ArticleMapper {
     return new ArticleEntity(
       entity._id,
       entity.authorData,
+      entity.preview,
       entity.content,
       entity.createdAt,
       entity.updatedAt,

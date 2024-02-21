@@ -4,6 +4,7 @@ import { type ELevelRecommended } from '../../../../core/entites/article.entity'
 export interface IArticle {
   _id: string
   author: string
+  preview?: string
   content: IContent
   createdAt: Date
   updatedAt: Date

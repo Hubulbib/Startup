@@ -9,9 +9,11 @@ export interface IArticleDetail {
 interface IBody {
   subTitle: string
   subTitleText: string
+  image?: string
 }
 
 interface ITask {
   taskTitle: string
   taskText: string
+  image?: string
 }

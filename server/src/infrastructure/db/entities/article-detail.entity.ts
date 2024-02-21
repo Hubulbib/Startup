@@ -9,12 +9,14 @@ const schema = new Schema<IArticleDetail>({
     {
       subTitle: { type: String },
       subTitleText: { type: String },
+      image: { type: String },
     },
   ],
   tasks: [
     {
       taskTitle: { type: String },
       taskText: { type: String },
+      image: { type: String },
     },
   ],
 })
