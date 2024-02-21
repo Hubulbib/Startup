@@ -16,7 +16,7 @@ import MyNav from "@/components/MyNav.vue"
 </script>
 
 <style lang="scss">
-@import '@/assets/main.scss';
+@import '@/assets/scss/main.scss';
 
 #app {
   font-family: "Roboto", sans-serif;
