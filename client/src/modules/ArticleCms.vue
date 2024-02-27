@@ -73,7 +73,7 @@ const createArticle = (data, node) => {
 
 const postArticle = (data) => {
   // console.log(createArticle(data))
-    $api
+  $api
     .post("/article", createArticle(data))
     .then((r) => console.log(r.data))
     .catch(err => console.log(err))
@@ -96,8 +96,7 @@ const postArticle = (data) => {
     :actions="false"
     @submit="postArticle"
     id="form"
-    class="article-form"
-  >
+    class="article-form">
     <div class="meta flex-c">
       <FormKit
         name="title"
@@ -107,8 +106,7 @@ const postArticle = (data) => {
         validation-visibility="blur"
         :validation-messages="{
           required: 'Поле должно быть заполнено',
-        }"
-      />
+        }" />
       <FormKit
         type="textarea"
         name="description"
@@ -121,8 +119,7 @@ const postArticle = (data) => {
         :validation-messages="{
           length: 'Описание не должно превышать 200 символов.',
           required: 'Поле должно быть заполнено',
-        }"
-      />
+        }" />
       <FormKit
         type="taglist"
         name="tags"
@@ -134,15 +131,13 @@ const postArticle = (data) => {
           required: 'Поле должно быть заполнено',
         }"
         :options="TagsMockup"
-        :filter="
-          (option, search) =>
-            option.label.toLowerCase().startsWith(search.toLowerCase())
-        "
+        :filter="(option, search) =>
+          option.label.toLowerCase().startsWith(search.toLowerCase())
+          "
         :tag-class="{
           'custom-tag': true,
         }"
-        max="3"
-      />
+        max="3" />
     </div>
 
     <div class="content flex-c">
@@ -155,8 +150,7 @@ const postArticle = (data) => {
         :validation-messages="{
           required: 'Поле должно быть заполнено',
         }"
-        placeholder="Для кого рекомендована статья?"
-      />
+        placeholder="Для кого рекомендована статья?" />
       <FormKit
         type="dropdown"
         name="level"
@@ -168,8 +162,7 @@ const postArticle = (data) => {
         :validation-messages="{
           required: 'Поле должно быть заполнено',
         }"
-        placeholder="Выберите уровень сложности"
-      />
+        placeholder="Выберите уровень сложности" />
       <div class="wrapper">
         <ul class="list">
           <editor-block ref="body" v-for="key in data.body" :key="key" />
@@ -258,6 +251,18 @@ const postArticle = (data) => {
     & svg {
       color: #4bb4ff;
     }
+  }
+}
+
+.content {
+  h3 {
+    color: var(--clr-text-prime);
+  }
+}
+
+.tasks {
+  h3 {
+    color: var(--clr-text-prime);
   }
 }
 </style>

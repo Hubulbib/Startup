@@ -27,7 +27,7 @@ const { list, containerProps, wrapperProps } = useVirtualList(articles, {
 
 <template>
   <div v-bind="containerProps"
-  style="height: 100vh;">
+    style="height: 100vh;">
     <transition-group
       v-bind="wrapperProps"
       name="article-list"
@@ -53,7 +53,7 @@ const { list, containerProps, wrapperProps } = useVirtualList(articles, {
   position: relative;
 
   &__item:not(:last-child) {
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid var(--clr-border);
   }
 }
 

@@ -33,7 +33,7 @@ const authStore = useAuthStore();
 const userStore = useUserStore();
 const router = useRouter();
 
-const redirectUser = function() {
+const redirectUser = function () {
   if (authStore.isAuth) {
     router.push({ name: 'account' });
   } else {
@@ -44,7 +44,7 @@ const redirectUser = function() {
 
 <style lang="scss" scoped>
 .wrapper {
-  background-color: #e5e5e5;
+  background-color: var(--clr-bg);
   box-shadow: 0 1px 25px rgba($color: #000000, $alpha: 0.5);
   border-radius: 0 0 12px 12px;
   padding: 20px;

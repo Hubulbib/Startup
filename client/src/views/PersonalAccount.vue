@@ -274,11 +274,12 @@ const submitChanges = async (data) => {
   &__block {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--clr-border);
     border-radius: 4px;
     font-size: 16px;
     line-height: 21px;
     text-align: center;
+    color: var(--clr-text-prime);
 
     &--container {
       padding: 0;

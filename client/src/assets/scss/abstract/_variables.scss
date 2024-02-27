@@ -4,6 +4,7 @@
   --clr-text-prime: #000;
   --clr-text-secondary: #d8d8d8;
   --clr-text-light: #fff;
+  --clr-border: #666
 }
 
 @media (prefers-color-scheme: dark) {
@@ -12,5 +13,6 @@
     --clr-prime: #092a35;
     --clr-text-prime: #fff;
     --clr-text-secondary: #d8d8d8;
+    --clr-border: #fff;
   }
 }

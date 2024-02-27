@@ -140,19 +140,20 @@ const updatedAt = publishedString(article.value.updatedAt);
 .toggle-span {
   cursor: pointer;
 }
+
 .article {
-  background-color: #f5f5f5;
+  background-color: var(--clr-prime);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
   &__header {
-    color: #333;
+    color: var(--clr-text-prime);
     font-size: 32px;
     margin-bottom: 30px;
 
     &--tasks {
-      color: #333;
+      color: var(--clr-text-prime);
       font-size: 24px;
       margin-bottom: 15px;
     }
@@ -163,12 +164,17 @@ const updatedAt = publishedString(article.value.updatedAt);
     gap: 45px;
     align-items: center;
     margin-bottom: 30px;
+    color: var(--clr-text-prime);
   }
 
   &__date {
     display: flex;
     flex-direction: column;
-    gap: 10px
+    gap: 10px;
+
+    div {
+      color: var(--clr-text-prime);
+    }
   }
 
   &__callout {
@@ -227,13 +233,13 @@ const updatedAt = publishedString(article.value.updatedAt);
     &__header {
       margin-bottom: 12px;
       font-size: 24px;
-      color: #333;
+      color: var(--clr-text-prime);
     }
 
     &__text {
       margin-bottom: 18px;
       line-height: 1.5;
-      color: #666;
+      color: var(--clr-text-prime);
     }
   }
 

@@ -60,7 +60,7 @@ onBeforeMount(async () => {
     </div>
     <div class="profile__deals-wrapper">
       <div class="profile__rating">
-        Rating 4.5
+        <span class="profile__rating-text">Rating 4.5</span>
       </div>
       <FormKit
         type="dropdown"
@@ -101,11 +101,12 @@ img {
   padding: 10px;
   width: 96px;
   height: 96px;
-  border: 1px solid #666;
+  border: 1px solid var(--clr-border);
   border-radius: 100%;
 }
 
 .avatar__text {
+  color: var(--clr-text-prime);
   font-size: 20px;
 }
 
@@ -113,6 +114,7 @@ img {
   border: none;
   background-color: transparent;
   cursor: pointer;
+  color: var(--clr-text-prime);
 }
 
 .profile__info-list {
@@ -126,16 +128,18 @@ img {
   margin-bottom: 20px;
   padding: 6px 50px;
   border-radius: 10px;
-  border: 2px solid #666;
+  border: 2px solid var(--clr-border);
 }
 
 .profile__name-text {
+  color: var(--clr-text-prime);
   font-size: 20px;
 }
 
 .profile__item--personal-acc a {
   display: flex;
   align-items: center;
+  color: var(--clr-text-prime);
 }
 
 .personal-account__text {
@@ -145,7 +149,7 @@ img {
 
 .profile__item--personal-acc svg {
   padding: 2px;
-  border: 2px solid #666;
+  border: 2px solid var(--clr-border);
   border-radius: 100%;
 }
 
@@ -178,7 +182,11 @@ img {
 .profile__rating {
   margin-right: 20px;
   padding: 5px 10px;
-  border: 2px solid #666;
+  border: 2px solid var(--clr-border);
   border-radius: 5px;
+}
+
+.profile__rating-text {
+  color: var(--clr-text-prime);
 }
 </style>

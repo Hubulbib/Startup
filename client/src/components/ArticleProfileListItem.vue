@@ -31,15 +31,13 @@ const published = publishedString(props.item.createdAt);
         v-if="item.img"
         class="img"
         :src="item.img"
-        :alt="item.content.title"
-      />
+        :alt="item.content.title" />
       <img
         v-else
         class="img-placeholder"
         src="@/assets/logo.png"
         alt="placeholder"
-        width="150"
-      />
+        width="150" />
     </div>
     <div class="article-item__card article-card" ref="articleCard">
       <h2 class="article-card__title">
@@ -51,8 +49,7 @@ const published = publishedString(props.item.createdAt);
               title: item.content.title.replace(/\s/g, '_'),
             },
           }"
-          class="title-link"
-        >
+          class="title-link">
           {{ item.content.title }}
         </router-link>
       </h2>
@@ -141,7 +138,7 @@ p {
     justify-content: center;
     gap: 10px;
     padding-left: 10px;
-    border-left: 1px solid #666;
+    border-left: 1px solid var(--clr-border);
   }
 
   .article-card {

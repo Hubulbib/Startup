@@ -45,3 +45,8 @@ button:disabled {
 svg {
   display: block;
 }
+
+body {
+  background-color: var(--clr-prime);
+  color: var(--clr-text);
+}
