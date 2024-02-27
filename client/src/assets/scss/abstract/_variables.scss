@@ -1,0 +1,16 @@
+:root {
+  --clr-bg: #e5e5e5;
+  --clr-prime: #fff;
+  --clr-text-prime: #000;
+  --clr-text-secondary: #d8d8d8;
+  --clr-text-light: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --clr-bg: #323643;
+    --clr-prime: #092a35;
+    --clr-text-prime: #fff;
+    --clr-text-secondary: #d8d8d8;
+  }
+}
