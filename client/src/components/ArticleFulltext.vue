@@ -146,6 +146,7 @@ const updatedAt = publishedString(article.value.updatedAt);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-family: 'Inter';
 
   &__header {
     color: var(--clr-text-prime);
@@ -153,7 +154,7 @@ const updatedAt = publishedString(article.value.updatedAt);
     margin-bottom: 30px;
 
     &--tasks {
-      color: var(--clr-text-prime);
+      color: var(--clr-text-secondary);
       font-size: 24px;
       margin-bottom: 15px;
     }
@@ -180,14 +181,15 @@ const updatedAt = publishedString(article.value.updatedAt);
   &__callout {
     margin-bottom: 30px;
     padding: 18px;
-    border-left: 3px solid #333;
+    border-left: 3px solid var(--clr-border);
     font-style: italic;
-    background-color: #eaeaea;
+    background-color: var(--clr-prime-light);
   }
 
   &__recommended {
     display: block;
-    margin-bottom: 12px;
+    margin-bottom: 25px;
+    color: var(--clr-text-secondary);
   }
 
   &__tags {
@@ -231,15 +233,19 @@ const updatedAt = publishedString(article.value.updatedAt);
     margin-bottom: 10px;
 
     &__header {
-      margin-bottom: 12px;
-      font-size: 24px;
-      color: var(--clr-text-prime);
+      margin: 0;
+      margin-bottom: 27px;
+      font-family: 'Inter';
+      font-size: 18px;
+      color: var(--clr-text-secondary);
     }
 
     &__text {
-      margin-bottom: 18px;
+      margin-bottom: 48px;
+      font-size: 18px;
       line-height: 1.5;
-      color: var(--clr-text-prime);
+      font-family: 'Inter';
+      color: var(--clr-text-secondary);
     }
   }
 
@@ -247,24 +253,26 @@ const updatedAt = publishedString(article.value.updatedAt);
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 25px 30px;
     margin-bottom: 15px;
-    background-color: white;
+    padding: 25px 30px;
+    border-radius: 8px;
+    background-color: var(--clr-prime-light);
     list-style: none;
   }
 
   .article-task {
-    padding-bottom: 20px;
-    border-bottom: 1px solid #999;
+    padding-bottom: 28px;
+    border-bottom: 2px solid var(--clr-border);
+    font-family: 'Inter';
 
     &__header {
-      margin-bottom: 8px;
-      font-size: 16px;
-      color: #333;
+      margin-bottom: 32px;
+      font-size: 18px;
+      color: var(--clr-text-secondary);
     }
 
     &__description {
-      color: #666;
+      color: var(--clr-text-secondary);
     }
   }
 
