@@ -6,8 +6,6 @@
         <h2 v-if="authStore.isLoading">
           <span class="skeleton skeleton--rectangle"></span>
         </h2>
-        <h2 v-else class="header__desc">Привет, {{ userStore.user ? `${userStore.user.name}
-                  ${userStore.user.surname}` : 'анонимус' }}</h2>
       </div>
       <div class="header__account">
         <my-button class="header__account--switch">THEME</my-button>
