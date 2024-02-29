@@ -1,3 +1,5 @@
+@use '@/assets/scss/abstract/_mixins.scss' as *;
+
 @include font-face("Roboto", "/Roboto-Regular", 400, normal);
 @include font-face("Roboto", "/Roboto-Medium", 500, normal);
 @include font-face("Inter", "/Inter-Regular", 400, normal);

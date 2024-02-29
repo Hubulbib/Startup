@@ -7,3 +7,11 @@
     font-style: $style;
   }
 }
+
+@mixin flex-center($direction: row, $wrap: wrap) {
+  display: flex;
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+  align-items: center;
+  justify-content: center;
+}

@@ -8,13 +8,10 @@
 **/
 
 /* vendors imports */
-@import '@/assets/scss/vendors/_normalize.scss';
+@use '@/assets/scss/vendors/_normalize.scss';
 
 /* abstract imports */
-@import '@/assets/scss/abstract/_variables.scss';
-@import '@/assets/scss/abstract/_mixins.scss';
+@use '@/assets/scss/abstract/_index.scss' as abstracts;
 
 /* base imports */
-@import '@/assets/scss/base/_fonts.scss';
-@import '@/assets/scss/base/_base.scss';
-@import '@/assets/scss/base/_helpers.scss';
+@use '@/assets/scss/base/_index.scss' as base;
