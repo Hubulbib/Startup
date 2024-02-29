@@ -14,7 +14,7 @@
       </button>
       <div class="header__account">
         <span v-if="authStore.isLoading" class="skeleton skeleton--circle"></span>
-        <user-avatar v-else :size="24" :user="userStore.user" @click="redirectUser"></user-avatar>
+        <user-avatar :size="100" :user="userStore.user" @click="redirectUser"></user-avatar>
         <my-button v-if="authStore.isAuth" @click="authStore.logout" class="">Выйти</my-button>
       </div>
     </div>
@@ -161,6 +161,20 @@ const redirectUser = function () {
       width: 400px;
       height: 60px;
     }
+  }
+
+  &__login {
+    @include abs.btn-reset;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--clr-text-secondary);
+  }
+
+  &__login-text {
+    font-size: 16px;
   }
 
   @keyframes shine {

@@ -1,8 +1,8 @@
 <template>
-<div class="view-container">
-  <h1 class="h-1">Article cms</h1>
-      <article-cms />
-</div>
+  <div class="view-container">
+    <h1 class="h-1">Article cms</h1>
+    <article-cms />
+  </div>
 </template>
 
 <script setup>
@@ -12,4 +12,8 @@ import ArticleCms from "@/modules/ArticleCms.vue";
 </script>
 
 <style scoped lang="scss">
+.h-1 {
+  color: var(--clr-text-prime);
+  font-family: 'Inter';
+}
 </style>

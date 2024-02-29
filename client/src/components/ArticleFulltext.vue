@@ -149,9 +149,10 @@ const updatedAt = publishedString(article.value.updatedAt);
   font-family: 'Inter';
 
   &__header {
+    text-align: center;
     color: var(--clr-text-prime);
     font-size: 32px;
-    margin-bottom: 30px;
+    margin-bottom: 55px;
 
     &--tasks {
       color: var(--clr-text-secondary);
