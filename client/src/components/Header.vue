@@ -9,12 +9,12 @@
         <router-link class="header__link" :to="{ name: 'account' }">Личный кабинет</router-link>
         <router-link class="header__link" :to="{ name: 'home' }">Поддержка</router-link>
       </nav>
+      <button class="header__account--switch">
+        <my-svg name="theme-switcher"></my-svg>
+      </button>
       <div class="header__account">
-        <button class="header__account--switch">
-          <my-svg name="theme-switcher"></my-svg>
-        </button>
         <span v-if="authStore.isLoading" class="skeleton skeleton--circle"></span>
-        <user-avatar v-else :size="100" :user="userStore.user" @click="redirectUser"></user-avatar>
+        <user-avatar v-else :size="24" :user="userStore.user" @click="redirectUser"></user-avatar>
         <my-button v-if="authStore.isAuth" @click="authStore.logout" class="">Выйти</my-button>
       </div>
     </div>

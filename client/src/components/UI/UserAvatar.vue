@@ -2,7 +2,7 @@
   <div class="avatar" :style="size">
     <img v-if="user && user.avatar" :src="user.avatar" alt="Личный кабинет" />
     <avatar-initials v-else-if="user && user.name" :fullname="{ name: user.name, surname: user.surname }" />
-    <Icon v-else icon="carbon:user-avatar-filled-alt" color="#6495ee" width="100" height="100" />
+    <Icon v-else icon="carbon:user-avatar-filled-alt" color="#6495ee" :width="size" :height="size" />
     <slot></slot>
   </div>
 </template>
