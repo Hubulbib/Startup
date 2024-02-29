@@ -3,12 +3,16 @@
     <div class="header">
       <div class="header__wrapper">
         <router-link class="header__logo" :to="{ name: 'home' }">Logo</router-link>
-        <h2 v-if="authStore.isLoading">
-          <span class="skeleton skeleton--rectangle"></span>
-        </h2>
       </div>
+      <nav class="header__nav">
+        <router-link class="header__link" :to="{ name: 'home' }">Главная</router-link>
+        <router-link class="header__link" :to="{ name: 'account' }">Личный кабинет</router-link>
+        <router-link class="header__link" :to="{ name: 'home' }">Поддержка</router-link>
+      </nav>
       <div class="header__account">
-        <my-button class="header__account--switch">THEME</my-button>
+        <button class="header__account--switch">
+          <my-svg name="theme-switcher"></my-svg>
+        </button>
         <span v-if="authStore.isLoading" class="skeleton skeleton--circle"></span>
         <user-avatar v-else :size="100" :user="userStore.user" @click="redirectUser"></user-avatar>
         <my-button v-if="authStore.isAuth" @click="authStore.logout" class="">Выйти</my-button>
@@ -41,6 +45,8 @@ const redirectUser = function () {
 </script>
 
 <style lang="scss" scoped>
+@use '@/assets/scss/abstract' as abs;
+
 .wrapper {
   background-color: var(--clr-bg);
   box-shadow: 0 1px 25px rgba($color: #000000, $alpha: 0.5);
@@ -56,6 +62,7 @@ const redirectUser = function () {
   width: 100%;
   display: flex;
   flex-wrap: nowrap;
+  justify-content: space-between;
   //   align-items: center;
 
   font-size: 35px;
@@ -67,12 +74,20 @@ const redirectUser = function () {
     align-items: center;
     gap: $gap;
 
-    margin-right: auto;
-
     &>* {
       display: flex;
       align-items: center;
     }
+  }
+
+  &__nav {
+    @include abs.flex-center;
+    gap: 32px;
+  }
+
+  &__link {
+    font-size: 16px;
+    color: var(--clr-text-secondary);
   }
 
   &__desc {
@@ -87,18 +102,6 @@ const redirectUser = function () {
     border-radius: 8px;
 
     position: relative;
-
-    &::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: calc($gap / 2 * -1);
-      width: 3px;
-      height: 100%;
-      background-color: #8c8b8b;
-      transform: translateX(50%);
-      pointer-events: none;
-    }
   }
 
   &__account {
@@ -135,6 +138,10 @@ const redirectUser = function () {
         transform: translateX(50%);
         pointer-events: none;
       }
+    }
+
+    &--switch {
+      @include abs.btn-reset;
     }
   }
 

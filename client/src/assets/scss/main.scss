@@ -11,7 +11,7 @@
 @use '@/assets/scss/vendors/_normalize.scss';
 
 /* abstract imports */
-@use '@/assets/scss/abstract/_index.scss' as abstracts;
+@use '@/assets/scss/abstract';
 
 /* base imports */
-@use '@/assets/scss/base/_index.scss' as base;
+@use '@/assets/scss/base';

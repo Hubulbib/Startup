@@ -15,3 +15,10 @@
   align-items: center;
   justify-content: center;
 }
+
+@mixin btn-reset($cursor: pointer) {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: $cursor;
+}

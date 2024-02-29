@@ -31,15 +31,15 @@ export default {
   }
 }
 
-  .button:disabled {
-    background-color: #d3d3d3;
-    color: #a9a9a9;
-    cursor: not-allowed;
+.button:disabled {
+  background-color: #d3d3d3;
+  color: #a9a9a9;
+  cursor: not-allowed;
 
-    &:active {
-      transform: none;
-    }
+  &:active {
+    transform: none;
   }
+}
 </style>
 
 <!-- PARENT
