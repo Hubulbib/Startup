@@ -200,12 +200,13 @@ const updatedAt = publishedString(article.value.updatedAt);
 
   &__tag {
     display: inline-block;
-    background-color: #6b6b6b;
-    color: #fff;
-    padding: 5px 10px;
     margin-right: 5px;
-    border-radius: 4px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--clr-border);
     font-size: 12px;
+    font-style: normal;
+    color: var(--clr-text-prime);
   }
 
   &__hide {
