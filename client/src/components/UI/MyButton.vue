@@ -1,5 +1,5 @@
 <template>
-  <button class="button">
+  <button :class="['button', { flat }]">
     <slot></slot>
   </button>
 </template>
@@ -7,20 +7,27 @@
 <script>
 export default {
   name: "my-button",
+  props: {
+    flat: {
+      type: Boolean,
+      required: false,
+      default: false,
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
+@use '@/assets/scss/abstract' as abs;
+
 .button {
+  @include abs.btn-reset;
   display: inline-block;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: var(--fk-bg-submit);
-  border: 2px solid var(--fk-bg-submit);
-  color: white;
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: 2px solid var(--clr-text-secondary);
+  color: var(--clr-text-secondary);
   font-size: 16px;
-  cursor: pointer;
 
   &:hover {
     background-color: var(--fk-bg-submit);
@@ -38,6 +45,17 @@ export default {
 
   &:active {
     transform: none;
+  }
+}
+
+.flat {
+  padding: 0;
+  border: none;
+  border-radius: 0px;
+  border-bottom: 2px solid #fff;
+
+  &:hover {
+    background-color: transparent;
   }
 }
 </style>
