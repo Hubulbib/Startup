@@ -28,3 +28,22 @@ app
     .use(router)
     .use(plugin, formKitConfig)
     .mount('#app');
+
+const debounce = (callback, delay) => {
+    let tid;
+    return function (...args) {
+        const ctx = self;
+        tid && clearTimeout(tid);
+        tid = setTimeout(() => {
+            callback.apply(ctx, args);
+        }, delay);
+    };
+};
+
+const _ = window.ResizeObserver;
+window.ResizeObserver = class ResizeObserver extends _ {
+    constructor(callback) {
+        callback = debounce(callback, 20);
+        super(callback);
+    }
+};
