@@ -23,9 +23,7 @@ const close = () => {
 onMounted(() => {
   interval = setInterval(() => {
     if (count.value === 1) {
-      clearInterval(interval);
-      fadeIn.value = false;
-      fadeOut.value = true;
+      close()
     } else {
       count.value--;
     }
