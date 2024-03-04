@@ -53,7 +53,7 @@ const { list, containerProps, wrapperProps } = useVirtualList(articles, {
   position: relative;
 
   &__item:not(:last-child) {
-    border-bottom: 1px solid var(--clr-border);
+    border-bottom: 2px solid var(--clr-border);
   }
 }
 

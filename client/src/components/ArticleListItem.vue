@@ -42,12 +42,12 @@ const published = publishedString(props.item.createdAt);
       <h2 class="article-card__title">
         <router-link
           :to="{
-            name: 'article.show',
-            params: {
-              id: item._id,
-              title: item.content.title.replace(/\s/g, '_'),
-            },
-          }"
+      name: 'article.show',
+      params: {
+        id: item._id,
+        title: item.content.title.replace(/\s/g, '_'),
+      },
+    }"
           class="title-link">
           {{ item.content.title }}
         </router-link>
@@ -66,9 +66,12 @@ const published = publishedString(props.item.createdAt);
       </div>
     </div>
     <div class="article-item__social">
-      <my-button>Поделиться</my-button>
-      <my-button>Избранное</my-button>
-      <my-button @click="onHide">Скрыть</my-button>
+      <my-button class="article-item__btn" flat>
+        <my-svg name='arrow-left'></my-svg>
+        <span class="article-item__btn-text">Поделиться</span>
+      </my-button>
+      <my-button class="article-item__btn" flat>Избранное</my-button>
+      <my-button class="article-item__btn" flat @click="onHide">Скрыть</my-button>
     </div>
   </div>
 </template>
@@ -109,8 +112,11 @@ p {
   &__img {
     flex-shrink: 0;
     width: 300px;
+    margin-right: 24px;
     border: 1px solid #ddd;
     border-radius: 15px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
     overflow: hidden;
 
     display: flex;
@@ -128,24 +134,30 @@ p {
     flex-direction: column;
     gap: 10px;
     padding-right: 20px;
+    margin-right: auto;
   }
 
   &__social {
     position: relative;
     z-index: 10;
-    margin-left: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 10px;
-    padding-left: 10px;
-    border-left: 1px solid var(--clr-border);
+    padding-left: 61px;
+    border-left: 2px solid var(--clr-border);
+  }
+
+  &__btn {
+    display: flex;
+    gap: 30px;
   }
 
   .article-card {
     &__title {
       margin: 0;
       padding: 0;
+      font-family: 'Inter';
       color: var(--clr-text-prime);
     }
 

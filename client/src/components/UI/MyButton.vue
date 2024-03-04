@@ -52,7 +52,6 @@ export default {
   padding: 0;
   border: none;
   border-radius: 0px;
-  border-bottom: 2px solid #fff;
 
   &:hover {
     background-color: transparent;

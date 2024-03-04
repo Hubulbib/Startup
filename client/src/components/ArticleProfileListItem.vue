@@ -43,12 +43,12 @@ const published = publishedString(props.item.createdAt);
       <h2 class="article-card__title">
         <router-link
           :to="{
-            name: 'article.show',
-            params: {
-              id: item._id,
-              title: item.content.title.replace(/\s/g, '_'),
-            },
-          }"
+      name: 'article.show',
+      params: {
+        id: item._id,
+        title: item.content.title.replace(/\s/g, '_'),
+      },
+    }"
           class="title-link">
           {{ item.content.title }}
         </router-link>
@@ -145,6 +145,7 @@ p {
     &__title {
       margin: 0;
       padding: 0;
+      color: var(--clr-text-secondary);
     }
 
     &__meta {
@@ -154,6 +155,11 @@ p {
       justify-content: space-between;
       align-items: center;
       gap: 30px;
+      color: var(--clr-text-prime);
+    }
+
+    &__description {
+      color: var(--clr-text-secondary);
     }
   }
 }
