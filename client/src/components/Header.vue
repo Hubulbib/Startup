@@ -10,10 +10,20 @@
         <router-link class="header__link" :to="{ name: 'home' }">Поддержка</router-link>
       </nav>
       <ThemeSwitch class="header__theme-switch" />
-      <div class=" header__account">
+      <div class="header__account">
         <span v-if="authStore.isLoading" class="skeleton skeleton--circle"></span>
-        <user-avatar :size="100" :user="userStore.user" @click="redirectUser"></user-avatar>
+        <user-avatar v-if="authStore.isAuth && !authStore.isLoading" :size="100" :user="userStore.user"
+          @click="redirectUser"></user-avatar>
         <my-button v-if="authStore.isAuth" @click="authStore.logout" class="">Выйти</my-button>
+      </div>
+      <div v-if="!authStore.isAuth && !authStore.isLoading" class="header__user-actions">
+        <router-link class="header__register" :to="{ name: 'signup' }">
+          Зарегистрироваться
+        </router-link>
+        <router-link class="header__login" :to="{ name: 'login' }">
+          <my-svg name="dummy-user"></my-svg>
+          <span class="header__login-text">Войти</span>
+        </router-link>
       </div>
     </div>
   </div>
@@ -163,14 +173,30 @@ const redirectUser = function () {
     }
   }
 
-  &__login {
-    @include abs.btn-reset;
+  &__user-actions {
     display: flex;
+    gap: 50px;
+  }
+
+  &__login {
+    display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 5px 16px;
+    gap: 10px;
+    padding: 8px 16px;
+    border: 1px solid var(--clr-border);
     border-radius: 8px;
-    border: 1px solid var(--clr-text-secondary);
+    color: var(--clr-text-prime);
+  }
+
+  &__register {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border: 1px solid var(--clr-border);
+    border-radius: 8px;
+    font-size: 16px;
+    color: var(--clr-text-prime);
   }
 
   &__login-text {
