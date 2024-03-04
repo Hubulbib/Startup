@@ -85,10 +85,19 @@ const login = () => authStore.login(email.value, password.value);
   display: flex;
   flex-direction: column;
   padding: 1em 20px;
-  border: 1px solid #94929c;
+  border: 1px solid var(--clr-border);
   border-radius: 8px;
   max-width: none;
   width: 100%;
+
+  &>* {
+    color: var(--clr-text-prime);
+
+    .formkit-input {
+      background-color: red;
+      color: red;
+    }
+  }
 }
 
 .sign-up {
@@ -104,5 +113,13 @@ const login = () => authStore.login(email.value, password.value);
   line-height: var(--fk-line-height-button);
   background: var(--fk-bg-submit);
   color: var(--fk-color-submit);
+}
+
+.form-header {
+  color: var(--clr-text-prime);
+}
+
+ul {
+  color: var(--clr-text-prime);
 }
 </style>

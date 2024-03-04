@@ -22,22 +22,19 @@ const signUp = (data) => {
         label="Имя"
         name="name"
         validation="required|length:3"
-        placeholder="Иван"
-      />
+        placeholder="Иван" />
       <FormKit
         type="text"
         label="Фамилия"
         name="surname"
         validation="required|length:3"
-        placeholder="Иванов"
-      />
+        placeholder="Иванов" />
       <FormKit
         type="email"
         label="Почта"
         name="email"
         placeholder="example@example.com"
-        validation="required|length:5|*email"
-      />
+        validation="required|length:5|*email" />
       <FormKit
         type="password"
         label="Пароль"
@@ -45,8 +42,7 @@ const signUp = (data) => {
         validation="required"
         prefix-icon="password"
         suffix-icon="eyeClosed"
-        @suffix-icon-click="pwVisibile"
-      />
+        @suffix-icon-click="pwVisibile" />
       <FormKit
         type="password"
         name="password_confirm"
@@ -54,18 +50,16 @@ const signUp = (data) => {
         validation="required|confirm"
         prefix-icon="password"
         suffix-icon="eyeClosed"
-        @suffix-icon-click="pwVisibile"
-      />
+        @suffix-icon-click="pwVisibile" />
       <FormKit
         type="radio"
         label="Роль"
         name="role"
         validation="required"
         :options="{
-          user: 'Пользователь',
-          mentor: 'Ментор',
-        }"
-      />
+      user: 'Пользователь',
+      mentor: 'Ментор',
+    }" />
       <div class="double">
         <router-link :to="{ name: 'login' }" class="sign-in">
           Уже есть аккаунт
@@ -93,6 +87,7 @@ const signUp = (data) => {
   }
 
   .form-header {
+    color: var(--clr-text-prime);
     margin-bottom: 20px;
   }
 }
