@@ -67,9 +67,18 @@ const published = publishedString(props.item.createdAt);
       </div>
     </div>
     <div class="article-item__social">
-      <my-button>Поделиться</my-button>
-      <my-button>Избранное</my-button>
-      <my-button @click="onHide">Скрыть</my-button>
+      <my-button class="article-item__btn" flat>
+        <my-svg name='share'></my-svg>
+        <span class="article-item__btn-text">Поделиться</span>
+      </my-button>
+      <my-button class="article-item__btn" flat>
+        <my-svg name='favorite'></my-svg>
+        <span class="article-item__btn-text">Избранное</span>
+      </my-button>
+      <my-button class="article-item__btn" flat>
+        <my-svg name='hide'></my-svg>
+        <span class="article-item__btn-text">Скрыть</span>
+      </my-button>
     </div>
   </div>
 </template>
@@ -125,7 +134,7 @@ p {
   &__card {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 11px;
     padding-right: 20px;
   }
 
@@ -138,7 +147,14 @@ p {
     justify-content: center;
     gap: 10px;
     padding-left: 10px;
+    padding-right: 10px;
     border-left: 1px solid var(--clr-border);
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    gap: 26px;
   }
 
   .article-card {
