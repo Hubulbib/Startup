@@ -9,10 +9,8 @@
         <router-link class="header__link" :to="{ name: 'account' }">Личный кабинет</router-link>
         <router-link class="header__link" :to="{ name: 'home' }">Поддержка</router-link>
       </nav>
-      <button class="header__account--switch">
-        <my-svg name="theme-switcher"></my-svg>
-      </button>
-      <div class="header__account">
+      <ThemeSwitch class="header__theme-switch" />
+      <div class=" header__account">
         <span v-if="authStore.isLoading" class="skeleton skeleton--circle"></span>
         <user-avatar :size="100" :user="userStore.user" @click="redirectUser"></user-avatar>
         <my-button v-if="authStore.isAuth" @click="authStore.logout" class="">Выйти</my-button>
@@ -30,6 +28,8 @@
 import { useAuthStore } from '@/stores/AuthStore';
 import { useUserStore } from '@/stores/userStore';
 import { useRouter } from 'vue-router';
+
+import ThemeSwitch from '@/components/UI/ThemeSwitch.vue';
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
@@ -63,7 +63,7 @@ const redirectUser = function () {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
-  //   align-items: center;
+  align-items: center;
 
   font-size: 35px;
 

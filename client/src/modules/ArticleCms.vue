@@ -97,7 +97,7 @@ const postArticle = (data) => {
     @submit="postArticle"
     id="form"
     class="article-form">
-    <div class="meta flex-c">
+    <div class="meta">
       <FormKit
         name="title"
         type="text"
@@ -105,21 +105,8 @@ const postArticle = (data) => {
         validation="required"
         validation-visibility="blur"
         :validation-messages="{
-          required: 'Поле должно быть заполнено',
-        }" />
-      <FormKit
-        type="textarea"
-        name="description"
-        auto-height
-        v-model="description"
-        placeholder="Краткое описание"
-        :help="`${description ? description.length : 0} / 200`"
-        validation="required|length:0,200"
-        validation-visibility="blur"
-        :validation-messages="{
-          length: 'Описание не должно превышать 200 символов.',
-          required: 'Поле должно быть заполнено',
-        }" />
+      required: 'Поле должно быть заполнено',
+    }" />
       <FormKit
         type="taglist"
         name="tags"
@@ -128,16 +115,29 @@ const postArticle = (data) => {
         open-on-remove
         validation-visibility="blur"
         :validation-messages="{
-          required: 'Поле должно быть заполнено',
-        }"
+      required: 'Поле должно быть заполнено',
+    }"
         :options="TagsMockup"
         :filter="(option, search) =>
-          option.label.toLowerCase().startsWith(search.toLowerCase())
-          "
+      option.label.toLowerCase().startsWith(search.toLowerCase())
+      "
         :tag-class="{
-          'custom-tag': true,
-        }"
+      'custom-tag': true,
+    }"
         max="3" />
+      <FormKit
+        type="textarea"
+        name="description"
+        :rows="7"
+        v-model="description"
+        placeholder="Краткое описание"
+        :help="`${description ? description.length : 0} / 200`"
+        validation="required|length:0,200"
+        validation-visibility="blur"
+        :validation-messages="{
+      length: 'Описание не должно превышать 200 символов.',
+      required: 'Поле должно быть заполнено',
+    }" />
     </div>
 
     <div class="content flex-c">
@@ -148,8 +148,8 @@ const postArticle = (data) => {
         validation="required"
         validation-visibility="blur"
         :validation-messages="{
-          required: 'Поле должно быть заполнено',
-        }"
+      required: 'Поле должно быть заполнено',
+    }"
         placeholder="Для кого рекомендована статья?" />
       <FormKit
         type="dropdown"
@@ -160,8 +160,8 @@ const postArticle = (data) => {
         validation-visibility="blur"
         :options="LevelMockup"
         :validation-messages="{
-          required: 'Поле должно быть заполнено',
-        }"
+      required: 'Поле должно быть заполнено',
+    }"
         placeholder="Выберите уровень сложности" />
       <div class="wrapper">
         <ul class="list">
