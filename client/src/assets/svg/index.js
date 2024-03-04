@@ -7,6 +7,7 @@ import themeSwitcher from '@/assets/svg/theme-switcher.vue';
 import favorite from '@/assets/svg/favorite.vue';
 import dummyUser from '@/assets/svg/dummy-user.vue';
 import hide from '@/assets/svg/hide.vue';
+import share from '@/assets/svg/share.vue';
 
 export default {
   rect,
@@ -15,6 +16,7 @@ export default {
   star,
   favorite,
   hide,
+  share,
   'arrow-left': arrowLeft,
   'theme-switcher': themeSwitcher,
   'dummy-user': dummyUser,
