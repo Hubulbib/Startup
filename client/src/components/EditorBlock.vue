@@ -4,8 +4,7 @@
       v-model="subTitle"
       type="text"
       class="input-header"
-      placeholder="Заголовок"
-    />
+      placeholder="Заголовок" />
     <!-- :modules="modules" -->
     <QuillEditor
       ref="editor"
@@ -19,8 +18,7 @@
       v-model:content="content"
       contentType="html"
       content="html"
-      placeholder="Контент"
-    >
+      placeholder="Контент">
     </QuillEditor>
   </li>
 </template>

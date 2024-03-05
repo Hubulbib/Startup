@@ -1,7 +1,9 @@
 <template>
   <div class="view-container">
     <h1 class="h-1">Article cms</h1>
-    <article-cms />
+    <div class="article-wrapper">
+      <article-cms />
+    </div>
   </div>
 </template>
 

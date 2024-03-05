@@ -98,34 +98,37 @@ const postArticle = (data) => {
     id="form"
     class="article-form">
     <div class="meta">
-      <FormKit
-        name="title"
-        type="text"
-        placeholder="Название статьи"
-        validation="required"
-        validation-visibility="blur"
-        :validation-messages="{
+      <div class="meta__first">
+        <FormKit
+          name="title"
+          type="text"
+          placeholder="Название статьи"
+          validation="required"
+          validation-visibility="blur"
+          :validation-messages="{
       required: 'Поле должно быть заполнено',
     }" />
-      <FormKit
-        type="taglist"
-        name="tags"
-        placeholder="Выберите язык программирования"
-        open-on-focus
-        open-on-remove
-        validation-visibility="blur"
-        :validation-messages="{
+        <FormKit
+          type="taglist"
+          name="tags"
+          placeholder="Выберите язык программирования"
+          open-on-focus
+          open-on-remove
+          validation-visibility="blur"
+          :validation-messages="{
       required: 'Поле должно быть заполнено',
     }"
-        :options="TagsMockup"
-        :filter="(option, search) =>
+          :options="TagsMockup"
+          :filter="(option, search) =>
       option.label.toLowerCase().startsWith(search.toLowerCase())
       "
-        :tag-class="{
+          :tag-class="{
       'custom-tag': true,
     }"
-        max="3" />
+          max="3" />
+      </div>
       <FormKit
+        outer-class="article__textarea"
         type="textarea"
         name="description"
         :rows="7"
@@ -142,27 +145,29 @@ const postArticle = (data) => {
 
     <div class="content flex-c">
       <h3>Контент статьи</h3>
-      <FormKit
-        type="text"
-        name="recommended"
-        validation="required"
-        validation-visibility="blur"
-        :validation-messages="{
+      <div class="content__wrapper">
+        <FormKit
+          type="text"
+          name="recommended"
+          validation="required"
+          validation-visibility="blur"
+          :validation-messages="{
       required: 'Поле должно быть заполнено',
     }"
-        placeholder="Для кого рекомендована статья?" />
-      <FormKit
-        type="dropdown"
-        name="level"
-        open-on-focus
-        open-on-remove
-        validation="required"
-        validation-visibility="blur"
-        :options="LevelMockup"
-        :validation-messages="{
+          placeholder="Для кого рекомендована статья?" />
+        <FormKit
+          type="dropdown"
+          name="level"
+          open-on-focus
+          open-on-remove
+          validation="required"
+          validation-visibility="blur"
+          :options="LevelMockup"
+          :validation-messages="{
       required: 'Поле должно быть заполнено',
     }"
-        placeholder="Выберите уровень сложности" />
+          placeholder="Выберите уровень сложности" />
+      </div>
       <div class="wrapper">
         <ul class="list">
           <editor-block ref="body" v-for="key in data.body" :key="key" />
@@ -229,6 +234,12 @@ const postArticle = (data) => {
   }
 }
 
+.meta__first {
+  display: flex;
+  gap: 60px;
+  margin-bottom: 60px;
+}
+
 .description {
   display: block;
   width: 100%;
@@ -258,11 +269,22 @@ const postArticle = (data) => {
   h3 {
     color: var(--clr-text-prime);
   }
+
+  &__wrapper {
+    display: flex;
+    gap: 60px;
+  }
 }
 
 .tasks {
   h3 {
     color: var(--clr-text-prime);
+  }
+}
+
+.list {
+  .item {
+    background-color: #fff;
   }
 }
 </style>
