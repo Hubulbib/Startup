@@ -58,8 +58,7 @@ const redirectUser = function () {
 @use '@/assets/scss/abstract' as abs;
 
 .wrapper {
-  background-color: var(--clr-bg);
-  box-shadow: 0 1px 25px rgba($color: #000000, $alpha: 0.5);
+  background-color: var(--clr-prime);
   border-radius: 0 0 12px 12px;
   padding: 20px;
 
