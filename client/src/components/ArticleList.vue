@@ -10,7 +10,7 @@ const articleStore = useArticleStore()
 const { articles } = storeToRefs(articleStore)
 
 onBeforeMount(async () => {
-  for (let page = 1; page <= 5; page++) {
+  for (let page = 1; page <= 100; page++) {
     try {
       await articleStore.fetchArticles(10, page)
     } catch (error) {
@@ -26,17 +26,21 @@ const { list, containerProps, wrapperProps } = useVirtualList(articles, {
 </script>
 
 <template>
-  <div v-bind="containerProps"
-    style="height: 100vh;">
+  <div
+    v-bind="containerProps"
+    style="height: 100vh;"
+  >
     <transition-group
       v-bind="wrapperProps"
       name="article-list"
       class="article-list"
-      tag="ul">
+      tag="ul"
+    >
       <li
         class="article-list__item"
         v-for="item in list"
-        :key="item.index">
+        :key="item.index"
+      >
         <ArticleListItem :item="item.data" />
         <!-- потом убрать -->
         <!-- <router-link style="margin-bottom: 10px; color: red"
@@ -82,5 +86,4 @@ const { list, containerProps, wrapperProps } = useVirtualList(articles, {
 .article-list-leave-active {
   transition: all 0.3s ease-in-out;
   position: absolute;
-}
-</style>
+}</style>
