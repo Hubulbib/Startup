@@ -22,3 +22,9 @@ import ArticleList from "@/components/ArticleList.vue";
 //   console.log(articleStore.articles)
 // }
 </script>
+
+<style lang="scss" scoped>
+.h-1 {
+  color: var(--clr-text-prime);
+}
+</style>

@@ -1,0 +1,24 @@
+@mixin font-face($font-family, $url, $weight, $style) {
+  @font-face {
+    font-family: "#{$font-family}";
+    src: url('@/fonts/#{$url}.woff2') format("woff2");
+    font-weight: #{$weight};
+    font-display: swap;
+    font-style: $style;
+  }
+}
+
+@mixin flex-center($direction: row, $wrap: wrap) {
+  display: flex;
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin btn-reset($cursor: pointer) {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: $cursor;
+}

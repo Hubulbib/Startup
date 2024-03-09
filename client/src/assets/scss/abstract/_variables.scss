@@ -1,0 +1,20 @@
+:root {
+  --clr-bg: #e5e5e5;
+  --clr-prime: #fff;
+  --clr-prime-light: #fff;
+  --clr-text-prime: #000;
+  --clr-text-secondary: #3f3a3a;
+  --clr-text-light: #fff;
+  --clr-border: #666
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --clr-bg: #323643;
+    --clr-prime: #092a35;
+    --clr-prime-light: #0E323E;
+    --clr-text-prime: #fff;
+    --clr-text-secondary: #d8d8d8;
+    --clr-border: #fff;
+  }
+}

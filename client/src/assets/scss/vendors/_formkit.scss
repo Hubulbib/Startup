@@ -1,0 +1,21 @@
+input.formkit-input {
+  color: var(--clr-text-prime);
+  background-color: #fff;
+}
+
+input.formkit-input:focus-visible {
+  background-color: var(--clr-prime);
+}
+
+button.formkit-selector {
+  color: var(--clr-text-prime);
+  background-color: #fff;
+}
+
+.article__textarea .formkit-inner  {
+  background-color: #fff;
+}
+
+.meta__first input.formkit-input {
+  background-color: #fff;
+}

@@ -3,17 +3,27 @@
     <div class="header">
       <div class="header__wrapper">
         <router-link class="header__logo" :to="{ name: 'home' }">Logo</router-link>
-        <h2 v-if="authStore.isLoading">
-          <span class="skeleton skeleton--rectangle"></span>
-        </h2>
-        <h2 v-else class="header__desc">Привет, {{ userStore.user ? `${userStore.user.name}
-                  ${userStore.user.surname}` : 'анонимус' }}</h2>
       </div>
+      <nav class="header__nav">
+        <router-link class="header__link" :to="{ name: 'home' }">Главная</router-link>
+        <router-link class="header__link" :to="{ name: 'account' }">Личный кабинет</router-link>
+        <router-link class="header__link" :to="{ name: 'home' }">Поддержка</router-link>
+      </nav>
+      <ThemeSwitch class="header__theme-switch" />
       <div class="header__account">
-        <my-button class="header__account--switch">THEME</my-button>
         <span v-if="authStore.isLoading" class="skeleton skeleton--circle"></span>
-        <user-avatar v-else :size="100" :user="userStore.user" @click="redirectUser"></user-avatar>
+        <user-avatar v-if="authStore.isAuth && !authStore.isLoading" :size="100" :user="userStore.user"
+          @click="redirectUser"></user-avatar>
         <my-button v-if="authStore.isAuth" @click="authStore.logout" class="">Выйти</my-button>
+      </div>
+      <div v-if="!authStore.isAuth && !authStore.isLoading" class="header__user-actions">
+        <router-link class="header__register" :to="{ name: 'signup' }">
+          Зарегистрироваться
+        </router-link>
+        <router-link class="header__login" :to="{ name: 'login' }">
+          <my-svg name="dummy-user"></my-svg>
+          <span class="header__login-text">Войти</span>
+        </router-link>
       </div>
     </div>
   </div>
@@ -29,11 +39,13 @@ import { useAuthStore } from '@/stores/AuthStore';
 import { useUserStore } from '@/stores/userStore';
 import { useRouter } from 'vue-router';
 
+import ThemeSwitch from '@/components/UI/ThemeSwitch.vue';
+
 const authStore = useAuthStore();
 const userStore = useUserStore();
 const router = useRouter();
 
-const redirectUser = function() {
+const redirectUser = function () {
   if (authStore.isAuth) {
     router.push({ name: 'account' });
   } else {
@@ -43,9 +55,10 @@ const redirectUser = function() {
 </script>
 
 <style lang="scss" scoped>
+@use '@/assets/scss/abstract' as abs;
+
 .wrapper {
-  background-color: #e5e5e5;
-  box-shadow: 0 1px 25px rgba($color: #000000, $alpha: 0.5);
+  background-color: var(--clr-prime);
   border-radius: 0 0 12px 12px;
   padding: 20px;
 
@@ -58,7 +71,8 @@ const redirectUser = function() {
   width: 100%;
   display: flex;
   flex-wrap: nowrap;
-  //   align-items: center;
+  justify-content: space-between;
+  align-items: center;
 
   font-size: 35px;
 
@@ -69,12 +83,20 @@ const redirectUser = function() {
     align-items: center;
     gap: $gap;
 
-    margin-right: auto;
-
     &>* {
       display: flex;
       align-items: center;
     }
+  }
+
+  &__nav {
+    @include abs.flex-center;
+    gap: 32px;
+  }
+
+  &__link {
+    font-size: 16px;
+    color: var(--clr-text-secondary);
   }
 
   &__desc {
@@ -89,18 +111,6 @@ const redirectUser = function() {
     border-radius: 8px;
 
     position: relative;
-
-    &::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: calc($gap / 2 * -1);
-      width: 3px;
-      height: 100%;
-      background-color: #8c8b8b;
-      transform: translateX(50%);
-      pointer-events: none;
-    }
   }
 
   &__account {
@@ -138,6 +148,10 @@ const redirectUser = function() {
         pointer-events: none;
       }
     }
+
+    &--switch {
+      @include abs.btn-reset;
+    }
   }
 
   .skeleton {
@@ -156,6 +170,36 @@ const redirectUser = function() {
       width: 400px;
       height: 60px;
     }
+  }
+
+  &__user-actions {
+    display: flex;
+    gap: 50px;
+  }
+
+  &__login {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border: 1px solid var(--clr-border);
+    border-radius: 8px;
+    color: var(--clr-text-prime);
+  }
+
+  &__register {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border: 1px solid var(--clr-border);
+    border-radius: 8px;
+    font-size: 16px;
+    color: var(--clr-text-prime);
+  }
+
+  &__login-text {
+    font-size: 16px;
   }
 
   @keyframes shine {

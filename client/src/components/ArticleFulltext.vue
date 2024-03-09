@@ -140,19 +140,22 @@ const updatedAt = publishedString(article.value.updatedAt);
 .toggle-span {
   cursor: pointer;
 }
+
 .article {
-  background-color: #f5f5f5;
+  background-color: var(--clr-prime);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-family: 'Inter';
 
   &__header {
-    color: #333;
+    text-align: center;
+    color: var(--clr-text-prime);
     font-size: 32px;
-    margin-bottom: 30px;
+    margin-bottom: 55px;
 
     &--tasks {
-      color: #333;
+      color: var(--clr-text-secondary);
       font-size: 24px;
       margin-bottom: 15px;
     }
@@ -163,25 +166,31 @@ const updatedAt = publishedString(article.value.updatedAt);
     gap: 45px;
     align-items: center;
     margin-bottom: 30px;
+    color: var(--clr-text-prime);
   }
 
   &__date {
     display: flex;
     flex-direction: column;
-    gap: 10px
+    gap: 10px;
+
+    div {
+      color: var(--clr-text-prime);
+    }
   }
 
   &__callout {
     margin-bottom: 30px;
     padding: 18px;
-    border-left: 3px solid #333;
+    border-left: 3px solid var(--clr-border);
     font-style: italic;
-    background-color: #eaeaea;
+    background-color: var(--clr-prime-light);
   }
 
   &__recommended {
     display: block;
-    margin-bottom: 12px;
+    margin-bottom: 25px;
+    color: var(--clr-text-secondary);
   }
 
   &__tags {
@@ -191,12 +200,13 @@ const updatedAt = publishedString(article.value.updatedAt);
 
   &__tag {
     display: inline-block;
-    background-color: #6b6b6b;
-    color: #fff;
-    padding: 5px 10px;
     margin-right: 5px;
-    border-radius: 4px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--clr-border);
     font-size: 12px;
+    font-style: normal;
+    color: var(--clr-text-prime);
   }
 
   &__hide {
@@ -225,15 +235,19 @@ const updatedAt = publishedString(article.value.updatedAt);
     margin-bottom: 10px;
 
     &__header {
-      margin-bottom: 12px;
-      font-size: 24px;
-      color: #333;
+      margin: 0;
+      margin-bottom: 27px;
+      font-family: 'Inter';
+      font-size: 18px;
+      color: var(--clr-text-secondary);
     }
 
     &__text {
-      margin-bottom: 18px;
+      margin-bottom: 48px;
+      font-size: 18px;
       line-height: 1.5;
-      color: #666;
+      font-family: 'Inter';
+      color: var(--clr-text-secondary);
     }
   }
 
@@ -241,24 +255,26 @@ const updatedAt = publishedString(article.value.updatedAt);
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 25px 30px;
     margin-bottom: 15px;
-    background-color: white;
+    padding: 25px 30px;
+    border-radius: 8px;
+    background-color: var(--clr-prime-light);
     list-style: none;
   }
 
   .article-task {
-    padding-bottom: 20px;
-    border-bottom: 1px solid #999;
+    padding-bottom: 28px;
+    border-bottom: 2px solid var(--clr-border);
+    font-family: 'Inter';
 
     &__header {
-      margin-bottom: 8px;
-      font-size: 16px;
-      color: #333;
+      margin-bottom: 32px;
+      font-size: 18px;
+      color: var(--clr-text-secondary);
     }
 
     &__description {
-      color: #666;
+      color: var(--clr-text-secondary);
     }
   }
 

@@ -31,28 +31,25 @@ const published = publishedString(props.item.createdAt);
         v-if="item.img"
         class="img"
         :src="item.img"
-        :alt="item.content.title"
-      />
+        :alt="item.content.title" />
       <img
         v-else
         class="img-placeholder"
         src="@/assets/logo.png"
         alt="placeholder"
-        width="150"
-      />
+        width="150" />
     </div>
     <div class="article-item__card article-card" ref="articleCard">
       <h2 class="article-card__title">
         <router-link
           :to="{
-            name: 'article.show',
-            params: {
-              id: item._id,
-              title: item.content.title.replace(/\s/g, '_'),
-            },
-          }"
-          class="title-link"
-        >
+      name: 'article.show',
+      params: {
+        id: item._id,
+        title: item.content.title.replace(/\s/g, '_'),
+      },
+    }"
+          class="title-link">
           {{ item.content.title }}
         </router-link>
       </h2>
@@ -70,9 +67,18 @@ const published = publishedString(props.item.createdAt);
       </div>
     </div>
     <div class="article-item__social">
-      <my-button>Поделиться</my-button>
-      <my-button>Избранное</my-button>
-      <my-button @click="onHide">Скрыть</my-button>
+      <my-button class="article-item__btn" flat>
+        <my-svg name='share'></my-svg>
+        <span class="article-item__btn-text">Поделиться</span>
+      </my-button>
+      <my-button class="article-item__btn" flat>
+        <my-svg name='favorite'></my-svg>
+        <span class="article-item__btn-text">Избранное</span>
+      </my-button>
+      <my-button class="article-item__btn" flat>
+        <my-svg name='hide'></my-svg>
+        <span class="article-item__btn-text">Скрыть</span>
+      </my-button>
     </div>
   </div>
 </template>
@@ -128,7 +134,7 @@ p {
   &__card {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 11px;
     padding-right: 20px;
   }
 
@@ -141,13 +147,21 @@ p {
     justify-content: center;
     gap: 10px;
     padding-left: 10px;
-    border-left: 1px solid #666;
+    padding-right: 10px;
+    border-left: 1px solid var(--clr-border);
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    gap: 26px;
   }
 
   .article-card {
     &__title {
       margin: 0;
       padding: 0;
+      color: var(--clr-text-secondary);
     }
 
     &__meta {
@@ -157,6 +171,11 @@ p {
       justify-content: space-between;
       align-items: center;
       gap: 30px;
+      color: var(--clr-text-prime);
+    }
+
+    &__description {
+      color: var(--clr-text-secondary);
     }
   }
 }

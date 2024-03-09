@@ -11,16 +11,13 @@ const props = defineProps({
 });
 
 const articlesLocalRef = toRef(props, 'articles');
-
-const loaderInc = ref(3);
-const isFull = ref(false)
 </script>
 
 <template>
   <div>
     <transition-group name="article-list" class="article-list" tag="ul">
       <li class="article-list__item" v-for="article in articlesLocalRef" :key="article._id">
-        <ArticleProfileListItem :item="article"/>
+        <ArticleProfileListItem :item="article" />
       </li>
     </transition-group>
   </div>
@@ -29,16 +26,16 @@ const isFull = ref(false)
 <style scoped lang="scss">
 .article-list {
   position: relative;
-  border: 1px solid #666;
+  border: 1px solid var(--clr-border);
   border-radius: 10px;
 
   &__item:not(:last-child) {
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid var(--clr-border);
   }
 }
 
 .article-item:not(:last-child) {
-  background-color: #666;
+  background-color: var(--clr-border);
 }
 
 .loadmore-btn {
@@ -67,6 +64,4 @@ const isFull = ref(false)
   transition: all 0.3s ease-in-out;
   position: absolute;
 }
-
-
 </style>

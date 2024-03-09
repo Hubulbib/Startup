@@ -1,0 +1,57 @@
+html {
+  background-color: var(--clr-prime);
+  color-scheme: white dark;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: currentColor;
+}
+
+textarea {
+  resize: none;
+}
+
+input {
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 22px;
+
+  &:hover {
+    background-color: rgba($color: #4bb4ff, $alpha: 0.1);
+  }
+
+  &:active {
+    background-color: rgba($color: #4bb4ff, $alpha: 0.2);
+  }
+}
+
+button:disabled {
+  background-color: #cacaca !important;
+  color: rgba($color: #000000, $alpha: 0.5) !important;
+  pointer-events: none;
+  user-select: none;
+}
+
+svg {
+  display: block;
+}
+
+body {
+  background-color: var(--clr-prime);
+  color: var(--clr-text);
+}

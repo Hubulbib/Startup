@@ -30,28 +30,25 @@ const published = publishedString(props.item.createdAt);
         v-if="item.img"
         class="img"
         :src="item.img"
-        :alt="item.content.title"
-      />
+        :alt="item.content.title" />
       <img
         v-else
         class="img-placeholder"
         src="@/assets/logo.png"
         alt="placeholder"
-        width="150"
-      />
+        width="150" />
     </div>
     <div class="article-item__card article-card" ref="articleCard">
       <h2 class="article-card__title">
         <router-link
           :to="{
-            name: 'article.show',
-            params: {
-              id: item._id,
-              title: item.content.title.replace(/\s/g, '_'),
-            },
-          }"
-          class="title-link"
-        >
+      name: 'article.show',
+      params: {
+        id: item._id,
+        title: item.content.title.replace(/\s/g, '_'),
+      },
+    }"
+          class="title-link">
           {{ item.content.title }}
         </router-link>
       </h2>
@@ -69,9 +66,18 @@ const published = publishedString(props.item.createdAt);
       </div>
     </div>
     <div class="article-item__social">
-      <my-button>Поделиться</my-button>
-      <my-button>Избранное</my-button>
-      <my-button @click="onHide">Скрыть</my-button>
+      <my-button class="article-item__btn" flat>
+        <my-svg name='share'></my-svg>
+        <span class="article-item__btn-text">Поделиться</span>
+      </my-button>
+      <my-button class="article-item__btn" flat>
+        <my-svg name='favorite'></my-svg>
+        <span class="article-item__btn-text">Избранное</span>
+      </my-button>
+      <my-button class="article-item__btn" flat>
+        <my-svg name='hide'></my-svg>
+        <span class="article-item__btn-text">Скрыть</span>
+      </my-button>
     </div>
   </div>
 </template>
@@ -112,8 +118,11 @@ p {
   &__img {
     flex-shrink: 0;
     width: 300px;
+    margin-right: 24px;
     border: 1px solid #ddd;
     border-radius: 15px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
     overflow: hidden;
 
     display: flex;
@@ -131,24 +140,33 @@ p {
     flex-direction: column;
     gap: 10px;
     padding-right: 20px;
+    margin-right: auto;
   }
 
   &__social {
     position: relative;
     z-index: 10;
-    margin-left: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
-    padding-left: 10px;
-    border-left: 1px solid #666;
+    gap: 11px;
+    padding-left: 61px;
+    padding-right: 5px;
+    border-left: 2px solid var(--clr-border);
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    gap: 26px;
   }
 
   .article-card {
     &__title {
       margin: 0;
       padding: 0;
+      font-family: 'Inter';
+      color: var(--clr-text-prime);
     }
 
     &__meta {
@@ -158,6 +176,11 @@ p {
       justify-content: space-between;
       align-items: center;
       gap: 30px;
+      color: var(--clr-text-prime);
+    }
+
+    &__description {
+      color: var(--clr-text-prime);
     }
   }
 }
