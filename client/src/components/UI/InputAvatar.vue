@@ -48,6 +48,6 @@ const show = ref(false)
 }
 
 .input {
-    /* cursor: pointer; */
+    cursor: pointer;
 }
 </style>
