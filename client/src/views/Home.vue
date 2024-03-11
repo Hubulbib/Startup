@@ -8,9 +8,7 @@
 </template>
 
 <script setup>
-import ArticleList from "@/components/ArticleList.vue";
-// import { useArticleStore } from "@/stores/ArticleStore";
-
+import ArticleList from "@/components/ArticleList.vue"
 // const articleStore = useArticleStore()
 // const click = () => {
 //   for (let index = 0; index < 10; index++) {

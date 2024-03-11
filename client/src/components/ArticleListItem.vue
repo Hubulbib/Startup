@@ -150,7 +150,7 @@ p {
     flex-direction: column;
     justify-content: center;
     gap: 11px;
-    padding-inline: 20px;
+    padding-inline: 20px 40px;
     border-left: 2px solid var(--clr-border);
   }
 

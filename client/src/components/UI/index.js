@@ -10,6 +10,8 @@ import MyInput from '@/components/UI/MyInput.vue'
 import ArticleAuthor from '@/components/UI/ArticleAuthor.vue';
 import AppLink from '@/components/UI/AppLink.vue';
 import Separator from '@/components/UI/Separator.vue';
+import DropModal from '@/components/UI/DropModal.vue'
+import InputAvatar from '@/components/UI/InputAvatar.vue'
 
 export default [
     MySelect,
@@ -23,5 +25,7 @@ export default [
     MyInput,
     ArticleAuthor,
     AppLink,
-    Separator
+    Separator,
+    DropModal,
+    InputAvatar
 ]

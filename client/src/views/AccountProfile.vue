@@ -39,10 +39,7 @@ onBeforeMount(async () => {
 <template>
   <div class="view-container profile">
     <div class="profile__info">
-      <div class="profile__avatar avatar">
-        <span class="avatar__text">Avatar</span>
-        <button class="avatar__change-btn">Изменить</button>
-      </div>
+      <input-avatar />
       <ul class="profile__info-list">
         <li class="profile__item profile__item--name">
           <span class="profile__name-text">{{ fullName }}</span>
@@ -120,12 +117,12 @@ img {
 .profile__info-list {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
 .profile__item {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
   padding: 6px 50px;
   border-radius: 10px;
   border: 2px solid var(--clr-border);

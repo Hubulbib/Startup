@@ -12,6 +12,7 @@
     "@formkit/vue": "^1.4.0",
     "@iconify/vue": "^4.1.1",
     "@vueup/vue-quill": "^1.2.0",
+    "@vueuse/components": "^10.9.0",
     "@vueuse/core": "^10.7.0",
     "axios": "^1.5.1",
     "core-js": "^3.8.3",
